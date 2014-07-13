@@ -1,0 +1,397 @@
+%!TEX root = ../thesis.tex
+%******************************************************************************
+\chapter{Performance Evaluation of Batch and Message-based Systems}\label{ch:performance_evaluation}
+%******************************************************************************
+
+\section{A real world example  application}\label{sec:billing_application}
+In this section we introduce the two prototypes of a billing system that we have built to evaluate the performance of batch and message-based processing.
+
+A billing system is a distributed system consisting of several sub components that process the different billing sub processes like mediation, rating, billing and presentment (see Figure \ref{fig:billing_process}).
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{billing_process}
+	\caption{Billing process}
+	\label{fig:billing_process}
+\end{figure}
+
+The mediation components receive usage events from delivery systems, like switches and transform them into a format the billing system is able to process. For example, transforming the event records to the internal record format of the rating and billing engine or adding internal keys that are later needed in the process. The rating engine assigns the events to the specific customer account, called guiding, and determines the price of the event, depending on the applicable tariff. It also splits events if more than one tariff is applicable or the customer qualifies for a discount. The billing engine calculates the total amount of the bill by adding the rated events, recurring and one-time charges and discounts. The output is processed by the presentment components, which format the bill, print it, or present it to the customer in self-service systems, for example on a website.
+
+In order to compare batch and message-based types of processing, two different prototypes of a billing application have been developed. Each prototype implements the mediation and rating steps of the billing process. Figure \ref{fig:prototype_components} shows the components of the billing prototype: 
+\begin{itemize}
+	\item \textbf{Event Generator}\\
+	The \emph{Event Generator} generates the calling events, i.e. the call detail records (CDR) that are processed by the billing application.
+	\item \textbf{Mediation}\\
+	The \emph{Mediation} component checks wether the calltime of the calldetail record exceeds the minimal billable length or if it belongs to a flatrate account and sets the corresponding flags of the record. The output of the \emph{Mediation} component are normalized call records (NCDR) that are further processed by the \emph{Rating} component.
+	\item \textbf{Rating}\\
+	The \emph{Rating} component processes the output from the \emph{Mediation} component. It assigns the calldetail record to a customer account and determines the price of the call event by looking up the correspondant product and tariff in the \emph{Master Data DB}. The output of the \emph{Rating} component (costed events) is afterwards written to the \emph{Costed Events DB}.
+	\item \textbf{Master Data DB}\\
+	The \emph{Master Data DB} contains products, tariffs and accounts used by the \emph{Event Generator} and the \emph{Rating} component.
+	\item \textbf{Costed Events DB}\\
+	The \emph{Costed Events DB} contains the result of the \emph{Rating} component, i.e. the costed events.
+\end{itemize}
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{prototype_components}
+	\caption{Components of the billing application prototype}
+	\label{fig:prototype_components}
+\end{figure}
+
+The prototypes are implemented with Java 1.6 using JPA for the data-access layer and a MySQL database. To ensure comparability, the prototypes share the same business components, database and data-access layer, varying only in different integration layers. 
+
+\subsection{Batch prototype}
+The batch prototype implements the billing application utilizing the batch processing type. It uses the Spring Batch framework\cite{springbatch}, a Java framework that facilitates the implementation of batch applications by providing basic building blocks for reading, writing and processing data.
+
+The main entities in Spring Batch are Jobs and Steps. A Job defines the processing flow of the batch application and consists of one or more steps. A basic step is comprised of an item reader, item processor and item writer (see Figure \ref{fig:spring_batch_step}). 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{spring_batch_step}
+	\caption{A Step consists of an item reader, item processor and item writer}
+	\label{fig:spring_batch_step}
+\end{figure}
+
+The item reader reads records of data in chunks, for example from a file, and converts them to objects. These objects are then processed by the item processor, which contains the business logic of the batch application. Finally, the processed objects are getting written to the output destination, for example a database, by the item writer.
+
+The mediation batch job \emph{mediationMultiThreadedJob} consists of two steps, the \emph{mediationMultiThreadedStep} and the \emph{renameFileMulitThreadedStep}. The step is multithreaded and uses 10 threads for processing. It consists of a \emph{rawUsageMultiThreadedEventReader}, a thread safe reader implementation that reads call detail records from the input file and converts them to objects, a \emph{rawUsageEventProcessor}, that processes the call detail objects by calling the mediation business logic and a \emph{loggingSimpleCdrWriter}, which writes the processd call detail objects to the output file. The step uses an commit interval of 1000, meaning that the input data is processed in chunks of 1000 records. After the input file has been processed by the \emph{mediationMultiThreadedStep} it is getting renamed to its final name by the \emph{renameFileMultiThreadedStep}.
+
+Figure \ref{fig:batch_prototype} shows the architecture of the batch prototype. It consists of two nodes, mediation batch and rating batch, each implemented as a separate spring batch application. The nodes are integrated using Apache Camel\cite{apachecamel}, an Java integration framework based on enterprise integration patterns, as descriped by Hohpe et al.\cite{Hohpe:2003fk} Apache Camel is responsible for listening on the file system, calling the Spring batch application when a file arrives and transferring the output from the mediation batch node to the rating batch node using ftp.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{batch_prototype}
+	\caption{Batch prototype}
+	\label{fig:batch_prototype}
+\end{figure}
+
+The batch prototype performs the following steps:
+\begin{enumerate}
+	\item The \emph{Event generator} generates call detail records and writes them to a single file.
+	\item The \emph{Mediation component} opens the file, processes it and writes the output to a single output file. The output file is getting transfered using FTP to the \emph{Rating component}.
+	\item The \emph{Rating component} opens the file, processes it and writes the costed events to the costed event database.
+\end{enumerate}
+
+\subsection{Messaging prototype}
+
+The messaging prototype implements the billing prototype utilizing the message-oriented processing type. It uses Apache Camel\cite{apachecamel} as the messaging middleware.
+
+Figure \ref{fig:message_prototype} shows the architecture of the messaging prototype. It consists of three nodes, the billing route, mediation service and rating service. The billing route implements the main flow of the application. It is responsible for reading messages from the billing queue, extracting the payload, calling the mediation and rating service and writing the processed messages to the database. The mediation service is a webservice representing the mediation component. It is a SOAP service implemented using Apache CXF and runs inside an Apache Tomcat container. The same applies to the rating service, representing the rating component.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{messaging_prototype}
+	\caption{Message-based prototype}
+	\label{fig:message_prototype}
+\end{figure}
+
+The messaging prototype performs the following steps:
+
+\begin{enumerate}
+	\item The message is read from the billing queue using JMS. The queue ist hosted by an Apache ActiveMQ instance.
+	\item The message is unmarshalled using JAXB.
+	\item The \emph{Mediation service} is called by the CXF Endpoint of the billing route.
+	\item The response of the \emph{Mediation webservice}, the normalized call detail record, is unmarshalled. 
+	\item The \emph{Rating service} is called by the CXF Endpoint of the billing route.
+	\item The response of the \emph{Rating webservice}, that is the costed event, is unmarshalled.
+	\item The costed event is written to the \emph{Costed Events} DB.
+\end{enumerate}
+
+\section{Performance evaluation}\label{sec:performance_evaluation}
+We have conducted a performance evaluation to compare the performance characterics of the two processing types, batch processing and message-based processing, with the main focus on latency and throughput.
+
+\subsection{Measuring points}
+A number of measuring points have been defined for each prototype by breaking down the processing in single steps and assigning a measuring point to each step. Figure \ref{fig:measuring_points_batch} and \ref{fig:measuring_points_messaging} show the measuring points of the batch prototype and the messaging prototype. 
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\columnwidth]{measuring_points_batch}
+	\caption{Measuring points of the batch prototye}
+	\label{fig:measuring_points_batch}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\columnwidth]{measuring_points_messaging}
+	\caption{Measuring points of the messaging prototype}
+	\label{fig:measuring_points_messaging}
+\end{figure}
+
+A detailed description of each point is shown in Table \ref{table:measuring_points_batch} and \ref{table:measuring_points_messaging}.
+
+\begin{table}
+	%\renewcommand{\arraystretch}{1.3}
+	\caption{Measuring points of the batch prototype}
+	\label{table:measuring_points_batch}
+	\centering
+	\begin{tabular}{|l|p{5cm}|}
+		\hline
+		\bfseries Measuring point & \bfseries Description\\
+		\hline
+		PROC\_START & Timestamp denoting the start of processing an event\\
+		\hline
+		PROC\_END & Timestamp denoting the end of processing an event\\
+		\hline
+		FILE\_READ & Elapsed time for reading events from file\\
+		\hline
+		MEDIATION & Elapsed time used by the mediation component\\
+		\hline
+		FILE\_WRITE & Elapsed time for writing events to file\\
+		\hline
+		FTP & Elapsed time for file transfer using FTP\\
+		\hline
+		RATING & Elapsed time used by the rating component\\
+		\hline
+		DB & Elapsed time for writing event to the database\\
+		\hline 
+	\end{tabular}
+\end{table}
+
+\begin{table}[htpb]
+	\renewcommand{\arraystretch}{1.5}
+	\caption{Measuring points of the messaging prototype}
+	\label{table:measuring_points_messaging}
+	\centering
+	\begin{tabular}{|l|p{4.5cm}|}
+		\hline
+		\bfseries Measuring point & \bfseries Description\\
+		\hline
+		PROC\_START & Timestamp denoting the start of processing an event\\
+		\hline
+		PROC\_END & Timestamp denoting the end of processing an event\\
+		\hline
+		JMS\_CONSUMER & Elapsed time processing a single event\\
+		\hline
+		UNMARSHALL & Elapsed time for unmarshalling an event\\
+		\hline
+		MEDIATION\_PROC & Elapsed time needed for calling the mediation service\\
+		\hline
+		MEDIATION & Elapsed time used by the mediation component\\
+		\hline
+		RATING\_PROC & Elapsed time needed for calling the rating service\\
+		\hline
+		RATING & Elapsed time used by the rating component\\
+		\hline
+		DB & Elapsed time for writing event to the database\\
+		\hline 
+	\end{tabular}
+\end{table}
+
+\subsection{Instrumentation}
+A logging statement for each measuring point has been added at the appropriate code location of the prototypes using different techniques.
+
+\begin{enumerate}
+	\item \textbf{Directly in the code}\\Whenever possible, the logging statements have been inserted directly in the code. This has been the case, when the code that should be measured, has been written exclusively for the protoype, for example the mediation and rating components.
+	\item \textbf{Delegation}\\When the code to instrument has been part of a framework that is configurable using Spring, an instrumented delegate has been used.
+	\item \textbf{AOP}\\Finally, when the code that should get instrumented was part of a framework that was not configurable using Spring, the logging statements have been added using aspects, which are woven into the resulting class files using AspectJ.
+\end{enumerate}
+
+\subsection{Test environment}
+
+The two prototypes have been deployed to an Amazon EC2 environment to conduct the performance evaluation, with the characterics described in Table \ref{amazon_ec2}.
+
+The batch prototype comprises two EC2 nodes, the \emph{Mediation Node} and the \emph{Rating Node}, containing the \emph{Mediation Batch} and the \emph{Rating Batch}, respectively. The \emph{Costed Event Database} is hosted on the \emph{Rating Node} as well. Figure \ref{fig:batch_deployment_model} shows the deployment diagramm of the Batch prototype.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{batch_deployment_model}
+	\caption{Batch prototype deployment on EC2 instances}
+	\label{fig:batch_deployment_model}
+\end{figure}
+
+The messaging prototype consists of three EC2 nodes, as shown in Figure \ref{fig:messaging_deployment_model}. The \emph{Master Node} hosts the \emph{ActiveMQ Server} which runs the JMS queue containining the billing events, the \emph{Billing Route}, which implements the processing flow of the prototype and the \emph{MySQL Database} containing the \emph{Costed Event Database}. The \emph{Mediation Node} and \emph{Rating Node} are containing the \emph{Mediation Service} and \emph{Rating Service}, respectively, with each service running inside an Apache Tomcat container.
+
+The clocks of the \emph{Mediation Node} and \emph{Rating Node} are synchronized with the clock of the \emph{Master Node} using PTPd\cite{ptpd}, an implementation of the Precision Time Protocol\cite{IEEE_PTP}. The clock of the \emph{Master Node} itself is synchronised with a public timeserver using the Network Time Protocol (NTP). Using this approach, a sub-millisecond precision is achieved.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{messaging_deployment_model}
+	\caption{Messaging prototype deployment on EC2 instances}
+	\label{fig:messaging_deployment_model}
+\end{figure}
+
+\begin{table}[htbp]
+	\renewcommand{\arraystretch}{1.3}
+	\caption{Amazon EC2 instance configuration}
+	\label{amazon_ec2}
+	\centering
+	\begin{tabular}{|l|p{3.5cm}|}
+		\hline
+		\bfseries Instance type & M1 Extra Large (EBS optimized)\\
+		\hline
+		\bfseries Memory & 15 GiB\\
+		\hline
+		\bfseries Virtual Cores & 8 (4 cores x 2 units)\\
+		\hline
+		\bfseries Architecture & 64-bit\\
+		\hline
+		\bfseries EBS Volume & 10 GiB (100 IOPS)\\
+		\hline
+		\bfseries Instance Store Volumes & 1690 GB (4x420 GB Raid 0)\\
+		\hline
+		\bfseries Operating System & Ubuntu 12.04 LTS\\
+		& (GNU/Linux 3.2.0-25-virtual x86\_64)\\
+		\hline 
+		\bfseries Database & MySQL 5.5.24\\
+		\hline
+		\bfseries Messaging Middleware & Apache ActiveMQ 5.6.0\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Preparation and execution of the performance tests}
+For running the performance tests, the Master Data DB has been set up with a list of customers, accounts, products and tariffs with each prototype using the same database and data. While part of the testdata like the products and tariffs have been created manually, the relationship between the customers and the products have been generated by a test data generator.
+
+After setting up the master data, a number of test runs have been executed using different sizes of test data (1.000, 5.000, 10.000, 50.000,100.000, 500.000, 1.000.000 records). To get reliable results, each test configuration has been run three times. Out of the three runs for each configuration, the run having the median processing time has been used for the evaluation.
+
+For each test run, the following steps have been executed:
+\begin{enumerate}
+	\item \textbf{Generating test data}\\In case of the batch prototype, the event generator writes the test data to file. In case of the messaging prototype, the event generator writes the test data to a JMS queue.
+	\item \textbf{Running the test}\\Each prototype listens on the file system and the JMS queue, respectively. Using the batch prototype, the processing starts when the input file is copied to the input folder of the mediation batch application by the event genarotor. Using the messaging prototype, the processing starts when the first event is written to the JMS queue by the test generator.
+	\item \textbf{Validating the results}\\Processsing the log files written during the test run
+	\item \textbf{Cleaning up}\\Deleting the created costed events from the DB.
+\end{enumerate}
+
+Before running the tests, each prototype has been warmed up by processing 10.000 records.
+
+\subsection{Results} \label{results}
+The performance evaluation yields the following results.
+
+\subsubsection{Throughput}
+
+The throughput per second for a test run with $N$ records is defined as
+\begin{displaymath}
+{TP/s}_N = N / PT_N
+\end{displaymath}
+with $PT_N$ being the total processing time for $N$ records. 
+Figure \ref{fig:result_throughput} shows the measured throughput of the batch and messaging prototypes. The messaging prototype is able to process about 70 events per second. The maximum throughput of the batch prototype is about 383 records per second which is reached with an input of 1.000.000 records.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{throughput_result}
+	\caption{Throughput}
+	\label{fig:result_throughput}
+\end{figure}
+
+\subsubsection{Latency}\label{sec:result_latency}
+
+Figure \ref{fig:result_latency} shows the measured latencies of the batch and messaging prototypes. To rule out peaks, the 95th percentile has been used, that is, 95\% of the measured latencies are below this value. In case of the batch prototype, the 95th percentile latency is a linear function of the amount of data. The latency increases proportionally to the number of processd records. In case of the messaging prototype, the 95th percentile latency is approximately a constant value which is independant of the number of processed records.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{latency_result}
+	\caption{Latency}
+	\label{fig:result_latency}
+\end{figure}
+
+\subsubsection{Processing overhead}
+
+The overhead of the batch prototype is about 7\% of the total processing time, independant of the number of processed records, as shown in Figure \ref{fig:overhead_batch}. This overhead contains file operations, such as opening, reading, writing and closing of input files, the file transfer between the Mediation and Rating Nodes and the database transactions to write the the processed event to the Costed Events DB.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{overhead_batch}
+	\caption{Overhead batch prototype}
+	\label{fig:overhead_batch}
+\end{figure}
+
+On the contrary, the overhead of the messaging prototype is about 84\% of the total processing time (see Figure \ref{fig:overhead_messaging}). In case of the messaging prototype, the overhead contains the JMS overhead, that is the overhead for reading events from the message queue, the webservice overhead needed for calling the Mediation and Rating services including marshalling and unmarshalling of input data and the overhead caused the database transactions to write the processed events to the Costed Events DB. Most of the overhead is induced by the webservice overhead and the database overhead. Since every event is written to the database in its own transaction, the database overhead of the messaging prototype is much larger than the database overhead of the batch prototype.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{overhead_messaging}
+	\caption{Overhead messaging prototype}
+	\label{fig:overhead_messaging}
+\end{figure}
+
+\subsubsection{System utilisation}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{systemutilisation_batch}
+	\caption{System utilisation batch prototype}
+	\label{fig:systemutilisation_batch}
+\end{figure}
+
+The system utilisation has been measured using the sar (System Activity Report) command while running the performance tests. Figure \ref{fig:systemutilisation_batch} shows the mean percentage of CPU consumption at the user level (\%user) and the mean percentage of used memory (\%memused) for the Mediation node and Rating node of the Batch prototype.
+The CPU utilisation of Medation Node and Ratig Node is about 2\% and 19\%, respectively. The memory utilisation increases slowly with the number of processed records.
+
+Figure \ref{fig:systemutilisation_messaging} shows the mean CPU consumption and mean memory usage for the nodes of the Messaging prototype. The CPU utilisation of the Master Node, Mediation Node and Rating Node is about 9\%, 1\% and 6\%, respectively.
+As the same with the batch prototye, the memory utilisation of the messaging prototype increases with the number of processed records. The memory utilisation of the master node peaks at about 38\% with 500000 processed records.
+With 1000000 processed records, the memory utilisation is only about 25\%, which presumably can be accounted to the garbage collector.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{systemutilisation_messaging}
+	\caption{System utilisation messaging prototype}
+	\label{fig:systemutilisation_messaging}
+\end{figure}
+
+\section{Impact of data granularity on throughput and latency}\label{sec:impact_granularity}
+The results presented in Section \ref{results} suggest that the throughput of the messaging prototype can be increased by increasing the granularity of the data that is beeing processed. Data granularity relates to the amount of data that is processed in a unit of work, for example in a single batch run or an event.
+In order to examine this approach, we have repeated the performance tests using different package sizes for processing the data.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{messaging_prototype_aggregator}
+	\caption{The data granularity is controlled by an aggregator}
+	\label{fig:messaging_prototype_aggregator}
+\end{figure}
+
+For this purpose, the messaging prototype has been extended to use an aggregator in the messaging route. The aggregator is a stateful filter which stores correlated messages until a set of messages is complete and sends this set to the next processing stage in the messaging route. In case of the messaging prototype, messages are not corelated to each other and also the messages can be processed in an arbitrary order. A set of messages is complete when it reaches the configured package size. In other scenarios, it is possible to corelate messages by specific data, for example an account number or by a business rule.
+
+Figure \ref{fig:throughput_aggregation} shows the impact of different aggregatation sizes on the throughput of the messaging prototype. For each test 100.000 events have been processed.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{throughput_aggregation}
+	\caption{Impact of different aggregation sizes on throughput}
+	\label{fig:throughput_aggregation}
+\end{figure}
+The throughput increases constantly for $1<aggregation\_size<=50$ with a maximum of 673 events per second with $aggregation\_size=50$. Higher aggregation sizes than 50 do not further increase the throughput, it stays around 390 events per second. Surprisingly, the maximum throughput of 673 events per second even outperforms the throughput of the batch prototype which is about 383 records per second. This is presumably a result of the better multithreading capabilities of the camel framework.
+
+Increasing the aggregation size also decreases the processing overhead, as shown in Figure \ref{fig:overhead_aggregation}. An aggregate size of 10 decreases the overhead by more than 50\% compared to an aggregate size of 1. Of course, the integration of the aggregator adds an additional overhead which is insignificant for $aggregation\_size>50$.
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{overhead_aggregation}
+	\caption{Impact of different aggregation sizes on processing overhead}
+	\label{fig:overhead_aggregation}
+\end{figure}
+
+The increased throughput achieved by increasing the aggregation size comes with the cost of a higher latency. Figure \ref{fig:latency_aggregation} shows the impact of different aggregation sizes on the 95th percentile latency of the messaging prototype. 
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{latency_aggregation}
+	\caption{Impact of different aggregation sizes on latency}
+	\label{fig:latency_aggregation}
+\end{figure}
+
+An aggregation size of 50, resulting in the maximum throughput of 673 events per seconds, shows a 95th percentile latency of about 68 seconds. This latency is significantly higher than the latency of the messaging system without message aggregation, which is about 0,15 seconds (see Section \ref{sec:result_latency}).
+
+Figure \ref{fig:systemutilisation_aggregation} shows the impact of different aggregation sizes on the system utilisation. The CPU utilisation of the Master node shows a maximum of 30\% with an aggregation size of 25. An $aggregation\_size >= 90$ results in a CPU utilisation of about 15\%. The maximum memory utilisation of the Master node is 41\% with an aggregation size of 100.
+
+The maximum system utilisation of the Rating node is 25\% with an aggregation size of 80. The memory utilisation is between 7-8\% irrespective of aggregation size. Maximum system and memory utilisation of the Mediation node are also irrespective of aggregation size, beeing less than 2\% and 8\%, respectively.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{systemutilisation_aggregation}
+	\caption{Impact of different aggregation sizes on system utilisation}
+	\label{fig:systemutilisation_aggregation}
+\end{figure}
+
+When using high levels of data granularity, the messaging system is essentially a batch processing system, providing high throughput with high latency. To provide near-time processing an optimum level of data granularity would allow having the lowest possible latency with the lowest acceptable throughput.
+
+\section{Summary}\label{sec:perf_summary}
+Near-time processing of bulk data is hard to achieve. As shown in Section \ref{sec:latency_throughput}, latency and throughput are opposed performance metrics of a system for bulk data processing. High throughput, as provided by batch processing, leads to high latency, which impedes near-time processing. On the other hand, low latency, as provided by a message-based system, cannot provide the throughput needed for bulk data processing due the additional overhead for each processed message.
+
+While it is technically possible to minimise the overhead of a message-based system by implementing a lightweight marshalling system and not use JMS or other state-of-the-art technologies such as XML, SOAP or REST, it would hurt the ability of the messaging middleware to integrate heterogenous systems or services and thus limiting its flexibility, which is one the main selling propositions of such a middleware. Furthermore, batch processing enables optimizations by partitioning and sorting the data appropriately which is not possible when each record is processed independently as a single message.
+
+In order to compare throughput and latency of batch and message-oriented systems, a prototype for each processing type has been built. A performance evaluation has been conducted with the following results:
+\begin{itemize}
+	\item The throughput of the batch prototype is 4 times the throughput of the messaging prototype.
+	\item The latency of the messaging prototype is only a fraction of the latency of the batch prototype.
+	\item The overhead of the messaging prototype is about 84\% of the total processing time, which is mostly induced by the webservice overhead and the database transactions. 
+	\item The overhead of the batch prototype is only about 7\% of the total processing time.
+\end{itemize}
+
+The results presented in Section \ref{sec:impact_granularity} show that throughput and latency depend on the granularity of data that is being processed. The throughput of the messaging-prototype can be increased by aggregating messages with the cost of a higher latency. An optimum data granularity would allow having the lowest possible latency with the lowest acceptable throughput and thus providing near-time processing of bulk data.
+
+To achieve the lowest possible latency while still providing the lowest acceptable maximum throughput of the system, the granularity of the data processed in one message could be adjusted at runtime by a middleware service which constantly measures the throughput and latency of the system and controls the granularity of the data. If the throughput drops below the acceptable minimum, the granularity of the data needs to be higher. On the other hand, the granularity can be lowered, if the throughput of the system is above the minimum. The next part of this research will implement and evaluate such a middleware service for messaging systems.
