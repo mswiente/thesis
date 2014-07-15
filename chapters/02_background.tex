@@ -2,6 +2,17 @@
 %******************************************************************************
 \chapter{Background}\label{ch:background}
 %******************************************************************************
+We consider a distributed system for bulk data processing consisting of several subsystems running on different nodes that together form a processing chain, that is, the output of subsystem S1 is the input of the next subsystem S2 and so on (see Figure \ref{fig:system_single}).
+\begin{figure}[h!]
+	\centering
+	\mbox{\subfloat[Single processing line]{\includegraphics[width=\columnwidth]{considered_system_single}\label{fig:system_single}}}
+	\mbox{\subfloat[Parallel processing lines]{\includegraphics[width=\columnwidth]{considered_system_parallel}\label{fig:sytem_parallel}}}
+	\caption{A system consisting of several subsystems forming a processing chain}
+\end{figure}
+
+To facilitate parallel processing, the system can consist of several lines of subsystems with data beeing distributed among each line. For simplification, we consider a system with a single processing line in the remainder of this paper.
+
+We discuss two processing types for this kind of system, batch processing and message-based processing.
 
 \section{Batch processing}\label{sec:batch_processing}
 The traditional operation paradigm of a system for bulk data processing is batch processing (see Figure \ref{fig:batch_processing}). A batch processing system is an application that processes bulk data without user interaction. Input and output data is usually organised in records using a file- or database-based interface. In the case of a file-based interface, the application reads a record from the input file, processes it and writes the record to the output file.

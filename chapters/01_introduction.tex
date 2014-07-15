@@ -3,6 +3,23 @@
 \chapter{Introduction}\label{ch:introduction}
 %******************************************************************************
 
+Enterprise Systems like customer-billing systems or financial transaction systems are required to process large volumes of data in a fixed period of time. For example, a billing system for a large telecommunication provider has to process more than 1 million bills per day.
+Those systems are increasingly required to also provide near-time processing of data to support new service offerings.
+
+Traditionally, enterprise systems for bulk data processing are implemented as batch processing systems\cite{Fleck:1999aa}. Batch processing delivers high throughput but cannot provide near-time processing of data, that is the end-to-end latency of such a system is high. End-to-end latency refers to the period of time that it takes for a business process, implemented by multiple subsystems, to process a single business event.  For example, consider the following billing system of telecommunications provider:
+\begin{itemize}
+	\item Customers are billed once per month
+	\item Customers are partitioned in 30 billing groups
+	\item The billing system processes 1 billing group per day, running 24h under full load.
+\end{itemize}
+In this case, the mean time for a call event to be billed by the billing system is 1/2 month. That is, the mean end-to-end latency of this system is 1/2 month.
+
+A lower end-to-end latency can be achieved by using single-event processing, for example by utilizing a message-oriented middleware for the integration of the services that form the enterprise system. While this approach is able to deliver near-time processing, it is hardly capable for bulk data processing due to the additional communication overhead for each processed message. Therefore, message-based processing is usually not considered for building a system for bulk data processing requiring high throughput.
+
+The processing type is usually a fixed property of an enterprise system that is decided when the architecture of the system is designed, prior to implementing the system. This choice depends on the non-functional requirements of the system. These requirements are not fixed and can change during the lifespan of a system, either anticipated or not anticipated.
+
+Additionally, enterprise systems often need to handle load peaks that occur infrequently. For example, think of a billing system with moderate load over most of the time, but there are certain events with very high load such as New Year's Eve. Most of the time, a low end-to-end latency of the system is preferable when the system faces moderate load. During the peak load, it is more important that the system can handle the load at all. A low end-to-end latency is not as important as an optimized maximum throughput in this situation.
+
 \section{Research Problem}\label{sec:research_problem}
 
 \section{Aims and Objectives of the Research}\label{sec:research_approach}
