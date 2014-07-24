@@ -148,3 +148,99 @@ A message-based system, while having a lower end-to-end latency, is not able to 
 \end{figure}
 
 From this follows that latency and throughput are opposed to each other (see Figure \ref{fig:latency_vs_throughput}). High throughput, as provided by batch processing, leads to high latency, which impedes near-time processing. On the other hand, low latency, as provided by a message-based system, cannot provide the throughput needed for bulk data processing because of the additional overhead for each processed event.
+
+\section{Service-Oriented Architecture}
+Service-Oriented Architecture (SOA) is an architectural pattern to build application landscapes from single business components. These business components are loosely coupled by providing their functionality in form of services.  A service represents an abstract business view of the functionality and hides all implementation details of the component providing the service. The definition of a service acts as a contract between the service provider and the service consumer. Services are called using a unified mechanism, which provides a plattform independent connection of the business components while hiding all the technical details of the communication. The calling mechanism also includes the discovery of the appropriate service
+\citep{Richter:2005ci}.
+
+By separating the technical from the business aspects, SOA aims for a higher level of flexibility of enterprise applications.
+\section{Enterprise Service Bus}
+An Enterprise Service Bus (ESB) is an integration platform that combines messaging, web services, data transformation and intelligent routing \citep{Schulte:2002mz}.
+Table \ref{tab:char_esb} shows the main characteristics of an ESB \citep{Chappell:2004jo}.
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+		\hline
+		Pervasiveness & An ESB supports multiple protocols and client technologies. It can span an entire organisation including its business partners. \\ \hline
+		Highly distributed & An ESB integrates loosely coupled application components that form a highly distributed network. \\ \hline
+		Selective deployment of integration components & The services of an ESB are independent of each other and can be separately deployed. \\ \hline
+		Security and reliability & An ESB provides reliable messaging, transactional integrity and secure authentication. \\ \hline
+		Orchestration and process flow & An ESB supports the orchestration of application components controlled by message metadata or an orchestration language like WS-BPEL. \\ \hline
+		Autonomous yet federated managed environment & Different departments can still separately manage an ESB that spans the whole organisation. \\ \hline
+		Incremental adoption & The adoption of an ESB can be incremental one project after another. \\ \hline
+		XML support & XML is the native data format of an ESB. \\ \hline
+		Real-time insight & An ESB provides real-time throughput of data by the use of its underlying message-oriented middleware and thus decreases latency. \\
+		\hline
+	\end{tabular}
+	\caption{Main characteristics of an ESB \citep{Chappell:2004jo}}
+	\label{tab:char_esb}
+\end{table}
+All application components and integration services that are connected to the ESB are viewed as abstract service endpoints. Abstract endpoints are logical abstractions of services that are plugged into the ESB and are all equal participants \citep{Chappell:2004jo}. An abstract endpoint can represent a whole application package such as a CRM or ERP system, a small web service or an integration service of the ESB such as a monitoring, logging or transformation service. As integration platform the ESB supports various types of connections for the service endpoints. These can be SOAP, HTTP, FTP, JMS or other programming APIs for C, C++, C\#, etc. It is often stated that ``if you can't bring the application to the bus, bring the bus to the application'' \citep{Chappell:2004jo}.
+
+The backbone of the ESB is a message-oriented middleware (MOM), which provides an asynchronous, reliable and efficient transport of data between the service endpoints. The concrete protocol of the MOM, such as JMS, WS-Rel* or a proprietary protocol is thereby abstracted by the service endpoint. The ESB is thus a logical layer over the messaging middleware. The utilised protocol can also be varied by the ESB depending on the Quality of Service (QoS) requirements or deployment situations. Service endpoints can be orchestrated to process flows, which are mapped to concrete service invocations by the ESB.
+
+The physical representation of a service endpoint is the service container. The service container is a remote process, which hosts the business or technical components that are connected through the bus. The set of all service containers therefore constitute the logical ESB.
+
+A service container provides the following interfaces \citep{Chappell:2004jo}:
+\begin{itemize}
+	\item \textbf{Service interface}\\
+	The service interface provides an entry endpoint and exit endpoint to dispatch messages to and from the service.
+	\item \textbf{Management interface}\\
+	The management interface provides an entry endpoint for retrieving configuration data and an exit endpoint for sending logging, event tracking and performance data.
+\end{itemize}
+\section{Performance Issues}
+This section describes the performance issues of an SOA middleware that inhibit their appropriateness for systems with high performance requirements.
+\subsection{Distributed Architecture}
+A system implemented according to the principles of SOA is a distributed system. Services are hosted on different locations belonging to different departments and even organizations. Hence, the performance drawbacks of a distributed system generally also apply to SOA. This includes the marshalling of the data that needs to be sent to the service provider by the service consumer, sending the data over the network and the unmarshalling of data by the service provider.
+\subsection{Integration of Heterogeneous Technologies}
+A main goal of introducing an SOA is to integrate applications implemented with heterogeneous technologies. This is achieved by using specific middleware and intermediate protocols for the communication. These protocols are typically based on XML, like SOAP \citep{soap:2007}. XML, as a very verbose language, adds a lot of meta-data to the actual payload of a message. The resulting request is about 10 to 20 times larger than the equivalent binary representation \citep{OBrien:2007fk}, which leads to a significant higher transmission time of the message. Processing these messages is also time-consuming, as they need to get parsed by a XML parser before the actual processing can occur.
+
+The usage of a middleware like an Enterprise Service Bus (ESB) adds further performance costs. An ESB usually processes the messages during transferring. Among other things, this includes the mapping between different protocols used by service providers and service consumers, checking the correctness of the request format, adding message-level security and routing the request to the appropriate service provider (See, for example, \citet{Josuttis:2007fk} or \citet{Krafzig:2005zc}).
+\subsection{Loose Coupling}
+Another aspect of SOA that has an impact on performance is the utilisation of loose coupling. The aim of loose coupling is to increase the flexibility and maintainability of the application landscape by reducing the dependency of its components on each other. This denotes that service consumers shouldn't make any assumptions about the implementation of the services they use and vice versa. Services become interchangeable as long they implement the interface the client expects.
+
+\citet{Engels:2008nr} consider two components A and B loosely coupled when the following constraints are satisfied:
+\begin{itemize}
+	\item \textbf{Knowlegde}\\
+	Component A knows only as much as it is needed to use the operations offered by component B in a proper way. This includes the syntax and semantic of the interfaces and the structure of the transferred data.
+	\item \textbf{Dependence on availability}\\
+	Component A provides the implemented service even when component B is not available or the connection to component B is not available.
+	\item \textbf{Trust}\\
+	Component B does not rely on component A to comply with pre-conditions. Component A does not rely on component B to comply with post-conditions.
+\end{itemize}
+
+The gains in flexibility and maintainability of loose coupling are amongst others opposed by performance costs.
+
+Service consumers and service provider are not bound to each other statically. Thus, the service consumer needs to determine the correct end point of the service provider during runtime. This can be done by looking up the correct service provider in a service repository either by the service consumer itself before making the call or by routing the message inside the ESB.  
+
+Apart from very few basic data types, Service consumers and service providers do not share the same data model. It is therefore necessary to map data between the data model used by the service consumer and the data model used by the service provider.
+\section{Current Approaches for Improving the Performance of an SOA Middleware}
+This section describes current approaches to the performance issues introduced in the previous section.
+\subsection{Hardware}
+The obvious solution to improve the processing time of a service is the utilization of faster hardware and more bandwidth. SOA performance issues are often neglected by suggesting that faster hardware or more bandwidth will solve this problem. However, it is often not feasible to add faster or more hardware due to high cost pressure.
+\subsection{Compression}
+The usage of XML as an intermediate protocol for service calls has a negative impact on their transmission times over the network. The transmission time of service calls and responses can be decreased by compression. Simply compressing service calls and responses with gzip can do this. The World Wide Web Consortium (W3C) proposes a binary presentation of XML documents called binary XML \citep{EXI:2007} to achieve a more efficient transportation of XML over networks.
+
+It must be pointed out that the utilisation of compression adds the additional costs of compressing and decompressing to the overall processing time of the service call.
+\subsection{Service Granularity}
+To reduce the communication overhead or the processing time of a service, the service granularity should be reconsidered.
+
+Coarse-grained services reduce the communication overhead by achieving more with a single service call and should be the favoured service design principle \citep{Hess:2006rs}. However, the processing time of a coarse grained service can pose a problem to a service consumer that only needs a fracture of the data provided by the service. To reduce the processing time it could be considered in this case to add a finer grained service that provides only the needed data \citep{Josuttis:2007fk}. 
+
+It should be noted that merging multiple services to form a more coarse grained service or splitting a coarse grained service into multiple services to solve performance problems specific to a single service consumer reduces the reusability of the services for other service consumers \citep{Josuttis:2007fk}.
+\subsection{Degree of Loose Coupling}
+The improvements in flexibility and maintainability gained by loose coupling are opposed by drawbacks on performance. Thus, it is crucial to find the appropriate degree of loose coupling. 
+
+\citet{Hess:2006rs} introduce the concept of distance to determine an appropriate degree of coupling between components. The distance of components is comprised of the functional and technical distance. Components are functional distant if they share few functional similarities. Components are technical distant if they are of a different category. Categories classify different types of components like inventory components, process components, function components and interaction components.
+
+Distant components trust each other in regard to the compliance of services levels to a lesser extent than near components do. The same applies to their common knowledge. Distant components share a lesser extent of knowledge of each other. Therefore, \citet{Hess:2006rs} argue that distant components should be coupled more loosely than close components.
+
+The degree of loose coupling between components that have been identified to be performance bottlenecks should be reconsidered to find the appropriate trade-off between flexibility and performance. It can be acceptable in that case to decrease the flexibility in favour of a better performance. 
+
+\section{Summary}
+Message-oriented middleware facilitates the integration of applications using asynchronous messages. An Enterprise Service Bus is such a middleware combining messaging, web services, data transformation and intelligent routing.
+Message-based systems are able to provide near-time processing of data due to their lower latency compared with batch processing systems. The advantage of a lower latency comes with a performance cost in regard to a lower throughput because of the additional overhead for each processed message. Every message needs amongst others to be serialised and deserialised, mapped between different protocols and routed to the appropriate receiving system.
+
+Current approaches to improve the throughput performance of message-based systems try to reduce the transmission time by compressing messages. Another approach is to adjust the service granularity to form more coarse-grained services or to adjust the degree of loose coupling to reduce the communication overhead.  
+
+While these approaches generally improve the performance of message-based systems, they are still not able provide the same throughput as that can be achieved with a batch processing system. Additionally, the current approaches are static and thus need to be considered at the design-time of the system. The next chapter presents an SOA middleware for high performance near-time processing of bulk data which is a novel approach to dynamically reduce the latency of a system while still providing high throughput. 
