@@ -84,6 +84,7 @@ Figure \ref{fig:middleware_components} shows the components of the middleware, t
 	\caption{Components of the Adaptive Middleware. We are using the notation defined by \cite{Hohpe:2003fk}}
 	\label{fig:middleware_components}
 \end{figure*}
+
 \subsubsection{Aggregator}
 The Aggregator is a stateful filter which stores correlated messages until a set of messages is complete and sends this set to the next processing stage in the messaging route. 
 
@@ -126,7 +127,19 @@ When processing data in batches, especially when a batch contains correlated dat
 
 With high levels of message aggregation, it is not preferred to send the aggregated message payload itself over the message bus using Java Message Service (JMS) or SOAP. Instead, the message only contains a pointer to the data payload, which is transferred using File Transfer Protocol (FTP) or a shared database.
 
-\subsection{Prototype Implementation}
+\subsection{Service Design}
+
+\subsection{Controller Design}
+
+\subsubsection{Control Problem}
+
+\subsubsection{Input/Output Variables}
+
+\subsubsection{Control Strategy}
+
+\subsection{Error Handling}
+
+\section{Prototype Implementation}
 To evaluate the proposed concepts of the adaptive middleware, we have implemented a prototype of a billing system using Apache Camel \citep{apachecamel} as the messaging middleware.
 
 Figure \ref{fig:message_prototype} shows the architecture of the prototype system.
@@ -160,6 +173,8 @@ The increased throughput achieved by increasing the aggregation size comes with 
 An aggregation size of 50, resulting in the maximum throughput of 673 events per seconds, shows a 95th percentile latency of about 68 seconds.
 
 The results indicate that there is an optimal range for the aggregation size to control the throughput and latency of the system. Setting the aggregation size higher than a certain threshold leads to a throughput drop and latency gain. In case of our prototype, this threshold is between an aggregation size of 85 and 90. This threshold needs to be considered by the control strategy. We are currently investigating the detailed causes of this finding.
+
+\section{Evaluation}
 
 \section{Related Work}\label{sec:related_work}
 Research on messaging middleware currently focusses on Enterprise Services Bus (ESB) infrastructure. An ESB is an integration plattform that combines messaging, web services, data transformation and intelligent routing to connect multiple heterogeneous services \citep{Chappell:2004jo}. It is a common middleware to implement the integration layer of an Service Oriented Architecture (SOA) and is available in numerous commercial and open-source packages.

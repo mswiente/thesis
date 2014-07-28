@@ -6,7 +6,7 @@
 Enterprise Systems like customer-billing systems or financial transaction systems are required to process large volumes of data in a fixed period of time. For example, a billing system for a large telecommunication provider has to process more than 1 million bills per day.
 Those systems are increasingly required to also provide near-time processing of data to support new service offerings.
 
-Traditionally, enterprise systems for bulk data processing are implemented as batch processing systems\cite{Fleck:1999aa}. Batch processing delivers high throughput but cannot provide near-time processing of data, that is the end-to-end latency of such a system is high. End-to-end latency refers to the period of time that it takes for a business process, implemented by multiple subsystems, to process a single business event.  For example, consider the following billing system of telecommunications provider:
+Traditionally, enterprise systems for bulk data processing are implemented as batch processing systems \citep{Fleck:1999aa}. Batch processing delivers high throughput but cannot provide near-time processing of data, that is the end-to-end latency of such a system is high. End-to-end latency refers to the period of time that it takes for a business process, implemented by multiple subsystems, to process a single business event.  For example, consider the following billing system of telecommunications provider:
 \begin{itemize}
 	\item Customers are billed once per month
 	\item Customers are partitioned in 30 billing groups
@@ -20,9 +20,19 @@ The processing type is usually a fixed property of an enterprise system that is 
 
 Additionally, enterprise systems often need to handle load peaks that occur infrequently. For example, think of a billing system with moderate load over most of the time, but there are certain events with very high load such as New Year's Eve. Most of the time, a low end-to-end latency of the system is preferable when the system faces moderate load. During the peak load, it is more important that the system can handle the load at all. A low end-to-end latency is not as important as an optimized maximum throughput in this situation.
 
-\section{Research Problem}\label{sec:research_problem}
-
-\section{Aims and Objectives of the Research}\label{sec:research_approach}
+\section{Aims and Objectives of the Research}\label{sec:research_objectives}
+This research project aims to find a solution for the following problem:
+\begin{quote}
+\textbf{How to achieve high-performance near-time processing of bulk data?}
+\end{quote}
+To approach this problems, the research project has the following key objectives:
+\begin{enumerate}[A.]
+	\item Performance evaluation of batch and messaging systems regarding throughput and latency.
+	\item Development of a concept for an adaptive middleware that delivers low latency while providing high throughput.
+	\item Implementation of a research prototype used for demonstrating the practicability of the concept.
+	\item Specification and conduction of appropriate performance tests to evaluate the developed approach.
+	\item Development of a conceptional framework containing guidelines and rules for the practitioner how to implement an enterprise system based on the adaptive middleware for near-time processing of bulk data.
+\end{enumerate}
 
 \section{Contributions}\label{sec:contributions}
 
