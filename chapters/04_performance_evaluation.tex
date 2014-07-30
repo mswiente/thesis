@@ -60,18 +60,6 @@ The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access 
 \subsection{Batch prototype}
 The batch prototype implements the billing application utilizing the batch processing type. It uses the Spring Batch framework \citep{springbatch}, a Java framework that facilitates the implementation of batch applications by providing basic building blocks for reading, writing and processing data.
 
-The main entities in Spring Batch are Jobs and Steps. A Job defines the processing flow of the batch application and consists of one or more steps. A basic step is comprised of an item reader, item processor and item writer (see Figure \ref{fig:ch4_spring_batch_step}). 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\columnwidth]{spring_batch_step}
-	\caption{A Step consists of an item reader, item processor and item writer}
-	\label{fig:ch4_spring_batch_step}
-\end{figure}
-
-The item reader reads records of data in chunks, for example from a file, and converts them to objects. These objects are then processed by the item processor, which contains the business logic of the batch application. Finally, the processed objects are getting written to the output destination, for example a database, by the item writer.
-
-The mediation batch job \emph{mediationMultiThreadedJob} consists of two steps, the \emph{mediationMultiThreadedStep} and the \emph{renameFileMulitThreadedStep}. The step is multithreaded and uses 10 threads for processing. It consists of a \emph{rawUsageMultiThreadedEventReader}, a thread safe reader implementation that reads call detail records from the input file and converts them to objects, a \emph{rawUsageEventProcessor}, that processes the call detail objects by calling the mediation business logic and a \emph{loggingSimpleCdrWriter}, which writes the processd call detail objects to the output file. The step uses an commit interval of 1000, meaning that the input data is processed in chunks of 1000 records. After the input file has been processed by the \emph{mediationMultiThreadedStep} it is getting renamed to its final name by the \emph{renameFileMultiThreadedStep}.
-
 Figure \ref{fig:ch4_batch_prototype} shows the architecture of the batch prototype. It consists of two nodes, mediation batch and rating batch, each implemented as a separate spring batch application. The nodes are integrated using Apache Camel \citep{apachecamel}, an Java integration framework based on enterprise integration patterns, as described by \cite{Hohpe:2003fk}. Apache Camel is responsible for listening on the file system, calling the Spring batch application when a file arrives and transferring the output from the mediation batch node to the rating batch node using \ac{FTP}.
 
 \begin{figure}[h!]
@@ -88,9 +76,63 @@ The batch prototype performs the following steps:
 	\item The \emph{Rating component} opens the file, processes it and writes the costed events to the costed event database.
 \end{enumerate}
 
+\subsubsection{Implementation details}
+The main entities in Spring Batch are Jobs and Steps. A Job defines the processing flow of the batch application and consists of one or more steps. A basic step is comprised of an item reader, item processor and item writer (see Figure \ref{fig:ch4_spring_batch_step}). 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{spring_batch_step}
+	\caption{A Step consists of an item reader, item processor and item writer}
+	\label{fig:ch4_spring_batch_step}
+\end{figure}
+
+The item reader reads records of data in chunks, for example from a file, and converts them to objects. These objects are then processed by the item processor, which contains the business logic of the batch application. Finally, the processed objects are getting written to the output destination, for example a database, by the item writer.
+
+\begin{lstlisting}[caption={Mediation batch job definition},label=listing:ch4_mediation_job]
+<batch:job id="mediationMultiThreadedJob" incrementer="jobRunIdIncrementer">
+	<batch:step id="mediationMultiThreadedStep" next="renameFileMultiThreadedStep">
+		<batch:tasklet transaction-manager="batchTransactionManager"
+			start-limit="100" 
+			task-executor="taskExecutor" throttle-limit="${batch.step.throttle-limit}">
+			<batch:chunk reader="rawUsageMultiThreadedEventReader" processor="rawUsageEventProcessor" writer="loggingSimpleCdrWriter" commit-interval="1000" />
+		</batch:tasklet>
+	</batch:step>
+	<batch:step id="renameFileMultiThreadedStep">
+		<batch:tasklet ref="renameFileTasklet" />
+	</batch:step>
+</batch:job>
+\end{lstlisting}
+
+Listing \ref{listing:ch4_mediation_job} shows the definition of the mediation batch job \emph{mediationMultiThreadedJob}. It consists of two steps, the \emph{mediationMultiThreadedStep} (line 2) and the \emph{renameFileMultiThreadedStep} (line 10). The step \emph{mediationMultiThreadedStep} is multithreaded and uses 10 threads for processing. It consists of a \emph{rawUsageMultiThreadedEventReader} (line 6), a thread safe reader implementation that reads call detail records from the input file and converts them to objects, a \emph{rawUsageEventProcessor}, that processes the call detail objects by calling the mediation business logic and a \emph{loggingSimpleCdrWriter} (line 7), which writes the processed call detail objects to the output file. The step uses an commit interval of 1000, meaning that the input data is processed in chunks of 1000 records. After the input file has been processed by the \emph{mediationMultiThreadedStep} it is getting renamed to its final name by the \emph{renameFileMultiThreadedStep} (line 10).
+
+The mediation batch job is integrated using Apache Camel. Listing \ref{listing:ch4_mediation_route} shows the definition of the mediation batch route.
+
+\begin{lstlisting}[caption={Mediation batch route definition},label=listing:ch4_mediation_route]
+public void configure() {
+	from("file:data/input")
+	.to("spring-batch:mediationMultiThreadedJob?jobLauncherRef=jobLauncher");
+        
+	from("file:data/output)
+	.to("ftp://billing@localhost/src/data?password=billing");
+}
+\end{lstlisting}
+
+It consists of two routes, the first route listens on the file system for incoming files (line 2) and calls the mediation batch job, when a file arrives (line 3). The second route transfers the output file of the mediation batch job to the rating batch node using \ac{FTP} (line 5-6).
+
+Listing \ref{listing:ch4_rating_job} shows the definition of the rating batch job \emph{ratingMultiThreadedJob}. It consists of a single step \emph{ratingMultiThreadedStep} (line 2), which is comprised of a \emph{simpleCdrMultiThreadedItemReader}, which reads the normalized call detail records written by the mediation batch node, a \emph{simpleCdrProcessor}, that processes the normalized call detail records by calling the rating business logic and a \emph{costedEventWriter}, which writes the processed costed events to the Costed Events database (line 4).
+
+\begin{lstlisting}[caption={Rating batch job definition},label=listing:ch4_rating_job]
+<batch:job id="ratingMultiThreadedJob" incrementer="jobRunIdIncrementer">
+	<batch:step id="ratingMultiThreadedStep">
+		<batch:tasklet transaction-manager="batchTransactionManager" start-limit="100" task-executor="taskExecutor" throttle-limit="${batch.step.throttle-limit}">
+			<batch:chunk reader="simpleCdrMultiThreadedItemReader" processor="simpleCdrProcessor" writer="costedEventWriter" commit-interval="1000" />
+		</batch:tasklet>
+	</batch:step>
+</batch:job>
+\end{lstlisting}
+
 \subsection{Messaging prototype}
 
-The messaging prototype implements the billing prototype utilizing the message-oriented processing type. It uses Apache Camel\cite{apachecamel} as the messaging middleware.
+The messaging prototype implements the billing prototype utilizing the message-oriented processing type. It uses Apache Camel \citep{apachecamel} as the messaging middleware.
 
 Figure \ref{fig:ch4_messaging_prototype} shows the architecture of the messaging prototype. It consists of three nodes, the billing route, mediation service and rating service. The billing route implements the main flow of the application. It is responsible for reading messages from the billing queue, extracting the payload, calling the mediation and rating service and writing the processed messages to the database. The mediation service is a webservice representing the mediation component. It is a SOAP service implemented using Apache CXF and runs inside an Apache Tomcat container. The same applies to the rating service, representing the rating component.
 
@@ -112,6 +154,8 @@ The messaging prototype performs the following steps:
 	\item The response of the \emph{Rating webservice}, that is the costed event, is unmarshalled.
 	\item The costed event is written to the \emph{Costed Events} DB.
 \end{enumerate}
+
+\subsubsection{Implementation details}
 
 \section{Performance evaluation}\label{sec:ch4_evaluation}
 We have conducted a performance evaluation to compare the performance characterics of the two processing types, batch processing and message-based processing, with the main focus on latency and throughput.
