@@ -143,19 +143,35 @@ Figure \ref{fig:ch4_messaging_prototype} shows the architecture of the messaging
 	\label{fig:ch4_messaging_prototype}
 \end{figure}
 
-The messaging prototype performs the following steps:
+Listing \ref{listing:ch4_billing_route} shows the definition of the billing route using the Apache Camel fluent \ac{API}.
+The billing route performs the following steps:
 
 \begin{enumerate}
-	\item The message is read from the billing queue using \ac{JMS}. The queue ist hosted by an Apache ActiveMQ instance.
-	\item The message is unmarshalled using \ac{JAXB}.
-	\item The \emph{Mediation service} is called by the CXF Endpoint of the billing route.
-	\item The response of the \emph{Mediation webservice}, the normalized call detail record, is unmarshalled. 
-	\item The \emph{Rating service} is called by the CXF Endpoint of the billing route.
-	\item The response of the \emph{Rating webservice}, that is the costed event, is unmarshalled.
-	\item The costed event is written to the \emph{Costed Events} DB.
+	\item The message is read from the billing queue using \ac{JMS} (line 5). The queue ist hosted by an Apache ActiveMQ instance.
+	\item The message is unmarshalled using \ac{JAXB} (line 6).
+	\item The \emph{Mediation service} is called by the CXF Endpoint of the billing route (line 7)
+	\item The response of the \emph{Mediation webservice}, the normalized call detail record, is unmarshalled (line 8). 
+	\item The \emph{Rating service} is called by the CXF Endpoint of the billing route (line 9).
+	\item The response of the \emph{Rating webservice}, that is the costed event, is unmarshalled (line 10).
+	\item The costed event is written to the \emph{Costed Events} DB (line 11).
 \end{enumerate}
 
-\subsubsection{Implementation details}
+If an error occurs during the processsing of an event, it is written to an error \ac{JMS} queue (line 3).
+
+\begin{lstlisting}[caption={Billing route definition},label=listing:ch4_billing_route]
+public void configure() {
+		
+	errorHandler(deadLetterChannel("activemq:queue:BILLING.ERRORS"));
+	
+	from("activemq:queue:BILLING.USAGE_EVENTS")
+		.unmarshal("jaxbContext")
+		.to("cxf:bean:mediationEndpoint?dataFormat=POJO&defaultOperationName=processEvent")
+		.process(new ProcessEventPostProcessor())
+		.to("cxf:bean:ratingEndpoint?dataFormat=POJO&defaultOperationName=processCallDetail")
+		.process(new ProcessCallDetailPostProcessor())
+		.process(costedEventProcessor)
+}
+\end{lstlisting}
 
 \section{Performance evaluation}\label{sec:ch4_evaluation}
 We have conducted a performance evaluation to compare the performance characterics of the two processing types, batch processing and message-based processing, with the main focus on latency and throughput.
