@@ -3,7 +3,13 @@
 % Publications
 %*******************************************************
 %\pdfbookmark[1]{Publications}{publications}
-\addcontentsline{toc}{chapter}{Publications}
-\bibliographystylepub{dcu}
-\label{app:publications}
-\bibliographypub{bib/publications}
+\renewcommand{\bibname}{Publications}
+\manualmark
+\markboth{\spacedlowsmallcaps{\bibname}}{\spacedlowsmallcaps{\bibname}} % work-around to have small caps also
+%\phantomsection 
+\refstepcounter{dummy}
+\addtocontents{toc}{\protect\vspace{\beforebibskip}} % to have the bib a bit from the rest in the toc
+\addcontentsline{toc}{chapter}{\tocEntry{\bibname}}
+\bibliographystyle{dcuurl}
+\label{app:publication} 
+\bibliographypub{bib/publication}

@@ -3,6 +3,9 @@
 \chapter{Background}\label{ch:background}
 %******************************************************************************
 We consider a distributed system for bulk data processing consisting of several subsystems running on different nodes that together form a processing chain, that is, the output of subsystem S1 is the input of the next subsystem S2 and so on (see Figure \ref{fig:system_single}).
+
+\todo[inline]{Add reference to Pipes and Filters architectural style (EIP)}
+
 \begin{figure}[h!]
 	\centering
 	\mbox{\subfloat[Single processing line]{\includegraphics[width=\columnwidth]{considered_system_single}\label{fig:system_single}}}
@@ -38,6 +41,14 @@ A batch processing system exhibits the following key characteristics:
 \end{itemize}
 Applications that are usually implemented as batch processing systems are billing systems for telecommunication companies used for mediating, rating and billing of call events.
 
+\subsection{Integration Styles}
+
+\subsubsection{File Transfer}
+
+\subsubsection{Shared Database}
+
+\subsection{Batch Architectures}
+
 \section{Message-base processing}\label{sec:message_processing}
 Messaging facilitates the integration of heterogeneous applications using asynchronous communication. Applications are communicating with each other by sending messages (see Figure \ref{fig:message_based_processing}). A messaging server or message-oriented middleware handles the asynchronous exchange of messages including an appropriate transaction control \cite{conrad2006enterprise}.
 
@@ -63,6 +74,12 @@ Hohpe et al.\cite{Hohpe:2003fk} describe the following basic messaging concepts:
 	\item \textbf{Endpoints}\\
 	A message endpoint is a software layer that connects arbitrary applications to the messaging system.
 \end{itemize}
+
+\subsection{Integration Styles}
+
+\subsubsection{Point To Point}
+
+\subsubsection{Publish/Subscribe}
 
 Message-based systems are able to provide near-time processing of data due to their lower latency compared with batch processing systems. The advantage of a lower latency comes with a performance cost in regard to a lower throughput because of the additional overhead for each processed message. Every message needs amongst others to be serialised and deserialised, mapped between different protocols and routed to the appropriate receiving system.
 
@@ -150,12 +167,12 @@ A message-based system, while having a lower end-to-end latency, is not able to 
 From this follows that latency and throughput are opposed to each other (see Figure \ref{fig:latency_vs_throughput}). High throughput, as provided by batch processing, leads to high latency, which impedes near-time processing. On the other hand, low latency, as provided by a message-based system, cannot provide the throughput needed for bulk data processing because of the additional overhead for each processed event.
 
 \section{Service-Oriented Architecture}
-Service-Oriented Architecture (SOA) is an architectural pattern to build application landscapes from single business components. These business components are loosely coupled by providing their functionality in form of services.  A service represents an abstract business view of the functionality and hides all implementation details of the component providing the service. The definition of a service acts as a contract between the service provider and the service consumer. Services are called using a unified mechanism, which provides a plattform independent connection of the business components while hiding all the technical details of the communication. The calling mechanism also includes the discovery of the appropriate service
+\ac{SOA} is an architectural pattern to build application landscapes from single business components. These business components are loosely coupled by providing their functionality in form of services.  A service represents an abstract business view of the functionality and hides all implementation details of the component providing the service. The definition of a service acts as a contract between the service provider and the service consumer. Services are called using a unified mechanism, which provides a plattform independent connection of the business components while hiding all the technical details of the communication. The calling mechanism also includes the discovery of the appropriate service
 \citep{Richter:2005ci}.
 
 By separating the technical from the business aspects, SOA aims for a higher level of flexibility of enterprise applications.
 \section{Enterprise Service Bus}
-An Enterprise Service Bus (ESB) is an integration platform that combines messaging, web services, data transformation and intelligent routing \citep{Schulte:2002mz}.
+An \ac{ESB} is an integration platform that combines messaging, web services, data transformation and intelligent routing \citep{Schulte:2002mz}.
 Table \ref{tab:char_esb} shows the main characteristics of an ESB \citep{Chappell:2004jo}.
 \begin{table}[htbp]
 	\centering

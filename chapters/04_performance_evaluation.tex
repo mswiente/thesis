@@ -5,20 +5,26 @@
 
 \section{Introduction}\label{sec:ch4_introduction}
 
+Traditionally, business information systems for bulk data processing are implemented as batch processing systems. Batch processing delivers high throughput but cannot provide near-time processing of data, that is the end-to-end latency of such a system is high. 
+
+A lower end-to-end latency can be achieved by using message-based processing, for example by utilising a message-oriented middleware for the integration of the services that form the business information system. While this approach is able to deliver near-time processing, it is hardly capable for bulk data processing due to the additional communication over- head for each processed message. Therefore, message-based processing is ususally not considered for building a system for bulk data processing requiring high throughput.
+
+This chapter compares the performance of a batch and message-based system. The main objectives of this comparison are:
+
 \begin{itemize}
   \item What is the impact of different processing styles, that is batch and message-based processing, on throughput and latency?
   \item What is the impact of data granularity on latency and throughput when using a message-based processing style?  
 \end{itemize}
 
-
+To find solutions for these questions, the following approach has been taken:
 
 \begin{itemize}
 	\item Two prototypes of a billing system for each processing type (see Section \ref{sec:ch4_prototype}) have been built. 
 	\item A performance evaluation has been conducted to compare the prototypes with each other with the focus on throughput and latency (see Section \ref{sec:ch4_evaluation}).
-	\item It is shown that throughput and latency of a messaging system depend on the level of data granularity and that the throughput can be increased by increasing the granularity of the processed messages (see Section \ref{sec:ch4_impact_granularity}).
+	\item To evaluate the impact of different aggregatation sizes on throughput and latency, the messaging prototype has been extended with an aggregator. A performance test has been conducted with different static aggregation sizes (see Section \ref{sec:ch4_impact_granularity}).
 \end{itemize}
 
-It is organised as follows. Section \ref{sec:ch4_prototype} introduces the batch and message-based prototype systems that have been implemented. To compare the performance characterics of the two processing types, batch processing and message-based processing, a performance evaluation has been conducted, which is presented in Section \ref{sec:ch4_evaluation}. Section \ref{sec:ch4_impact_granularity} shows the impact of data granularity on throughput and latency of the messaging prototype. Section \ref{sec:ch4_related_work} gives an overview of other work related to the contents of this chapter. Finally, this chapter concludes with a summary in Section \ref{sec:ch4_summary} 
+This chapter is organised as follows. Section \ref{sec:ch4_prototype} introduces the batch and message-based prototype systems that have been implemented. To compare the performance characterics of the two processing types, batch processing and message-based processing, a performance evaluation has been conducted, which is presented in Section \ref{sec:ch4_evaluation}. Section \ref{sec:ch4_impact_granularity} shows the impact of data granularity on throughput and latency of the messaging prototype. Section \ref{sec:ch4_related_work} gives an overview of other work related to the contents of this chapter. Finally, this chapter concludes with a summary in Section \ref{sec:ch4_summary} 
 
 \section{A real world example  application}\label{sec:ch4_prototype}
 This section introduces the two prototypes of a billing system that have been built to evaluate the performance of batch and message-based processing.
@@ -55,7 +61,14 @@ In order to compare batch and message-based types of processing, two different p
 	\label{fig:ch4_prototype_components}
 \end{figure}
 
-The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access layer and a MySQL database. To ensure comparability, the prototypes share the same business components, database and data-access layer, varying only in different integration layers. 
+The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access layer and a MySQL database. To ensure comparability, the prototypes share the same business components, database and data-access layer, varying only in different integration layers (see Figure \ref{fig:ch4_technical_integration}). 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\columnwidth]{technical_integration}
+	\caption{The prototypes share the same business components, database and data-access layer.}
+	\label{fig:ch4_technical_integration}
+\end{figure}
 
 \subsection{Batch prototype}
 The batch prototype implements the billing application utilizing the batch processing type. It uses the Spring Batch framework \citep{springbatch}, a Java framework that facilitates the implementation of batch applications by providing basic building blocks for reading, writing and processing data.
@@ -169,12 +182,14 @@ public void configure() {
 		.process(new ProcessEventPostProcessor())
 		.to("cxf:bean:ratingEndpoint?dataFormat=POJO&defaultOperationName=processCallDetail")
 		.process(new ProcessCallDetailPostProcessor())
-		.process(costedEventProcessor)
+		.process(costedEventProcessor);
 }
 \end{lstlisting}
 
 \section{Performance evaluation}\label{sec:ch4_evaluation}
-We have conducted a performance evaluation to compare the performance characterics of the two processing types, batch processing and message-based processing, with the main focus on latency and throughput.
+To compare the performance characterics of the two processing types, batch processing and message-based processing, a performance evaluation has been conducted with the main focus on latency and throughput.
+
+This section describes the approach and the results of the performance evaluation.
 
 \subsection{Measuring points}
 A number of measuring points have been defined for each prototype by breaking down the processing in single steps and assigning a measuring point to each step. Figure \ref{fig:ch4_measuring_points_batch} and \ref{fig:ch4_measuring_points_messaging} show the measuring points of the batch prototype and the messaging prototype. 
@@ -266,6 +281,8 @@ A logging statement for each measuring point has been added at the appropriate c
 
 The two prototypes have been deployed to an Amazon EC2 environment to conduct the performance evaluation, with the characterics described in Table \ref{table:ch4_amazon_ec2}.
 
+\subsubsection{Batch prototype}
+
 The batch prototype comprises two EC2 nodes, the \emph{Mediation Node} and the \emph{Rating Node}, containing the \emph{Mediation Batch} and the \emph{Rating Batch}, respectively. The \emph{Costed Event Database} is hosted on the \emph{Rating Node} as well. Figure \ref{fig:ch4_batch_deployment_model} shows the deployment diagramm of the Batch prototype.
 
 \begin{figure}[htbp]
@@ -275,7 +292,11 @@ The batch prototype comprises two EC2 nodes, the \emph{Mediation Node} and the \
 	\label{fig:ch4_batch_deployment_model}
 \end{figure}
 
+\subsubsection{Messaging Prototype}
+
 The messaging prototype consists of three EC2 nodes, as shown in Figure \ref{fig:ch4_messaging_deployment_model}. The \emph{Master Node} hosts the \emph{ActiveMQ Server} which runs the JMS queue containining the billing events, the \emph{Billing Route}, which implements the processing flow of the prototype and the \emph{MySQL Database} containing the \emph{Costed Event Database}. The \emph{Mediation Node} and \emph{Rating Node} are containing the \emph{Mediation Service} and \emph{Rating Service}, respectively, with each service running inside an Apache Tomcat container.
+
+\subsection{Clock Synchronization}
 
 The clocks of the \emph{Mediation Node} and \emph{Rating Node} are synchronized with the clock of the \emph{Master Node} using PTPd \citep{ptpd}, an implementation of the \ac{PTP} \citep{IEEE_PTP}. The clock of the \emph{Master Node} itself is synchronised with a public timeserver using the \ac{NTP}. Using this approach, a sub-millisecond precision is achieved.
 
@@ -416,6 +437,24 @@ In order to examine this approach, we have repeated the performance tests using 
 
 For this purpose, the messaging prototype has been extended to use an aggregator in the messaging route. The aggregator is a stateful filter which stores correlated messages until a set of messages is complete and sends this set to the next processing stage in the messaging route. In case of the messaging prototype, messages are not corelated to each other and also the messages can be processed in an arbitrary order. A set of messages is complete when it reaches the configured package size. In other scenarios, it is possible to corelate messages by specific data, for example an account number or by a business rule.
 
+Listing \ref{listing:ch4_billing_route_aggregator} shows the definition of the billing route using the aggregator processor, which is provided by Apache Camel (line 7). The aggregator is configured using the correlation expression \lstinline$constant(true)$, which simply aggregates messages in order of their arrival and the aggregation strategy \lstinline$UsageEventsAggrationStrategy$, which implements the merging of incoming messages with already merged messages. The aggregation size is set by \lstinline$completionSize$. The specific value is set in a configuration file. As a fallback, \lstinline$completionTimeout$ defines a timeout in milliseconds to send the set of aggregated messages to the next processing stage before it has reached the defined aggregation size. \lstinline$parallelProcessing$ indicates that the aggregator should use multiple threads (default is 10) to process the finished sets of aggregated messages.
+
+\begin{lstlisting}[caption={Billing route definition with an additional aggregator},label=listing:ch4_billing_route_aggregator]
+public void configure() {
+		
+	errorHandler(deadLetterChannel("activemq:queue:BILLING.ERRORS"));
+	
+	from("activemq:queue:BILLING.USAGE_EVENTS")
+		.unmarshal("jaxbContext")
+		.aggregate(constant(true), new UsageEventsAggrationStrategy()).completionSize(completionSize).completionTimeout(completionTimeout).parallelProcessing()
+		.to("cxf:bean:mediationEndpoint?dataFormat=POJO&headerFilterStrategy=#dropAllMessageHeadersStrategy&defaultOperationName=processEvents")
+		.process(new ProcessEventsPostProcessor())
+		.to("cxf:bean:ratingEndpoint?dataFormat=POJO&headerFilterStrategy=#dropAllMessageHeadersStrategy&defaultOperationName=processCallDetails")
+		.process(new ProcessCallDetailsPostProcessor())
+		.process(costedEventsProcessor);
+}
+\end{lstlisting}
+
 Figure \ref{fig:ch4_throughput_aggregation} shows the impact of different aggregatation sizes on the throughput of the messaging prototype. For each test 100.000 events have been processed.
 \begin{figure}[htbp]
 	\centering
@@ -442,6 +481,8 @@ The increased throughput achieved by increasing the aggregation size comes with 
 \end{figure}
 
 An aggregation size of 50, resulting in the maximum throughput of 673 events per seconds, shows a 95th percentile latency of about 68 seconds. This latency is significantly higher than the latency of the messaging system without message aggregation, which is about 0,15 seconds (see Section \ref{sec:result_latency}).
+
+The results indicate that there is an optimal range for the aggregation size to control the throughput and latency of the system. Setting the aggregation size higher than a certain threshold leads to a throughput drop and latency gain. In case of our prototype, this threshold is between an aggregation size of 85 and 90. The observed throughput drop and latency gain is caused by a congestion in the aggregator. Messages are read faster from the queue than they are getting processed by the aggregator.
 
 Figure \ref{fig:ch4_systemutilisation_aggregation} shows the impact of different aggregation sizes on the system utilisation. The CPU utilisation of the Master node shows a maximum of 30\% with an aggregation size of 25. An $aggregation\_size >= 90$ results in a CPU utilisation of about 15\%. The maximum memory utilisation of the Master node is 41\% with an aggregation size of 100.
 
@@ -539,7 +580,7 @@ The authors state that a coarse-grained data granularity reduces the communicati
 
 
 \section{Summary}\label{sec:ch4_summary}
-Near-time processing of bulk data is hard to achieve. As shown in Section \ref{sec:ch2_latency_throughput}, latency and throughput are opposed performance metrics of a system for bulk data processing. High throughput, as provided by batch processing, leads to high latency, which impedes near-time processing. On the other hand, low latency, as provided by a message-based system, cannot provide the throughput needed for bulk data processing due the additional overhead for each processed message.
+Near-time processing of bulk data is hard to achieve. As shown in Section \ref{sec:ch2_latency_throughput}, latency and throughput are opposed performance metrics of a system for bulk data processing. Batch processing, while providding high throughput, leads to high latency, which impedes near-time processing. Message-base processing delivers low latency but cannot provide the throughput for bulk data processing due to the additional overhead for each processed message.
 
 While it is technically possible to minimise the overhead of a messaging system by implementing a lightweight marshalling system and not use JMS or other state-of-the-art technologies such as XML, SOAP or REST, it would hurt the ability of the messaging middleware to integrate heterogenous systems or services and thus limiting its flexibility, which is one the main selling propositions of such a middleware. Furthermore, batch processing enables optimizations by partitioning and sorting the data appropriately which is not possible when each record is processed independently as a single message.
 
@@ -551,6 +592,16 @@ In order to compare throughput and latency of batch and message-oriented systems
 	\item The overhead of the batch prototype is only about 7\% of the total processing time.
 \end{itemize}
 
-The results presented in Section \ref{sec:ch4_impact_granularity} show that throughput and latency depend on the granularity of data that is being processed. The throughput of the messaging-prototype can be increased by aggregating messages with the cost of a higher latency. An optimum data granularity would allow having the lowest possible latency with the lowest acceptable throughput and thus providing near-time processing of bulk data.
+The results presented in Section \ref{sec:ch4_impact_granularity} show that throughput and latency depend on the granularity of data that is being processed. 
+\begin{itemize}
+	\item The throughput increases constantly for an aggreation size > 1 and <= 50 with a maximum of 673 events per second with an aggregation size = 50.
+	\item The increased throughput achieved by increasing the aggregation size comes with the cost of a higher latency. An aggregation size of 50, resulting in the maximum throughput of 673 events per seconds, shows a 95th percentile latency of about 68 seconds. This latency is significantly higher than the latency of the messaging system without message aggregation, which is about 0,15 seconds.
+	\item Increasing the aggregation size also decreases the processing overhead of the messaging prototype. An aggregate size of 10 decreases the overhead by more than 50\% compared to an aggregation size of 1.
+	\item There is an optimal range for the aggregation size to control the throughput and latency of the system. Setting the aggregation size higher than a certain threshold leads to a throughput drop and latency gain cause by a congestion in the aggregator.
+\end{itemize}
 
-To achieve the lowest possible latency while still providing the lowest acceptable maximum throughput of the system, the granularity of the data processed in one message could be adjusted at runtime by a middleware service which constantly measures the throughput and latency of the system and controls the granularity of the data. If the throughput drops below the acceptable minimum, the granularity of the data needs to be higher. On the other hand, the granularity can be lowered, if the throughput of the system is above the minimum. The next part of this research will implement and evaluate such a middleware service for messaging systems.
+The performance tests that have been run for the evaluation described in section \ref{sec:ch4_evaluation} are static tests, in the sense that they do not take different load scenarios of the system into account. In a real situation, the current throughput and latency also depend on the current load of the system. If the system is not able to handle the current load, messages are congested in the input queue which increases the latency of the system. A higher maximum throughput would decrease the latency in this case. 
+
+Therefore, the aggregation size used by the messaging system should depend on the current load of the system. It is not feasible to find a static aggregation size that works under all load conditions resulting in an optimum latency.
+
+The next chapter presents a solution for this problem. It describes an adaptive middleware that is able to adjust the data aggregation size at runtime, depending on the current load of the system.
