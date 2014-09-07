@@ -185,7 +185,7 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 		\item change queue > 0: Increase the aggregation size by a certain amount
 		\item change queue = 0: Do nothing
 	\end{itemize}
-	\item PID Controller
+	\item PID Controller\\
 	Another option would be to use a standard PID-Controller instead, which calculates the output value $u_k$ at time step $k$ of the controller depending on the current (proportional part), previous (integral part) and expected future error (differential part):
 	\begin{displaymath}
 	u_k=K_p*e_k+K_i*T_a\sum_{i=0}^k e_i+\frac{K_d}{T_a}(e_k-e_{k-1})
@@ -217,9 +217,36 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 
 \subsection{Load Generator}
 
+\subsubsection{Overview}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch6_datagenerator_classdiagram}
+	\caption{Datagenerator: Class diagram}
+	\label{fig:ch5_datagenerator_classdiagram}
+\end{figure}
+
+\begin{itemize}
+	\item Description of main classes
+\end{itemize}
+
+\subsubsection{Event Distribution}
+
+\begin{itemize}
+	\item Poisson Process
+	\begin{itemize}
+		\item Events occur continuously and independently of each other
+		\item Exponentially distributed inter-arrival times
+	\end{itemize}
+\end{itemize}
+
 \subsection{Monitoring}
 
 \subsection{Controller}
+
+\subsubsection{Simple Controller}
+
+\subsubsection{PID Controller}
 
 \section{Evaluation}
 
@@ -230,6 +257,8 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 \subsubsection{Static Tests}
 
 \subsubsection{Step Tests}
+
+\subsubsection{Dynamic Tests}
 
 \subsection{Results}
 

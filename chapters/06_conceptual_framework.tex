@@ -6,6 +6,7 @@
 
 %******************************************************************************
 \todo[inline]{Alternative title: A Conceptual Framework for Feedback-Controlled Computer Systems}
+\todo[inline]{Alternative title: A Process (Procedure) Model for ... }
 
 \section{Introduction} 
 \begin{figure}
@@ -19,6 +20,7 @@
 	\item Role
 	\item Task
 	\item Deliverable
+	\item Tool
 \end{itemize}
 
 \begin{figure}
@@ -64,6 +66,8 @@
 \end{table}
 
 \section{Processes/Tasks} 
+
+\subsection{List of Tasks}
 \begin{itemize}
 	\item Define System Architecture 
 	\item Define Integration Architecture
@@ -76,19 +80,24 @@
 		\item Define Control Problem 
 		\item Define Input/Output Variables 
 	\end{itemize}
+	\item Implement Controller / Feedback Loop
 	\item Perform Controller Tuning 
 	\begin{itemize}
 		\item System Model/System Identification 
 		\item Static Tests
 		\item Step Tests
 	\end{itemize}
-	\item Define Service Interfaces 
-	\item Define Aggregation Rules 
+	\item Define Service Interfaces
+	\item Implement Service Interfaces / Test / Deploy
+	\item Define Aggregation Rules
+	\item Implement Aggregation Rules 
 	\item Define Performance Tests 
 	\item Setup Monitoring infrastructure
 	\item Setup Test and Integration Environment
 	\item Deploy to Test and Integration Environment
 	\item Perform Performance Tests
+	\item Evaluate Performance Test Results
+	\item Define Training Concept
 \end{itemize}
 \begin{table}
 	[h!] \caption{Define System Architecture} \label{table:ch6_Task_Define_System_Architect} \centering 
@@ -103,9 +112,62 @@
 	\end{tabular}
 \end{table}
 
+\subsection{Task Dependencies}
+
+\begin{itemize}
+	\item Tasks depend on each other
+\end{itemize}
+
+\begin{figure}
+	[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_dependencies} 
+	\caption{Tasks depend on each other} 
+	\label{fig:ch6_dependencies} 
+\end{figure}
+
 \section{Building Blocks/Artifacts}
 
+\begin{itemize}
+	\item System Architecture
+	\item Integration Architecture
+	\item Controller Architecture
+	\item System Model
+	\item Performance Test Concept
+	\item Training Concept
+\end{itemize}
+
+\section{Tools} % (fold)
+\label{sec:ch6_tools}
+
+\begin{itemize}
+	\item Modeling Framework
+	\begin{itemize}
+		\item Discrete Event Simulation
+		\item Matlab/Simulink
+		\item Scilab/Xcos
+	\end{itemize}
+	\item Tools for Data Visualisation
+	\begin{itemize}
+		\item Excel
+		\item Matlab
+		\item Gnuplot
+		\item matplotlib
+	\end{itemize}
+\end{itemize}
+
+% section tools (end)
+
 \section{Reference Architecture}
+
+\section{Relationship to Architecture Frameworks and Methodologies} % (fold)
+\label{sec:ch6_relation_frameworks}
+
+\begin{itemize}
+	\item TOGAF
+	\item Agile (Scrum)
+\end{itemize}
+
+% section relationship_to_architecture_frameworks_and_methodologies (end)
 
 \section{Related Work}
 
