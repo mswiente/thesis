@@ -240,13 +240,78 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 	\end{itemize}
 \end{itemize}
 
-\subsection{Monitoring}
+\subsection{Sensors}
+
+\subsubsection{QueueLengthSensor}
+
+\begin{itemize}
+	\item Base class JmxSensor
+	\item Reads the current queue length of the ActiveMQ instance using JMX
+\end{itemize}
 
 \subsection{Controller}
+
+\begin{itemize}
+	\item ControllerStrategy Interface
+\end{itemize}
+
+\begin{lstlisting}[caption={ControllerStrategy Interface},label=listing:ch5_controller_strategy]
+package com.jswiente.phd.performance.controller;
+
+public interface ControllerStrategy {
+	public Double getOutput(Double error);
+}
+\end{lstlisting}
 
 \subsubsection{Simple Controller}
 
 \subsubsection{PID Controller}
+
+\begin{lstlisting}[caption={Implementation of PID Controller},label=listing:ch5_pid_controller]
+public class PIDController implements ControllerStrategy {
+	
+	@Value("${controller.kp}")
+	private Double kp;
+	
+	@Value("${controller.ki}")
+	private Double ki;
+	
+	@Value("${controller.kd}")
+	private Double kd;
+	
+	@Value("${controller.ta}")
+	private Double ta;
+	
+	private Double errorSum = 0.0;
+	private Double previousError = 0.0;
+
+	public Double getOutput(Double error) {
+		errorSum = errorSum + error;
+		Double output = kp * error + ki * ta * errorSum + (kd * (error - previousError)/ta);
+		previousError = error;
+		return output;
+	}
+
+	//Setter methods removed for simplification...
+
+}
+
+\end{lstlisting}
+
+\subsection{Actuator}
+
+\begin{itemize}
+	\item Interface Actuator
+	\item AggregateSizeActuator
+\end{itemize}
+\begin{lstlisting}[caption={Actuator Interface},label=listing:ch5_pid_controller]
+package com.jswiente.phd.performance.actuator;
+
+public interface Actuator<T> {
+
+	public void setValue(T value);
+}
+\end{lstlisting}
 
 \section{Evaluation}
 
