@@ -278,6 +278,7 @@ A logging statement for each measuring point has been added at the appropriate c
 \end{enumerate}
 
 \subsection{Test environment}
+\label{sec:ch4_test_environment}
 
 The two prototypes have been deployed to an Amazon EC2 environment to conduct the performance evaluation, with the characterics described in Table \ref{table:ch4_amazon_ec2}.
 
@@ -497,7 +498,8 @@ The maximum system utilisation of the Rating node is 25\% with an aggregation si
 
 When using high levels of data granularity, the messaging system is essentially a batch processing system, providing high throughput with high latency. To provide near-time processing an optimum level of data granularity would allow having the lowest possible latency with the lowest acceptable throughput.
 
-\section{Related work}\label{sec:ch4_related_work}
+\section{Discussion with respect to related work}\label{sec:ch4_related_work}
+\todo[inline]{Discuss why a prototype has been built instead of using a model of the system.}
 This section gives an overview of work related to the research presented in this paper. Related work can be categorised in two different topics, performance measuring and performance optimisation of messaging systems. Performance measuring is applied to evaluate if an implemented system meets its performance requirements and to spot possible performance problems. Performance optimisation aims to improve the performance of a system to meet certain requirements such as throughput or latency.
 
 \subsection{Performance Measuring}
@@ -547,6 +549,7 @@ SPECjms2007 is a standard benchmark for the evaluation of Message-Oriented Middl
 \cite{Ueno:2006ly} propose a methodology to evaluate the performance of an ESB in an early stage of development that can be used for capacity planning. Instead of using a performance model for performance prediction, they run the ESB on a real machine with a pseudo-environment using lightweight web service providers and clients. The authors state that model-based approaches ``often require elemental performance measurements and sophisticated modeling of the entire system, which is usuable not feasible for complex systems''.
 
 \subsection{Performance Optimisation}
+\todo[inline]{Most of this section should be moved to Section \ref{ch:03_related_work}}
 Various approaches have been proposed to optimise the performance of webservices, in particular SOAP, the standard protocol for Web Service communication. This includes approaches for optimising the processing of SOAP messages (see for example \cite{Abu-Ghazaleh:2005bs}, \cite{Suzumura:2005fv} and \cite{Ng:2006kl}), compression of SOAP messages (see for example \cite{Estrella:2008dz} and \cite{Ng:2005qa}) and caching (see for example \cite{andresen2004lye} and \cite{Devaram:2003fu}). A survey of the current approaches to improve the performance of SOAP can be found in \cite{Tekli:2012bh}.
 
 \cite{Wichaiwong:2007oq} propose an approach to transfer bulk data between web services per FTP. The SOAP messages transferred between the web services would only contain the necessary details how to download the corresponding data from an FTP server since this protocol is optimized for transferring huge files. This approach solves the technical aspect of efficiently transferring the input and output data but does not pose any solutions how to implement loose coupling and how to integrate heterogeneous technologies, the fundamental means of an SOA to improve the flexibility of an application landscape.
@@ -577,6 +580,8 @@ Tempo is a real-time messaging system written in Java that can be used on either
 \end{itemize}
 The authors state that a coarse-grained data granularity reduces the communication overhead, since the number of network transfers is decreased.
 ``Especially in the case of Web services, this overhead is high since asynchronous messaging requires multiple queuing operations and numerous XML transformations''.
+
+\todo[inline]{Discuss contributions in this chapter with respect to related work. What is different?}
 
 
 \section{Summary}\label{sec:ch4_summary}
