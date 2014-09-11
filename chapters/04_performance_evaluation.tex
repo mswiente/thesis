@@ -100,20 +100,7 @@ The main entities in Spring Batch are Jobs and Steps. A Job defines the processi
 
 The item reader reads records of data in chunks, for example from a file, and converts them to objects. These objects are then processed by the item processor, which contains the business logic of the batch application. Finally, the processed objects are getting written to the output destination, for example a database, by the item writer.
 
-\begin{lstlisting}[caption={Mediation batch job definition},label=listing:ch4_mediation_job]
-<batch:job id="mediationMultiThreadedJob" incrementer="jobRunIdIncrementer">
-	<batch:step id="mediationMultiThreadedStep" next="renameFileMultiThreadedStep">
-		<batch:tasklet transaction-manager="batchTransactionManager"
-			start-limit="100" 
-			task-executor="taskExecutor" throttle-limit="${batch.step.throttle-limit}">
-			<batch:chunk reader="rawUsageMultiThreadedEventReader" processor="rawUsageEventProcessor" writer="loggingSimpleCdrWriter" commit-interval="1000" />
-		</batch:tasklet>
-	</batch:step>
-	<batch:step id="renameFileMultiThreadedStep">
-		<batch:tasklet ref="renameFileTasklet" />
-	</batch:step>
-</batch:job>
-\end{lstlisting}
+\lstinputlisting[caption={Mediation batch job definition},label=listing:ch4_mediation_job]{listings/mediation_job.xml}
 
 Listing \ref{listing:ch4_mediation_job} shows the definition of the mediation batch job \emph{mediationMultiThreadedJob}. It consists of two steps, the \emph{mediationMultiThreadedStep} (line 2) and the \emph{renameFileMultiThreadedStep} (line 10). The step \emph{mediationMultiThreadedStep} is multithreaded and uses 10 threads for processing. It consists of a \emph{rawUsageMultiThreadedEventReader} (line 6), a thread safe reader implementation that reads call detail records from the input file and converts them to objects, a \emph{rawUsageEventProcessor}, that processes the call detail objects by calling the mediation business logic and a \emph{loggingSimpleCdrWriter} (line 7), which writes the processed call detail objects to the output file. The step uses an commit interval of 1000, meaning that the input data is processed in chunks of 1000 records. After the input file has been processed by the \emph{mediationMultiThreadedStep} it is getting renamed to its final name by the \emph{renameFileMultiThreadedStep} (line 10).
 
@@ -133,15 +120,7 @@ It consists of two routes, the first route listens on the file system for incomi
 
 Listing \ref{listing:ch4_rating_job} shows the definition of the rating batch job \emph{ratingMultiThreadedJob}. It consists of a single step \emph{ratingMultiThreadedStep} (line 2), which is comprised of a \emph{simpleCdrMultiThreadedItemReader}, which reads the normalized call detail records written by the mediation batch node, a \emph{simpleCdrProcessor}, that processes the normalized call detail records by calling the rating business logic and a \emph{costedEventWriter}, which writes the processed costed events to the Costed Events database (line 4).
 
-\begin{lstlisting}[caption={Rating batch job definition},label=listing:ch4_rating_job]
-<batch:job id="ratingMultiThreadedJob" incrementer="jobRunIdIncrementer">
-	<batch:step id="ratingMultiThreadedStep">
-		<batch:tasklet transaction-manager="batchTransactionManager" start-limit="100" task-executor="taskExecutor" throttle-limit="${batch.step.throttle-limit}">
-			<batch:chunk reader="simpleCdrMultiThreadedItemReader" processor="simpleCdrProcessor" writer="costedEventWriter" commit-interval="1000" />
-		</batch:tasklet>
-	</batch:step>
-</batch:job>
-\end{lstlisting}
+\lstinputlisting[caption={Rating batch job definition},label=listing:ch4_rating_job]{listings/rating_job.xml}
 
 \subsection{Messaging prototype}
 

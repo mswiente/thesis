@@ -1,0 +1,12 @@
+<batch:job id="mediationMultiThreadedJob" incrementer="jobRunIdIncrementer">
+	<batch:step id="mediationMultiThreadedStep" next="renameFileMultiThreadedStep">
+		<batch:tasklet transaction-manager="batchTransactionManager"
+			start-limit="100" 
+			task-executor="taskExecutor" throttle-limit="${batch.step.throttle-limit}">
+			<batch:chunk reader="rawUsageMultiThreadedEventReader" processor="rawUsageEventProcessor" writer="loggingSimpleCdrWriter" commit-interval="1000" />
+		</batch:tasklet>
+	</batch:step>
+	<batch:step id="renameFileMultiThreadedStep">
+		<batch:tasklet ref="renameFileTasklet" />
+	</batch:step>
+</batch:job>

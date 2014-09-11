@@ -1,0 +1,7 @@
+<batch:job id="ratingMultiThreadedJob" incrementer="jobRunIdIncrementer">
+	<batch:step id="ratingMultiThreadedStep">
+		<batch:tasklet transaction-manager="batchTransactionManager" start-limit="100" task-executor="taskExecutor" throttle-limit="${batch.step.throttle-limit}">
+			<batch:chunk reader="simpleCdrMultiThreadedItemReader" processor="simpleCdrProcessor" writer="costedEventWriter" commit-interval="1000" />
+		</batch:tasklet>
+	</batch:step>
+</batch:job>
