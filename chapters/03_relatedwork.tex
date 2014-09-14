@@ -45,23 +45,7 @@ The authors suggest that it is vital to consider performance aspects early in th
 	\item Continual use of services by local users or developers during the performance investigation
 	\item Heterogeneity of the underlying service software plattform
 \end{itemize}
-\section{Performance Modeling}
-\todo[inline]{Should be moved to section \ref{sec:ch4_related_work}}
-Performance modeling allows to predict the performance of a system in an early stage of development. It facilitates for example capacity and resource planning before the system is already available or helps to evaluate design alternatives in regard of their performance impact.
 
-\citet{Brebner:2008uq} developed a tool for performance modeling of Service-Oriented Architectures. It is comprised of SOA models, a simulation engine and a graphical user interface. The SOA models are generated from architectural artifacts such as UML sequence or deployment diagrams and automatically transformed into runtime models for execution.
-
-An approach to predict the performance of J2EE applications using messaging services using queueing network models has been presented by \citet{Liu:2007vn}. As opposed to prior approaches, their solution models the underlying component infrastructure that implements the messaging service which allows an accurate prediction with an error within 15\% when compared to the real performance of the implemented system.
-
-In another work, \citet{Liu:2007vn} developed a performance model of an service-oriented application based on an Enterprise Service Bus using a queuing network. Their modeling approach includes the following steps:
-\begin{itemize}
-	\item Mapping of application components of the design level to analytical model elements
-	\item Characterisation of workload patterns for the application components used as input for performance model
-	\item Calibrating the performance model
-	\item Validating the performance model
-\end{itemize}
-
-\citet{DAmbrogio:2007ly} describe ``a model-driven approach for integrating performance prediction into service composition processes carried out by use of BPEL (Business Process Execution Language for Web Services).'' Using their approach, a BPEL process is described using an UML model. The model is automatically annotated with performance data and transformed into a Layered Queueing Network which is used to predict the performance of the BPEL process. For the automatic annotation of the model, a performance-oriented extension to WSDL is utilised called P-WSDL \citep{D-Ambrogio:2005ve}.
 \section{Performance Measuring}
 Performance measuring is applied to evaluate if an implemented system meets its performance requirements and to spot possible performance problems.
 

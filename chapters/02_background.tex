@@ -6,7 +6,7 @@ We consider a distributed system for bulk data processing consisting of several 
 
 \todo[inline]{Add reference to Pipes and Filters architectural style (EIP)}
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\mbox{\subfloat[Single processing line]{\includegraphics[width=\columnwidth]{considered_system_single}\label{fig:system_single}}}
 	\mbox{\subfloat[Parallel processing lines]{\includegraphics[width=\columnwidth]{considered_system_parallel}\label{fig:sytem_parallel}}}
@@ -19,7 +19,7 @@ We discuss two processing types for this kind of system, batch processing and me
 
 \section{Batch processing}\label{sec:batch_processing}
 The traditional operation paradigm of a system for bulk data processing is batch processing (see Figure \ref{fig:batch_processing}). A batch processing system is an application that processes bulk data without user interaction. Input and output data is usually organised in records using a file- or database-based interface. In the case of a file-based interface, the application reads a record from the input file, processes it and writes the record to the output file.
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{batch}
 	\caption{Batch processing}
@@ -52,7 +52,7 @@ Applications that are usually implemented as batch processing systems are billin
 \section{Message-base processing}\label{sec:message_processing}
 Messaging facilitates the integration of heterogeneous applications using asynchronous communication. Applications are communicating with each other by sending messages (see Figure \ref{fig:message_based_processing}). A messaging server or message-oriented middleware handles the asynchronous exchange of messages including an appropriate transaction control \cite{conrad2006enterprise}.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{esb}
 	\caption{Message-based processing}
@@ -101,7 +101,7 @@ A business process, such as billing, implemented by a system using batch process
 
 In this case, the mean time for a call event to be billed by the billing system is $1/2$ month. That is, the mean end-to-end latency of this system is $1/2$ month.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{latency_throughput1}
 	\caption{Batch processing system comprised of three subsystems}
@@ -139,7 +139,7 @@ where $N$ is the number of subsystems. Please note that the wait time of the eve
 
 The processing overhead $OH_{E_i}$ includes amongst others the time spent for unmarshalling and marshalling, protocol mapping and opening and closing transactions, which is done for every processed event.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{latency_throughput2}
 	\caption{Message-based system comprised of three subsystems}
@@ -157,7 +157,7 @@ OH_{S_{Message}} = \sum_{i=1}^n OH_{E_i} * m > OH_{S_{Batch}} = \sum_{i=1}^n OH_
 \end{displaymath}
 A message-based system, while having a lower end-to-end latency, is not able to process the same amount of events in the same time as a batch processing system and therefore cannot provide the same maximum throughput.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{latency_vs_throughput}
 	\caption{Latency and throughput are opposed to each other}
