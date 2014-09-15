@@ -31,7 +31,9 @@ This section introduces the two prototypes of a billing system that have been bu
 
 A billing system is a distributed system consisting of several sub components that process the different billing sub processes like mediation, rating, billing and presentment (see Figure \ref{fig:ch4_billing_process}).
 
-\begin{figure}[h!]
+
+
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{billing_process}
 	\caption{Billing process}
@@ -54,7 +56,7 @@ In order to compare batch and message-based types of processing, two different p
 	The \emph{Costed Events DB} contains the result of the \emph{Rating} component, i.e. the costed events.
 \end{itemize}
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{prototype_components}
 	\caption{Components of the billing application prototype}
@@ -63,7 +65,90 @@ In order to compare batch and message-based types of processing, two different p
 
 The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access layer and a MySQL database. To ensure comparability, the prototypes share the same business components, database and data-access layer, varying only in different integration layers (see Figure \ref{fig:ch4_technical_integration}). 
 
-\begin{figure}[h!]
+\begin{table}
+	%\renewcommand{\arraystretch}{1.3}
+	\caption{Used frameworks and technologies}
+	\label{table:ch4_frameworks}
+	\centering
+	\begin{tabular}{|l|p{5cm}|}
+		\hline
+		\bfseries Language & Java 1.6\\
+		\hline
+		\bfseries Dependancy Injection & Spring\\
+		\hline
+		\bfseries Persistence API & OpenJPA (JPA 2.0)\\
+		\hline
+		\bfseries Database & MySQL\\
+		\hline
+		\bfseries Logging & Logback\\
+		\hline 
+		\bfseries Test & JUnit\\
+		\hline
+		\bfseries Batch Framework & Spring Batch\\
+		\hline
+		\bfseries Messaging Middleware & Apache Camel\\
+		\hline
+		\bfseries Other Frameworks & Joda-Time, Apache Commons\\
+		\hline 
+	\end{tabular}
+\end{table}
+
+\subsection{Common Architecture} % (fold)
+\label{sub:ch4_common_architecture}
+
+\begin{itemize}
+	\item The comparison should only include the processing (integration ?) style of the prototypes
+	\item All other aspects should be the same, for example business functionality, data access, datamodel
+	\item A common architecture is used to ensure comparability between the two prototypes
+\end{itemize}
+
+% subsection common_architecture (end)
+
+\subsubsection{Datamodel}
+The prototypes use a common data model.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch4_logical_datamodel}
+	\caption{Logical data model of the prototype}
+	\label{fig:ch4_data_model}
+\end{figure}
+
+\subsubsection{Business Services}
+
+\begin{itemize}
+	\item Business functionality (Mediation, Rating) is implemented by Business Services used by both prototypes
+	\item Interface DataProcessor 
+	\item MediationProcessor, implements Mediation functionality
+	\item RatingProcessor, implements Rating functionality
+	\item Describe functionality in detail using a sequence diagram (?)
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch4_business_services}
+	\caption{Business services}
+	\label{fig:ch4_business_services}
+\end{figure}
+
+\subsubsection{Data Access Layer}
+
+\begin{itemize}
+	\item The prototypes use a common data access layer
+	\item Uses OR Mapper OpenJPA (JPA 2.0)
+	\item Business Entities are generated from Database Model
+	\item Data Access is implemented using the DAO pattern
+\end{itemize}
+
+\subsubsection{Technical Integration}
+
+\begin{itemize}
+	\item Only difference is the processing type, implemented by the Integration Layer of the respective prototype
+	\item Batch frame
+	\item Messaging middleware
+\end{itemize}
+
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{technical_integration}
 	\caption{The prototypes share the same business components, database and data-access layer.}
@@ -75,7 +160,7 @@ The batch prototype implements the billing application utilizing the batch proce
 
 Figure \ref{fig:ch4_batch_prototype} shows the architecture of the batch prototype. It consists of two nodes, mediation batch and rating batch, each implemented as a separate spring batch application. The nodes are integrated using Apache Camel \citep{apachecamel}, an Java integration framework based on enterprise integration patterns, as described by \cite{Hohpe:2003fk}. Apache Camel is responsible for listening on the file system, calling the Spring batch application when a file arrives and transferring the output from the mediation batch node to the rating batch node using \ac{FTP}.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{batch_prototype}
 	\caption{Batch prototype}
@@ -91,7 +176,7 @@ The batch prototype performs the following steps:
 
 \subsubsection{Implementation details}
 The main entities in Spring Batch are Jobs and Steps. A Job defines the processing flow of the batch application and consists of one or more steps. A basic step is comprised of an item reader, item processor and item writer (see Figure \ref{fig:ch4_spring_batch_step}). 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{spring_batch_step}
 	\caption{A Step consists of an item reader, item processor and item writer}
@@ -128,7 +213,7 @@ The messaging prototype implements the billing prototype utilizing the message-o
 
 Figure \ref{fig:ch4_messaging_prototype} shows the architecture of the messaging prototype. It consists of three nodes, the billing route, mediation service and rating service. The billing route implements the main flow of the application. It is responsible for reading messages from the billing queue, extracting the payload, calling the mediation and rating service and writing the processed messages to the database. The mediation service is a webservice representing the mediation component. It is a SOAP service implemented using Apache CXF and runs inside an Apache Tomcat container. The same applies to the rating service, representing the rating component.
 
-\begin{figure}[h!]
+\begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{messaging_prototype}
 	\caption{Message-based prototype}
@@ -480,6 +565,23 @@ When using high levels of data granularity, the messaging system is essentially 
 \section{Discussion with respect to related work}\label{sec:ch4_related_work}
 \todo[inline]{Discuss why a prototype has been built instead of using a model of the system.}
 This section gives an overview of work related to the research presented in this paper. Related work can be categorised in two different topics, performance measuring and performance optimisation of messaging systems. Performance measuring is applied to evaluate if an implemented system meets its performance requirements and to spot possible performance problems. Performance optimisation aims to improve the performance of a system to meet certain requirements such as throughput or latency.
+
+\subsection{Performance Modeling}
+Performance modeling allows to predict the performance of a system in an early stage of development. It facilitates for example capacity and resource planning before the system is already available or helps to evaluate design alternatives in regard of their performance impact.
+
+\citet{Brebner:2008uq} developed a tool for performance modeling of Service-Oriented Architectures. It is comprised of SOA models, a simulation engine and a graphical user interface. The SOA models are generated from architectural artifacts such as UML sequence or deployment diagrams and automatically transformed into runtime models for execution.
+
+An approach to predict the performance of J2EE applications using messaging services using queueing network models has been presented by \citet{Liu:2007vn}. As opposed to prior approaches, their solution models the underlying component infrastructure that implements the messaging service which allows an accurate prediction with an error within 15\% when compared to the real performance of the implemented system.
+
+In another work, \citet{Liu:2007vn} developed a performance model of an service-oriented application based on an Enterprise Service Bus using a queuing network. Their modeling approach includes the following steps:
+\begin{itemize}
+	\item Mapping of application components of the design level to analytical model elements
+	\item Characterisation of workload patterns for the application components used as input for performance model
+	\item Calibrating the performance model
+	\item Validating the performance model
+\end{itemize}
+
+\citet{DAmbrogio:2007ly} describe ``a model-driven approach for integrating performance prediction into service composition processes carried out by use of BPEL (Business Process Execution Language for Web Services).'' Using their approach, a BPEL process is described using an UML model. The model is automatically annotated with performance data and transformed into a Layered Queueing Network which is used to predict the performance of the BPEL process. For the automatic annotation of the model, a performance-oriented extension to WSDL is utilised called P-WSDL \citep{D-Ambrogio:2005ve}.
 
 \subsection{Performance Measuring}
 Her et al. \citep{Her:2007qf} propose the following set of metrics for measuring the performance of a service-oriented system:
