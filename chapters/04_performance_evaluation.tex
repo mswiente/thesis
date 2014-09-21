@@ -63,11 +63,11 @@ In order to compare batch and message-based types of processing, two different p
 	\label{fig:ch4_prototype_components}
 \end{figure}
 
-The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access layer and a MySQL database. To ensure comparability, the prototypes share the same business components, database and data-access layer, varying only in different integration layers (see Figure \ref{fig:ch4_technical_integration}). 
+The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access layer and a MySQL database. See Table \ref{table:ch4_frameworks} for complete list of technologies and frameworks used for the implementation of the prototypes.
 
 \begin{table}
 	%\renewcommand{\arraystretch}{1.3}
-	\caption{Used frameworks and technologies}
+	\caption{Technologies and frameworks used for the implementation of the prototypes}
 	\label{table:ch4_frameworks}
 	\centering
 	\begin{tabular}{|l|p{5cm}|}
@@ -96,32 +96,39 @@ The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access 
 \subsection{Common Architecture} % (fold)
 \label{sub:ch4_common_architecture}
 
+The objective of this performance evaluation is to compare the different processing styles, batch and single-event processing, with each other.
+It needs to be ensured that the comparison only includes the different processing styles. Therefore, the prototypes should only differ in their processing style, all other aspects should be the same, for example the business functionality, data access and datamodel.
+
+To ensure the comparability between the prototypes, a common architecture used by both prototypes has been designed and implemented.
+
+It consists of the following components (see Figure \ref{fig:ch4_technical_integration}):
+
 \begin{itemize}
-	\item The comparison should only include the processing (integration ?) style of the prototypes
-	\item All other aspects should be the same, for example business functionality, data access, datamodel
-	\item A common architecture is used to ensure comparability between the two prototypes
+	\item \textbf{Integration Layer}\\
+	Implements the integration style, i.e. file-based integration and message-based integration.
+	\item \textbf{Business Service}\\
+	Implements the business functionality, i.e. mediation and rating.
+	\item \textbf{Data Access Layer}\\Implements the data access.
 \end{itemize}
-
-% subsection common_architecture (end)
-
-\subsubsection{Datamodel}
-The prototypes use a common data model.
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\columnwidth]{ch4_logical_datamodel}
-	\caption{Logical data model of the prototype}
-	\label{fig:ch4_data_model}
+	\includegraphics[width=\columnwidth]{technical_integration}
+	\caption{The prototypes share the same business components, database and data-access layer.}
+	\label{fig:ch4_technical_integration}
 \end{figure}
+
+% subsection common_architecture (end)
 
 \subsubsection{Business Services}
 
+The business functionality, mediation and rating, is implemented by business services, which are used by both prototypes (see Figure \ref{fig:ch4_business_services}):
+
 \begin{itemize}
-	\item Business functionality (Mediation, Rating) is implemented by Business Services used by both prototypes
-	\item Interface DataProcessor 
-	\item MediationProcessor, implements Mediation functionality
-	\item RatingProcessor, implements Rating functionality
-	\item Describe functionality in detail using a sequence diagram (?)
+	\item \textbf{MediationProcessor}\\
+	Implements the mediation functionality.
+	\item \textbf{RatingProcessor}\\
+	Implements the rating functionality.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -129,6 +136,40 @@ The prototypes use a common data model.
 	\includegraphics[width=\columnwidth]{ch4_business_services}
 	\caption{Business services}
 	\label{fig:ch4_business_services}
+\end{figure}
+
+\subsubsection{Integration Layer}
+
+The integration layer implements the different integration styles of the two prototypes. The batch prototype uses a file-based integration with files being transfered using \ac{FTP}. The messaging prototype uses a messaging middleware for exchanging messages.
+
+\begin{figure}[htbp]
+	\centering
+	\subfloat[Batch integration]{\includegraphics[width=0.4\textwidth]{ch4_batch_integration}\label{fig:ch4_batch_integration}}
+	\qquad
+	\subfloat[Messaging middleware]{\includegraphics[width=0.4\textwidth]{ch4_messaging_integration}\label{fig:ch4_messaging_integration}}
+	\caption{Batch and messaging integration}
+\end{figure}
+
+\subsubsection{Datamodel}
+The prototypes use a common data model as shown in Figure \ref{fig:ch4_data_model}. It consists of the following entities:
+
+\begin{itemize}
+	\item \textbf{Customer}
+	\item \textbf{Account}
+	\item \textbf{Product}
+	\item \textbf{Tariff}
+	\item \textbf{EventSource}
+	\item \textbf{CostedEvent}
+	\item \textbf{SkippedEvent}
+	\item \textbf{CustomerProduct}
+	\item \textbf{CustomerProductTariff}
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch4_logical_datamodel}
+	\caption{Logical data model of the prototype}
+	\label{fig:ch4_data_model}
 \end{figure}
 
 \subsubsection{Data Access Layer}
@@ -139,21 +180,6 @@ The prototypes use a common data model.
 	\item Business Entities are generated from Database Model
 	\item Data Access is implemented using the DAO pattern
 \end{itemize}
-
-\subsubsection{Technical Integration}
-
-\begin{itemize}
-	\item Only difference is the processing type, implemented by the Integration Layer of the respective prototype
-	\item Batch frame
-	\item Messaging middleware
-\end{itemize}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[width=\columnwidth]{technical_integration}
-	\caption{The prototypes share the same business components, database and data-access layer.}
-	\label{fig:ch4_technical_integration}
-\end{figure}
 
 \subsection{Batch prototype}
 The batch prototype implements the billing application utilizing the batch processing type. It uses the Spring Batch framework \citep{springbatch}, a Java framework that facilitates the implementation of batch applications by providing basic building blocks for reading, writing and processing data.
@@ -663,7 +689,6 @@ The authors state that a coarse-grained data granularity reduces the communicati
 ``Especially in the case of Web services, this overhead is high since asynchronous messaging requires multiple queuing operations and numerous XML transformations''.
 
 \todo[inline]{Discuss contributions in this chapter with respect to related work. What is different?}
-
 
 \section{Summary}\label{sec:ch4_summary}
 Near-time processing of bulk data is hard to achieve. As shown in Section \ref{sec:ch2_latency_throughput}, latency and throughput are opposed performance metrics of a system for bulk data processing. Batch processing, while providding high throughput, leads to high latency, which impedes near-time processing. Message-base processing delivers low latency but cannot provide the throughput for bulk data processing due to the additional overhead for each processed message.
