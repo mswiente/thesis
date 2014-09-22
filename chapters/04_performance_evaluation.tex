@@ -113,7 +113,7 @@ It consists of the following components (see Figure \ref{fig:ch4_technical_integ
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\columnwidth]{technical_integration}
+	\includegraphics[width=0.7\textwidth]{technical_integration}
 	\caption{The prototypes share the same business components, database and data-access layer.}
 	\label{fig:ch4_technical_integration}
 \end{figure}
@@ -133,36 +133,47 @@ The business functionality, mediation and rating, is implemented by business ser
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\columnwidth]{ch4_business_services}
+	\includegraphics[width=\textwidth]{ch4_business_services}
 	\caption{Business services}
 	\label{fig:ch4_business_services}
 \end{figure}
 
 \subsubsection{Integration Layer}
 
-The integration layer implements the different integration styles of the two prototypes. The batch prototype uses a file-based integration with files being transfered using \ac{FTP}. The messaging prototype uses a messaging middleware for exchanging messages.
+The integration layer implements the different integration styles of the two prototypes. The batch prototype uses a batch layer which provides components for file-based data integration, transaction and control of batch processes.
+
+The messaging prototype uses a messaging middleware for exchanging messages (see Figure \ref{fig:ch4_messaging_integration}). The messaging middleware provides components for the transport, transformation and routing of messages.
 
 \begin{figure}[htbp]
 	\centering
 	\subfloat[Batch integration]{\includegraphics[width=0.4\textwidth]{ch4_batch_integration}\label{fig:ch4_batch_integration}}
 	\qquad
-	\subfloat[Messaging middleware]{\includegraphics[width=0.4\textwidth]{ch4_messaging_integration}\label{fig:ch4_messaging_integration}}
-	\caption{Batch and messaging integration}
+	\subfloat[Message-based integration]{\includegraphics[width=0.4\textwidth]{ch4_messaging_integration}\label{fig:ch4_messaging_integration}}
+	\caption{The prototypes use different integration layers.}
 \end{figure}
 
-\subsubsection{Datamodel}
+\subsubsection{Data model}
 The prototypes use a common data model as shown in Figure \ref{fig:ch4_data_model}. It consists of the following entities:
 
 \begin{itemize}
-	\item \textbf{Customer}
-	\item \textbf{Account}
-	\item \textbf{Product}
-	\item \textbf{Tariff}
-	\item \textbf{EventSource}
-	\item \textbf{CostedEvent}
-	\item \textbf{SkippedEvent}
-	\item \textbf{CustomerProduct}
-	\item \textbf{CustomerProductTariff}
+	\item \textbf{Customer}\\
+	Represents a customer. A customer has an account and one or many products.
+	\item \textbf{Account}\\
+	Contains payment informations of a customer.
+	\item \textbf{Product}\\
+	A product such as a voice or data plan.
+	\item \textbf{Tariff}\\
+	The tariff of a product. Defines the price of a product.
+	\item \textbf{EventSource}\\
+	Mobile number or IP associated with a product instance of a customer.
+	\item \textbf{CostedEvent}\\
+	An event that has been rated by the rating component.
+	\item \textbf{SkippedEvent}\\
+	An event that has been skipped by the mediation component. For example a flat rate event.
+	\item \textbf{CustomerProduct}\\
+	Contains the booked products of a customer. A customer can have zero or many products.
+	\item \textbf{CustomerProductTariff}\\
+	Contains the tariffs of a product. A product can have one or many tariffs.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -174,12 +185,7 @@ The prototypes use a common data model as shown in Figure \ref{fig:ch4_data_mode
 
 \subsubsection{Data Access Layer}
 
-\begin{itemize}
-	\item The prototypes use a common data access layer
-	\item Uses OR Mapper OpenJPA (JPA 2.0)
-	\item Business Entities are generated from Database Model
-	\item Data Access is implemented using the DAO pattern
-\end{itemize}
+The data access layer provides common access to the database by using the \ac{ORM} framework OpenJPA. All business domain entities have been generated from the data model using the toolchain provided by OpenJPA. The data access for retrieving, creating and update of the domain entities is implemented using the DAO pattern \citep{Alur:2003:CJP:863711}.
 
 \subsection{Batch prototype}
 The batch prototype implements the billing application utilizing the batch processing type. It uses the Spring Batch framework \citep{springbatch}, a Java framework that facilitates the implementation of batch applications by providing basic building blocks for reading, writing and processing data.
