@@ -598,9 +598,33 @@ When using high levels of data granularity, the messaging system is essentially 
 \todo[inline]{Discuss why a prototype has been built instead of using a model of the system.}
 This section gives an overview of work related to the performance evaluation of batch and message-based systems presented in this chapter and discusses the approach that has been taken. 
 
-Related work can be categorised in two different topics, performance measuring and performance optimisation of messaging systems. Performance measuring is applied to evaluate if an implemented system meets its performance requirements and to spot possible performance problems. Performance optimisation aims to improve the performance of a system to meet certain requirements such as throughput or latency.
+Related work can be categorised in two different topics, performance measuring and evaluation and performance modelling. 
+Performance measuring is applied to evaluate if an implemented system meets its performance requirements and to spot possible performance problems.
+
+\begin{itemize}
+	\item Two different approaches: Performance Measuring and Performance Prediction
+	\item Performance Measuring 
+	\begin{itemize}
+		\item can only be done with an existing system
+	\end{itemize}
+	\item Performance Prediction
+	\begin{itemize}
+		\item allows to predict the performance of a system in an early stage of development before the system is available
+		\item uses Performance Modelling to build a model of the system, evaluation is done with this model
+		\item common approaches use queuing networks to model a messaging system
+	\end{itemize}
+\end{itemize}
 
 \subsection{Performance Modeling}
+
+\begin{itemize}
+	\item instead of using a model a prototype has been implemented, because
+	\item no suitable models exist (? - needs to be checked, there should be many models for messaging systems...)
+	\item it's difficult to build a model since every relevant aspect needs to be modelled (data transfer, data marshalling, database, transactions)
+	\item prototype is a compromise between using a (mathematical or theoretical) model and a real application. 
+	\item By using state-of the art technologies for the implementation, the relevant aspects for comparing the different processing types come for ``free''.
+\end{itemize}
+
 Performance modeling allows to predict the performance of a system in an early stage of development. It facilitates for example capacity and resource planning before the system is already available or helps to evaluate design alternatives in regard of their performance impact.
 
 \citet{Brebner:2008uq} developed a tool for performance modeling of Service-Oriented Architectures. It is comprised of SOA models, a simulation engine and a graphical user interface. The SOA models are generated from architectural artifacts such as UML sequence or deployment diagrams and automatically transformed into runtime models for execution.
@@ -618,6 +642,12 @@ In another work, \citet{Liu:2007vn} developed a performance model of an service-
 \citet{DAmbrogio:2007ly} describe ``a model-driven approach for integrating performance prediction into service composition processes carried out by use of BPEL (Business Process Execution Language for Web Services).'' Using their approach, a BPEL process is described using an UML model. The model is automatically annotated with performance data and transformed into a Layered Queueing Network which is used to predict the performance of the BPEL process. For the automatic annotation of the model, a performance-oriented extension to WSDL is utilised called P-WSDL \citep{D-Ambrogio:2005ve}.
 
 \subsection{Performance Measuring and Evaluation}
+
+\begin{itemize}
+	\item related research is concerned with the performance of messaging middleware such as JMS Servers
+	\item In this research an end-to-end performance evaluation of a batch and messaging prototype implementation has been conducted instead
+\end{itemize}
+
 Her et al. \citep{Her:2007qf} propose the following set of metrics for measuring the performance of a service-oriented system:
 \begin{itemize}
 	\item \textbf{Service response time}\\
@@ -630,7 +660,7 @@ Her et al. \citep{Her:2007qf} propose the following set of metrics for measuring
 	Number of requests served at a given period of time. The authors distinguish between the throughput of a service and the throughput of a business process.
 \end{itemize}
 
-In their work, \cite{Henjes:2006nx}\cite{Menth:2006ys} investigated the throughput performance of the JMS server FioranaMQ, SunMQ and WebsphereMQ. The authors came to the following conclusion:
+In their work, \citet{Henjes:2006nx,Menth:2006ys} investigated the throughput performance of the JMS server FioranaMQ, SunMQ and WebsphereMQ. The authors came to the following conclusion:
 \begin{itemize}
 	\item Message persistence reduces the throughput significantly.
 	\item Message replication increases the overall throughput of the server.
