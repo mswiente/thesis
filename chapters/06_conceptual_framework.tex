@@ -7,12 +7,26 @@
 %******************************************************************************
 
 \section{Introduction} 
+
+\begin{itemize}
+	\item The concept for an adaptive Middleware for bulk data processing presented in chapter \ref{ch:adaptive_middleware} describes the ``What'' (what needs to be done) but not the ``How'' (how should it be done).
+	\item The design, implementation and operation of such a system differs from common approaches to implement enterprise systems (what are these differences?)
+	\begin{itemize}
+		\item Design: Defining Service interfaces, defining aggregation rules, defining transports, defining integration architecture
+		\item Implementation: Service implementation, Service Optimisation
+		\item Operation: controller tuning, monitoring
+	\end{itemize}
+	\item In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework is needed
+	\item It defines views, roles and tasks and their dependencies to describe the necessary steps for design, implementation and operation of system describe in Chapter \ref{ch:adaptive_middleware}.
+\end{itemize}
+
 \begin{figure}
 	[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_conceptual_framework_overview} \caption{Overview of Conceptual Framework} \label{fig:ch6_conceptional_framework_overview} 
 \end{figure}
 
 \section{Metamodel} 
+The conceptual framework consists of the following entities:
 \begin{itemize}
 	\item View
 	\item Role
@@ -35,6 +49,83 @@
 	\item Run
 \end{itemize}
 
+\subsection{Plan}
+
+	\captionof{table}{Plan}\label{table:ch6_View_Plan}
+	\begin{tabular}
+		{|m{2cm}|m{10cm}|} \hline \bfseries View & Plan\\
+		\hline \bfseries Description & Lorem ipsum\\
+		\hline \bfseries Tasks & 
+		\begin{itemize}
+			\item Define System Architecture
+			\item Define Integration Architecture
+			\item Define Controller Architecture
+			\item Define Service Interfaces
+			\item Define Aggregation Rules
+			\item Define Performance Tests
+			\item Define Training Concept
+		\end{itemize}
+		\\
+		\hline \bfseries Roles &
+		\begin{itemize}
+			\item Project Manager
+			\item Business Analyst
+			\item System Architect
+			\item Service Architect
+		\end{itemize}
+		\\
+		\hline 
+	\end{tabular}
+
+\subsection{Build}
+\captionof{table}{View}\label{table:ch6_View_Build}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries View & Build\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Implement Controller and Feedback Loop
+		\item Implement Services
+		\item Implement Aggregation Rules
+		\item Perform Controller Tuning
+	\end{itemize}
+	\\
+	\hline \bfseries Roles &
+	\begin{itemize}
+		\item Developer
+		\item Service Developer
+		\item System Architect
+		\item Tester
+	\end{itemize}
+	\\
+	\hline 
+\end{tabular}
+
+\subsection{Run}
+
+\captionof{table}{View}\label{table:ch6_View_Build}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries View & Run\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Setup Monitoring infrastructure
+		\item Setup Test and Integration Environment
+		\item Deploy to Test and Integration Environment
+		\item Perform Performance Tests
+		\item Evaluate Performance Test Results
+	\end{itemize}
+	\\
+	\hline \bfseries Roles &
+	\begin{itemize}
+		\item Operations Engineer
+		\item Systems Architect
+		\item Developer
+	\end{itemize}
+	\\
+	\hline 
+\end{tabular}
+
 \section{Roles} 
 \begin{itemize}
 	\item System Architect 
@@ -48,24 +139,119 @@
 \end{itemize}
 
 \subsection{System Architect} 
-\begin{table}
-	[!ht] \caption{System Architect} \label{table:ch6_Role_System_Architect} \centering 
-	\begin{tabular}
-		{|m{2cm}|m{10cm}|} \hline \bfseries Role & System Architect\\
-		\hline \bfseries Description & Lorem ipsum\\
-		\hline \bfseries Tasks & 
-		\begin{itemize}
-			\item Define System Architecture 
-		\end{itemize}
-		\\
-		\hline \bfseries Artifacts & System Architecture\\
-		\hline 
-	\end{tabular}
-\end{table}
+	\captionof{table}{System Architect}\label{table:ch6_Role_System_Architect}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & System Architect\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Business Analyst}
+\captionof{table}{Business Analyst} \label{table:ch6_Role_Business_Analysist}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Developer}
+\captionof{table}{Developer} \label{table:ch6_Role_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Developer\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Tester}
+\captionof{table}{Tester} \label{table:ch6_Role_Tester}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Tester\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline
+\end{tabular}
+
+\subsection{Project Manager}
+\captionof{table}{Project Manager} \label{table:ch6_Role_Project_Manager}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Project Manager\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 	
+\end{tabular}
+
+\subsection{Operations Engineer}
+\captionof{table}{Operations Engineer} \label{table:ch6_Role_Operations_Engineer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Operations Engineer\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Service Architect}
+\captionof{table}{Service Architect} \label{table:ch6_Role_Service_Architect}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Service Architect\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Service Developer}
+\captionof{table}{Service Developer} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline 
+\end{tabular}
 
 \section{Processes/Tasks} 
 
-\subsection{List of Tasks}
 \begin{itemize}
 	\item Define System Architecture 
 	\item Define Integration Architecture
@@ -97,20 +283,262 @@
 	\item Evaluate Performance Test Results
 	\item Define Training Concept
 \end{itemize}
-\begin{table}
-	[!ht] \caption{Define System Architecture} \label{table:ch6_Task_Define_System_Architect} \centering 
-	\begin{tabular}
-		{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
-		\hline \bfseries Why & Lorem ipsum\\
-		\hline \bfseries Who & System Architect\\
-		\hline \bfseries Artifacts & System Architecture\\
-		\hline \bfseries Challenges & Lorem Ipsum\\
-		\hline \bfseries Best practises & Lorem ipsum\\
-		\hline 
-	\end{tabular}
-\end{table}
 
-\subsection{Task Dependencies}
+\subsection{Define System Architecture }
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Define Integration Architecture}
+\subsubsection{Transports}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsubsection{Distribution}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Define Controller Architecture}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsubsection{Define Control Problem}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsubsection{Define Input/Output Variables}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Implement Controller / Feedback Loop}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Perform Controller Tuning}
+\subsubsection{System Model/System Identification}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsubsection{Static Tests}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsubsection{Step Tests}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Define Service Interfaces}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Implement Service Interfaces / Test / Deploy}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Define Aggregation Rules}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Implement Aggregation Rules}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Define Performance Tests}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Setup Monitoring infrastructure}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Setup Test and Integration Environment}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Deploy to Test and Integration Environment}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Perform Performance Tests}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Evaluate Performance Test Results}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\subsection{Define Training Concept}
+\captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architect}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Artifacts & System Architecture\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline 
+\end{tabular}
+
+\section{Task Dependencies}
 
 \begin{itemize}
 	\item Tasks depend on each other
@@ -133,6 +561,90 @@
 	\item Performance Test Concept
 	\item Training Concept
 \end{itemize}
+
+\subsection{System Architecture}
+\captionof{table}{System Architecture} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Integration Architecture}
+\captionof{table}{System Architecture} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Controller Architecture}
+\captionof{table}{System Architecture} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{System Model}
+\captionof{table}{System Architecture} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Performance Test Concept}
+\captionof{table}{System Architecture} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & System Architecture\\
+	\hline 
+\end{tabular}
+
+\subsection{Training Concept}
+\captionof{table}{System Architecture} \label{table:ch6_Role_Service_Developer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define System Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & System Architecture\\
+	\hline 
+\end{tabular}
 
 \section{Tools} % (fold)
 \label{sec:ch6_tools}
