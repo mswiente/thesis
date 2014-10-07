@@ -18,6 +18,7 @@
 	\end{itemize}
 	\item In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework is needed
 	\item It defines views, roles and tasks and their dependencies to describe the necessary steps for design, implementation and operation of system describe in Chapter \ref{ch:adaptive_middleware}.
+	\item The conceptual model can be tailored to specific projects requirements, it does not have to be followed strictly.
 \end{itemize}
 
 \begin{figure}
@@ -60,19 +61,26 @@ The conceptual framework consists of the following entities:
 	\label{fig:ch6_metamodel} 
 \end{figure}
 
-\section{Views}
+\section{Phase}
+
 \begin{itemize}
-	\item Plan
-	\item Build
-	\item Run
+	\item Phases are the toplevel building blocks
+	\item The framework defines the following phases
+	\begin{itemize}
+		\item Plan
+		\item Build
+		\item Run
+	\end{itemize}
+	\item Phases are aligned to phases commonly used by other software development frameworks and methodologies (examples?)
+	\item It should be noted that the framework defines no requirements regarding the general order or mode in which theses phases should be processed. It is therefore possible to use this framework with different software development methodologies such as the Waterfall model, Scrum or the V-Modell.
 \end{itemize}
 
 \subsection{Plan}
-
-	\captionof{table}{Plan}\label{table:ch6_View_Plan}
+\begin{minipage}{\textwidth}
+	\captionof{table}{Phase: Plan}\label{table:ch6_View_Plan}
 	\begin{tabular}
-		{|m{2cm}|m{10cm}|} \hline \bfseries View & Plan\\
-		\hline \bfseries Description & Lorem ipsum\\
+		{|m{2cm}|m{10cm}|} \hline \bfseries Phase & Plan\\
+		\hline \bfseries Description & This phase contains tasks concerning the technical and business design of the system.\\
 		\hline \bfseries Tasks & 
 		\begin{itemize}
 			\item Define System Architecture
@@ -94,12 +102,14 @@ The conceptual framework consists of the following entities:
 		\\
 		\hline 
 	\end{tabular}
+\end{minipage}
 
 \subsection{Build}
-\captionof{table}{View}\label{table:ch6_View_Build}
+\begin{minipage}{\textwidth}
+\captionof{table}{Phase: Build}\label{table:ch6_View_Build}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries View & Build\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Phase & Build\\
+	\hline \bfseries Description & This phase contains tasks concerning the implementation of the system.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
 		\item Implement Controller and Feedback Loop
@@ -118,13 +128,14 @@ The conceptual framework consists of the following entities:
 	\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Run}
-
-\captionof{table}{View}\label{table:ch6_View_Run}
+\begin{minipage}{\textwidth}
+\captionof{table}{Phase: Run}\label{table:ch6_View_Run}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries View & Run\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Phase & Run\\
+	\hline \bfseries Description & This phase contains tasks concerning the operation of the implemented system in the production environment. \\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
 		\item Setup Monitoring infrastructure
@@ -143,144 +154,187 @@ The conceptual framework consists of the following entities:
 	\\
 	\hline 
 \end{tabular}
+\end{minipage}
+
+\section{View}
+\todo[inline]{Do we need Views?}
+\begin{itemize}
+	\item Technical
+	\item Business
+\end{itemize}
 
 \section{Roles} 
+
+\begin{itemize}
+	\item Roles describe responsibilities and skills
+	\item Roles are not the same as persons, a person can fulfill multiple roles at the same time
+\end{itemize}
+
+The following Roles are defined:
 \begin{itemize}
 	\item System Architect 
-	\item Business Analyst 
-	\item Developer 
-	\item Tester 
-	\item Project Manager 
+	\item Business Architect
+	\item Developer
+	\item Test Engineer
+	\item Project Manager
 	\item Operations Engineer 
 	\item Service Architect 
 	\item Service Developer
 \end{itemize}
 
 \subsection{System Architect} 
-	\captionof{table}{System Architect}\label{table:ch6_Role_System_Architect}
+\begin{minipage}{\textwidth}
+\captionof{table}{System Architect}\label{table:ch6_Role_System_Architect}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & System Architect\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The System Architect is responsible for designing the technical architecture of the system, including the integration and controller architecture.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
 		\item Define System Architecture 
+		\item Define Integration Architecture
+		\item Define Controller Architecture
+		\item Define Service Interfaces (?)
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Business Analyst}
-\captionof{table}{Business Analyst} \label{table:ch6_Role_Business_Analysist}
+\begin{minipage}{\textwidth}
+\captionof{table}{Business Architect} \label{table:ch6_Role_Business_Analysist}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The Business Architect is responsible for designing the business architecture of the system, including the definition of services and aggregation rules.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Define Services (?)
+		\item Define Aggregation Rules
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Developer}
+\begin{minipage}{\textwidth}
 \captionof{table}{Developer} \label{table:ch6_Role_Developer}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Developer\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The Developer is responsible for the implementation of the system, including the implementation and tuning of the feeback-controll loop.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Implement Integration Mechanisms (?)
+		\item Implement Aggregation Rules
+		\item Implement Controller
+		\item Perform Controller Tuning (?)
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Tester}
+\begin{minipage}{\textwidth}
 \captionof{table}{Tester} \label{table:ch6_Role_Tester}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Tester\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Test Engineer\\
+	\hline \bfseries Description & The Tester is responsible for defining and performing the performance tests of the system.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Define Performance Tests (?)
+		\item Perform Performance Tests
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline
 \end{tabular}
+\end{minipage}
 
 \subsection{Project Manager}
+\begin{minipage}{\textwidth}
 \captionof{table}{Project Manager} \label{table:ch6_Role_Project_Manager}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Project Manager\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The Project Manager is responsible for the project coordination, including the staffing and planing of the required environments.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Plan Staffing (?)
+		\item Plan Project Environments (Development / Testing / Integration / Production)
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 	
 \end{tabular}
+\end{minipage}
 
 \subsection{Operations Engineer}
+\begin{minipage}{\textwidth}
 \captionof{table}{Operations Engineer} \label{table:ch6_Role_Operations_Engineer}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Operations Engineer\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The Operations Engineer is responsible for operating the system, including setup, deployment and monitoring.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Setup Monitoring Infrastructure
+		\item Setup Test and Integration Environment
+		\item Deploy to Test and Integration Environment 
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Service Architect}
+\begin{minipage}{\textwidth}
 \captionof{table}{Service Architect} \label{table:ch6_Role_Service_Architect}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Service Architect\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The Service Architect is responsible for designing the technical architecture of services.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Define Service Interfaces
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Service Developer}
+\begin{minipage}{\textwidth}
 \captionof{table}{Service Developer} \label{table:ch6_Role_Service_Developer}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Service Developer\\
+	\hline \bfseries Description & The Service Developer is responsible for implementing the services.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Implement Service Interface
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
-\section{Processes/Tasks} 
+\section{Tasks}
 
 \begin{itemize}
-	\item Define System Architecture 
-	\item Define Integration Architecture
+	\item Define Business Architecture
 	\begin{itemize}
-		\item Transports
-		\item Distribution
+		\item Define Service Interfaces
+		\item Define Aggregation Rules
 	\end{itemize}
-	\item Define Controller Architecture 
+	\item Define System Architecture 
 	\begin{itemize}
-		\item Define Control Problem 
-		\item Define Input/Output Variables 
+		\item Define Integration Architecture
+		\begin{itemize}
+			\item Transports
+			\item Distribution
+		\end{itemize}
+		\item Define Routing Rules
+		\item Define Controller Architecture 
+		\begin{itemize}
+			\item Define Control Problem 
+			\item Define Input/Output Variables 
+		\end{itemize}
+		\item Define Routing Rules
 	\end{itemize}
 	\item Implement Controller / Feedback Loop
 	\item Perform Controller Tuning 
@@ -289,9 +343,7 @@ The conceptual framework consists of the following entities:
 		\item Static Tests
 		\item Step Tests
 	\end{itemize}
-	\item Define Service Interfaces
 	\item Implement Service Interfaces / Test / Deploy
-	\item Define Aggregation Rules
 	\item Implement Aggregation Rules 
 	\item Define Performance Tests 
 	\item Setup Monitoring infrastructure
@@ -302,56 +354,190 @@ The conceptual framework consists of the following entities:
 	\item Define Training Concept
 \end{itemize}
 
+\subsection{Define Business Architecture}
+
+\begin{itemize}
+	\item The business architecture defines the business components of the system and their relationships independantly of the technical implementation.
+	\item Except from the described subtasks, the task is not specific to the conceptual model.
+\end{itemize}
+
+\subsection{Define Service Interfaces}
+\begin{minipage}{\textwidth}
+\captionof{table}{Define Service Interfaces} \label{table:ch6_Task_Define_Service_Interfaces}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Service Interfaces\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & Business Architect\\
+	\hline \bfseries Artifacts & Service Interface Definitions\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline 
+\end{tabular}
+\end{minipage}
+
+\begin{itemize}
+	\item Definition of service operations, every service needs operations for single event and batch processing
+	\begin{itemize}
+		\item Distinct operations for batch and single event processing
+		\item common operation for both processing styles (list interface)
+	\end{itemize}
+	\item Defines functional format of input and output data
+	\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
+\end{itemize}
+
+\subsection{Define Aggregation Rules}
+\begin{minipage}{\textwidth}
+\captionof{table}{Define Aggregation Rules} \label{table:ch6_Task_Define_Aggregation_Rules}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Aggregation Rules\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & Business Architect\\
+	\hline \bfseries Artifacts & Aggregation Rules\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline 
+\end{tabular}
+\end{minipage}
+
+\begin{itemize}
+	\item Definition of rules used in the aggregator for correlating events
+	\item Different options
+	\begin{itemize}
+		\item No correlation
+		\begin{itemize}
+			\item Simple solution
+			\item even distribution of events
+			\item optimization is not or hardly possible
+		\end{itemize}
+		\item Business correlation
+		\begin{itemize}
+			\item analysation of processed data needed
+			\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
+			\item optimization is possible
+		\end{itemize}
+		\item Technical correlation
+		\begin{itemize}
+			\item analysation of processed data needed
+			\item Rules can be defined after integration architecture
+			\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
+			\item optimization (?)
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
 \subsection{Define System Architecture }
+\begin{minipage}{\textwidth}
 \captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architecture}
 \begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
-	\hline \bfseries Why & Lorem ipsum\\
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture
+	Subtasks:
+	\begin{itemize}
+		\item Define Integration Architecture
+		\item Define Controller Architecture
+	\end{itemize}
+	\\
+	\hline \bfseries Why & The System Architecture defines the technical architecture of the system.\\
 	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline \bfseries Input & 
+		\begin{itemize}
+			\item Business Architecture
+			\item Service Interface Definitions
+		\end{itemize}
+	\\
+	\hline \bfseries Output & System Architecture\\
+	\hline \bfseries Tools & \ac{UML}\\
+	\hline \bfseries Challenges & \\
 	\hline 
 \end{tabular}
+\end{minipage}
+
+\begin{itemize}
+	\item Except from the described subtasks, the task is not specific to the conceptual model.
+\end{itemize}
 
 \subsection{Define Integration Architecture}
-\subsubsection{Transports}
+\begin{minipage}{\textwidth}
 \captionof{table}{Define Integration Architecture} \label{table:ch6_Task_Define_Integration_Architecture}
 \begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
-	\hline \bfseries Why & Lorem ipsum\\
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Integration Architecture\\
+	\hline \bfseries Why & \\
 	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline \bfseries Input & 
+		\begin{itemize}
+			\item Business Architecture
+			\item Service Interface Definitions
+		\end{itemize}
+	\\
+	\hline \bfseries Output & Integration Architecture\\
+	\hline \bfseries Challenges & \\
 	\hline 
 \end{tabular}
+\end{minipage}
 
-\subsubsection{Distribution}
-\captionof{table}{Distribution} \label{table:ch6_Task_Distribution}
+\begin{itemize}
+	\item Definition of integration architecture
+	\begin{itemize}
+		\item Sychronous, e.g. webservices
+		\item Asynchronous, e.g. message queues
+	\end{itemize}
+	\item Definition of transports
+	\begin{itemize}
+		\item JMS
+		\item SOAP
+		\item REST
+		\item FTP
+		\item DB
+	\end{itemize}
+	\item Different transports / integration patterns needed for different aggregation sizes:
+	\begin{itemize}
+		\item Large messages should not be transferred over the messaging bus
+		\item Options for large messages:
+		\begin{itemize}
+			\item File-based integration and transfer using FTP or database
+			\item Message-Slip EIP pattern
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Define Routing Rules}
+
+\begin{minipage}{\textwidth}
+\captionof{table}{Define Routing Rules} \label{table:ch6_Task_Define_Routing_Rules}
 \begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
-	\hline \bfseries Why & Lorem ipsum\\
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Routing Rules\\
+	\hline \bfseries Why & \\
 	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline \bfseries Input & 
+		\begin{itemize}
+			\item Integration Architecture
+		\end{itemize}
+	\\
+	\hline \bfseries Output & Routing Rules Definition\\
+	\hline \bfseries Challenges & Finding the data aggregation threshold to route messages to the appropriate service endpoint.\\
 	\hline 
 \end{tabular}
+\end{minipage}
+
+\begin{itemize}
+	\item Depending on the size of the aggregated message, the Router routes the message to the appropriate service endpoint, which is either optimized for batch or single event processing.
+	\item The routing rules define, which service endpoint should be called for a given aggregation size.
+\end{itemize}
 
 \subsection{Define Controller Architecture}
+\begin{minipage}{\textwidth}
 \captionof{table}{Define Controller Architecture} \label{table:ch6_Task_Define_Controller_Architecture}
 \begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
-	\hline \bfseries Why & Lorem ipsum\\
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Controller Architecture\\
+	\hline \bfseries Why & \\
 	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Input & System Architecture\\
+	\hline \bfseries Output & Controller Architecture\\
 	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline \bfseries Challenges & \\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsubsection{Define Control Problem}
+\begin{minipage}{\textwidth}
 \captionof{table}{Define Control Problem} \label{table:ch6_Task_Define_Control_Problem}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
@@ -362,8 +548,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsubsection{Define Input/Output Variables}
+\begin{minipage}{\textwidth}
 \captionof{table}{Define Input/Output Variables} \label{table:ch6_Task_Define_Controller_Variables}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Input/Output Variables\\
@@ -374,8 +562,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Implement Controller}
+\begin{minipage}{\textwidth}
 \captionof{table}{Implement Controller / Feedback Loop} \label{table:ch6_Task_Implement_Controller}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Implement Controller\\
@@ -386,21 +576,25 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Perform Controller Tuning}
 \subsubsection{System Model/System Identification}
-\captionof{table}{System Model/System Identification} \label{table:ch6_Task_Controler_Tuning}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
-	\hline \bfseries Why & Lorem ipsum\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
-	\hline 
-\end{tabular}
+\begin{minipage}{\textwidth}
+	\captionof{table}{System Model/System Identification} \label{table:ch6_Task_Controler_Tuning} 
+	\begin{tabular}
+		{|m{3cm}|m{10cm}|} \hline \bfseries What & Define System Architecture\\
+		\hline \bfseries Why & Lorem ipsum\\
+		\hline \bfseries Who & System Architect\\
+		\hline \bfseries Artifacts & System Architecture\\
+		\hline \bfseries Challenges & Lorem Ipsum\\
+		\hline \bfseries Best practises & Lorem ipsum\\
+		\hline 
+	\end{tabular}
+\end{minipage}
 
 \subsubsection{Static Tests}
+\begin{minipage}{\textwidth}
 \captionof{table}{Static Tests} \label{table:ch6_Task_Static_Tests}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Static Tests\\
@@ -411,8 +605,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsubsection{Step Tests}
+\begin{minipage}{\textwidth}
 \captionof{table}{Step Tests} \label{table:ch6_Task_Step_Tests}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Step Tests\\
@@ -423,20 +619,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
-
-\subsection{Define Service Interfaces}
-\captionof{table}{Define Service Interfaces} \label{table:ch6_Task_Define_Service_Interfaces}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Service Interfaces\\
-	\hline \bfseries Why & Lorem ipsum\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
-	\hline 
-\end{tabular}
+\end{minipage}
 
 \subsection{Implement Service Interfaces / Test / Deploy}
+\begin{minipage}{\textwidth}
 \captionof{table}{Implement Service Interfaces} \label{table:ch6_Task_Implement_Service_Interfaces}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Implement Service Interfaces\\
@@ -447,20 +633,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
-
-\subsection{Define Aggregation Rules}
-\captionof{table}{Define Aggregation Rules} \label{table:ch6_Task_Define_Aggregation_Rules}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Aggregation Rules\\
-	\hline \bfseries Why & Lorem ipsum\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
-	\hline 
-\end{tabular}
+\end{minipage}
 
 \subsection{Implement Aggregation Rules}
+\begin{minipage}{\textwidth}
 \captionof{table}{Implement Aggregation Rules} \label{table:ch6_Task_Implement_Aggregation_Rules}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Implement Aggregation Rules\\
@@ -471,8 +647,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Define Performance Tests}
+\begin{minipage}{\textwidth}
 \captionof{table}{Define Performance Tests} \label{table:ch6_Task_Define_Performance_Tests}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Performance Tests\\
@@ -483,8 +661,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Setup Monitoring infrastructure}
+\begin{minipage}{\textwidth}
 \captionof{table}{Setup Monitoring infrastructure} \label{table:ch6_Task_Setup_Monitoring_infrastructure}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Setup Monitoring infrastructuree\\
@@ -495,8 +675,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Setup Test and Integration Environment}
+\begin{minipage}{\textwidth}
 \captionof{table}{Setup Test and Integration Environment} \label{table:ch6_Task_Setup_Test_Environment}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Setup Test and Integration Environment\\
@@ -507,8 +689,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Deploy to Test and Integration Environment}
+\begin{minipage}{\textwidth}
 \captionof{table}{Deploy to Test and Integration Environment} \label{table:ch6_Task_Deploy}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Deploy to Test and Integration Environment\\
@@ -519,8 +703,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Perform Performance Tests}
+\begin{minipage}{\textwidth}
 \captionof{table}{Perform Performance Tests} \label{table:ch6_Task_Perform_Performance_Tests}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Perform Performance Tests\\
@@ -531,8 +717,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Evaluate Performance Test Results}
+\begin{minipage}{\textwidth}
 \captionof{table}{Evaluate Performance Test Results} \label{table:ch6_Evaluate_Performance_Results}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Evaluate Performance Test Results\\
@@ -543,8 +731,10 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Define Training Concept}
+\begin{minipage}{\textwidth}
 \captionof{table}{Define Training Concept} \label{table:ch6_Task_Define_Training_Concept}
 \begin{tabular}
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Define Training Concept\\
@@ -555,32 +745,90 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \section{Task Dependencies}
 
 \begin{itemize}
-	\item Tasks depend on each other
+	\item Tasks depend on each other, some tasks must be processed in a certain order
 \end{itemize}
 
-\begin{figure}
-	[htpb] \centering 
+\begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_dependencies} 
 	\caption{Tasks depend on each other} 
 	\label{fig:ch6_dependencies} 
 \end{figure}
 
-\section{Building Blocks/Artifacts}
+\section{Artifacts}
 
 \begin{itemize}
+	\item An Artifact is a result of a task
+	\item Additionally, an artifact can be a prerequisite of a task
+\end{itemize}
+
+\begin{itemize}
+	\item Business Architecture
+	\item Service Interface Definition
+	\item Aggregation Rules
 	\item System Architecture
 	\item Integration Architecture
+	\item Routing Rules
 	\item Controller Architecture
 	\item System Model
 	\item Performance Test Concept
 	\item Training Concept
 \end{itemize}
 
+\subsection{Business Architecture}
+\begin{minipage}{\textwidth}
+\captionof{table}{Business Architecture} \label{table:ch6_Artifact_Business_Architecture}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Business Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define Business Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & Business Architect\\
+	\hline 
+\end{tabular}
+\end{minipage}
+
+\subsection{Service Interface Definition}
+\begin{minipage}{\textwidth}
+\captionof{table}{Business Architecture} \label{table:ch6_Artifact_Service_Interface_Definition}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Business Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define Business Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & Business Architect\\
+	\hline 
+\end{tabular}
+\end{minipage}
+
+\subsection{Aggregation Rules}
+\begin{minipage}{\textwidth}
+\captionof{table}{Business Architecture} \label{table:ch6_Artifact_Aggregation_Rules}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Business Architecture\\
+	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define Business Architecture 
+	\end{itemize}
+	\\
+	\hline \bfseries Role & Business Architect\\
+	\hline 
+\end{tabular}
+\end{minipage}
+
 \subsection{System Architecture}
+\begin{minipage}{\textwidth}
 \captionof{table}{System Architecture} \label{table:ch6_Artifact_System_Architecture}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Architecture\\
@@ -590,53 +838,61 @@ The conceptual framework consists of the following entities:
 		\item Define System Architecture 
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architecture\\
+	\hline \bfseries Role & System Architect\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Integration Architecture}
+\begin{minipage}{\textwidth}
 \captionof{table}{Integration Architecture} \label{table:ch6_Artifact_Integration_Architecture}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Integration Architecture\\
 	\hline \bfseries Description & Lorem ipsum\\
 	\hline \bfseries Task & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Define Integration Architecture 
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architecture\\
+	\hline \bfseries Role & System Architect\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
-\subsection{Controller Architecture}
-\captionof{table}{Controller Architecture} \label{table:ch6_Artifact_Controller_Architecture}
+\subsection{Routing Rules}
+\begin{minipage}{\textwidth}
+\captionof{table}{Controller Architecture} \label{table:ch6_Artifact_Routing_Rules}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Controller Architecture\\
 	\hline \bfseries Description & Lorem ipsum\\
 	\hline \bfseries Task & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Define Controller Architecture 
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architecture\\
+	\hline \bfseries Role & System Architect\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{System Model}
+\begin{minipage}{\textwidth}
 \captionof{table}{System Model} \label{table:ch6_Artifact_System_Model}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Model\\
 	\hline \bfseries Description & Lorem ipsum\\
 	\hline \bfseries Task & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item System Identification / Modelling
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architecture\\
+	\hline \bfseries Role & System Architect\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Performance Test Concept}
+\begin{minipage}{\textwidth}
 \captionof{table}{Performance Test Concept} \label{table:ch6_Artifact_Performance_Test_Concept}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Performance Test Concept\\
@@ -646,11 +902,13 @@ The conceptual framework consists of the following entities:
 		\item Define System Architecture 
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architecture\\
+	\hline \bfseries Role & System Architect\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \subsection{Training Concept}
+\begin{minipage}{\textwidth}
 \captionof{table}{Training Concept} \label{table:ch6_Artifact_Training_Concept}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Training Concept\\
@@ -663,6 +921,7 @@ The conceptual framework consists of the following entities:
 	\hline \bfseries Role & System Architecture\\
 	\hline 
 \end{tabular}
+\end{minipage}
 
 \section{Tools} % (fold)
 \label{sec:ch6_tools}
