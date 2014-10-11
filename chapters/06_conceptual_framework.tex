@@ -314,6 +314,18 @@ The following Roles are defined:
 \end{minipage}
 
 \section{Tasks}
+\label{sec:ch6_tasks}
+
+\begin{itemize}
+	\item Main entities of the conceptual framework, define what should be done.
+	\item Tasks depend on each other, some tasks must be processed in a certain order
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_dependencies} 
+	\caption{Tasks depend on each other} 
+	\label{fig:ch6_dependencies} 
+\end{figure}
 
 \begin{itemize}
 	\item Define Business Architecture
@@ -536,7 +548,18 @@ The following Roles are defined:
 \end{tabular}
 \end{minipage}
 
+\begin{itemize}
+	\item Design of the controller architecture implemented by the system
+	\item For example
+	\begin{itemize}
+		\item PID Controller
+		\item Fuzzy Controller
+	\end{itemize}
+	\item Depends on control problem and system dynamics (linear, non-linear)
+\end{itemize}
+
 \subsubsection{Define Control Problem}
+\todo[inline]{Do we need this task or is this already fixed with the proposed middleware architecture?}
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Control Problem} \label{table:ch6_Task_Define_Control_Problem}
 \begin{tabular}
@@ -564,6 +587,18 @@ The following Roles are defined:
 \end{tabular}
 \end{minipage}
 
+\begin{itemize}
+	\item Definition of input and output variables of the controller
+	\item for example
+	\begin{itemize}
+		\item Number of messages in the system
+		\item Input queue length
+		\item current end-to-end latency
+		\item current throughput
+	\end{itemize}
+	\item selected input variables should be measured easily and directly, without delay such as when calculating averages
+\end{itemize}
+
 \subsection{Implement Controller}
 \begin{minipage}{\textwidth}
 \captionof{table}{Implement Controller / Feedback Loop} \label{table:ch6_Task_Implement_Controller}
@@ -571,15 +606,30 @@ The following Roles are defined:
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Implement Controller\\
 	\hline \bfseries Why & Lorem ipsum\\
 	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
+	\hline \bfseries Input & Controller Architecture\\
+	\hline \bfseries Artifacts & Controller Implementation\\
+	\hline \bfseries Challenges & 
+		\begin{itemize}
+			\item Sensor performance
+			\item Distributed sensors 
+			\item Framework vs. custom development
+		\end{itemize}\\
 	\hline 
 \end{tabular}
 \end{minipage}
 
+\begin{itemize}
+	\item Implementation of Controller Architecture including
+	\begin{itemize}
+		\item Sensors
+		\item Controller
+		\item Actuator
+	\end{itemize}
+\end{itemize}
+
 \subsection{Perform Controller Tuning}
 \subsubsection{System Model/System Identification}
+\todo[inline]{Should this be a Sub-Task of Definition of Controller Architecture?}
 \begin{minipage}{\textwidth}
 	\captionof{table}{System Model/System Identification} \label{table:ch6_Task_Controler_Tuning} 
 	\begin{tabular}
@@ -588,7 +638,6 @@ The following Roles are defined:
 		\hline \bfseries Who & System Architect\\
 		\hline \bfseries Artifacts & System Architecture\\
 		\hline \bfseries Challenges & Lorem Ipsum\\
-		\hline \bfseries Best practises & Lorem ipsum\\
 		\hline 
 	\end{tabular}
 \end{minipage}
@@ -602,7 +651,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -616,7 +664,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -628,12 +675,18 @@ The following Roles are defined:
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Implement Service Interfaces\\
 	\hline \bfseries Why & Lorem ipsum\\
 	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Input & Service Interface Definitions\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
+
+\begin{itemize}
+	\item Implementation of business services
+	\item Batch implementation / single event implementation
+	\item Batch optimisation
+\end{itemize}
 
 \subsection{Implement Aggregation Rules}
 \begin{minipage}{\textwidth}
@@ -642,12 +695,17 @@ The following Roles are defined:
 	{|m{3cm}|m{10cm}|} \hline \bfseries What & Implement Aggregation Rules\\
 	\hline \bfseries Why & Lorem ipsum\\
 	\hline \bfseries Who & System Architect\\
+	\hline \bfseries Input & Aggregation Rules\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
+
+\begin{itemize}
+	\item Implementation of aggregation rules
+	\item Rules should be configurable during run-time or configuration-time. Should not be hard-coded.
+\end{itemize}
 
 \subsection{Define Performance Tests}
 \begin{minipage}{\textwidth}
@@ -658,7 +716,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -672,7 +729,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -686,7 +742,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -700,7 +755,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -714,7 +768,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -728,7 +781,6 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -742,22 +794,9 @@ The following Roles are defined:
 	\hline \bfseries Who & System Architect\\
 	\hline \bfseries Artifacts & System Architecture\\
 	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
 	\hline 
 \end{tabular}
 \end{minipage}
-
-\section{Task Dependencies}
-
-\begin{itemize}
-	\item Tasks depend on each other, some tasks must be processed in a certain order
-\end{itemize}
-
-\begin{figure}[htpb] \centering 
-	\includegraphics[width=\textwidth]{ch6_dependencies} 
-	\caption{Tasks depend on each other} 
-	\label{fig:ch6_dependencies} 
-\end{figure}
 
 \section{Artifacts}
 
