@@ -625,6 +625,7 @@ The following Roles are defined:
 		\item Controller
 		\item Actuator
 	\end{itemize}
+	\item Implement JMX Beans for monitoring purposes
 \end{itemize}
 
 \subsection{Perform Controller Tuning}
@@ -720,6 +721,13 @@ The following Roles are defined:
 \end{tabular}
 \end{minipage}
 
+\begin{itemize}
+	\item Define load scenarios
+	\item define test data
+	\item Implement event generator
+	\item Implementation of tools/scripts for evaluation and data visualisation
+\end{itemize}
+
 \subsection{Setup Monitoring infrastructure}
 \begin{minipage}{\textwidth}
 \captionof{table}{Setup Monitoring infrastructure} \label{table:ch6_Task_Setup_Monitoring_infrastructure}
@@ -733,6 +741,10 @@ The following Roles are defined:
 \end{tabular}
 \end{minipage}
 
+\begin{itemize}
+	\item Integrate jmx services into monitoring infrastracture
+\end{itemize}
+
 \subsection{Setup Test and Integration Environment}
 \begin{minipage}{\textwidth}
 \captionof{table}{Setup Test and Integration Environment} \label{table:ch6_Task_Setup_Test_Environment}
@@ -745,6 +757,11 @@ The following Roles are defined:
 	\hline 
 \end{tabular}
 \end{minipage}
+
+\begin{itemize}
+	\item Setup / Mock external Services
+	\item setup test data
+\end{itemize}
 
 \subsection{Deploy to Test and Integration Environment}
 \begin{minipage}{\textwidth}
@@ -785,6 +802,10 @@ The following Roles are defined:
 \end{tabular}
 \end{minipage}
 
+\begin{itemize}
+	\item Visualise the test results using the tools/skripts implemented in task Define Performance Tests.
+\end{itemize}
+
 \subsection{Define Training Concept}
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Training Concept} \label{table:ch6_Task_Define_Training_Concept}
@@ -797,6 +818,16 @@ The following Roles are defined:
 	\hline 
 \end{tabular}
 \end{minipage}
+
+\begin{itemize}
+	\item define target audience, e.g. operations engineer
+	\item define training content
+	\begin{itemize}
+		\item Different operation modes (batch, single event processing)
+		\item performance characteristics (regarding latency and throughput) depend on current operation mode
+		\item Tuning options (Controller, Aggregation Rules, Routing Rules)
+	\end{itemize}
+\end{itemize}
 
 \section{Artifacts}
 
