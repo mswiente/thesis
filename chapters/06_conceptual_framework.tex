@@ -23,7 +23,7 @@
 
 \begin{figure}
 	[htpb] \centering 
-	\includegraphics[width=\textwidth]{ch6_conceptual_framework_overview} \caption{Overview of Conceptual Framework} \label{fig:ch6_conceptional_framework_overview} 
+	\includegraphics[width=\textwidth]{ch6_overview} \caption{Overview of Conceptual Framework} \label{fig:ch6_overview} 
 \end{figure}
 
 \section{Metamodel} 
@@ -155,13 +155,6 @@ The conceptual framework consists of the following entities:
 	\hline 
 \end{tabular}
 \end{minipage}
-
-\section{View}
-\todo[inline]{Do we need Views?}
-\begin{itemize}
-	\item Technical
-	\item Business
-\end{itemize}
 
 \section{Roles} 
 
@@ -355,15 +348,17 @@ The following Roles are defined:
 		\item Static Tests
 		\item Step Tests
 	\end{itemize}
-	\item Implement Service Interfaces / Test / Deploy
+	\item Implement Integration Architecture
+	\item Implement Service Interfaces
 	\item Implement Aggregation Rules 
+	\item Implement Routing Rules
 	\item Define Performance Tests 
 	\item Setup Monitoring infrastructure
 	\item Setup Test and Integration Environment
-	\item Deploy to Test and Integration Environment
 	\item Perform Performance Tests
 	\item Evaluate Performance Test Results
 	\item Define Training Concept
+	\item Staffing
 \end{itemize}
 
 \subsection{Define Business Architecture}
@@ -761,20 +756,8 @@ The following Roles are defined:
 \begin{itemize}
 	\item Setup / Mock external Services
 	\item setup test data
+	\item Deployment
 \end{itemize}
-
-\subsection{Deploy to Test and Integration Environment}
-\begin{minipage}{\textwidth}
-\captionof{table}{Deploy to Test and Integration Environment} \label{table:ch6_Task_Deploy}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries What & Deploy to Test and Integration Environment\\
-	\hline \bfseries Why & Lorem ipsum\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline 
-\end{tabular}
-\end{minipage}
 
 \subsection{Perform Performance Tests}
 \begin{minipage}{\textwidth}
@@ -826,6 +809,32 @@ The following Roles are defined:
 		\item Different operation modes (batch, single event processing)
 		\item performance characteristics (regarding latency and throughput) depend on current operation mode
 		\item Tuning options (Controller, Aggregation Rules, Routing Rules)
+	\end{itemize}
+\end{itemize}
+
+\subsection{Staffing}
+\begin{minipage}{\textwidth}
+\captionof{table}{Staffing} \label{table:ch6_Task_Staffing}
+\begin{tabular}
+	{|m{3cm}|m{10cm}|} \hline \bfseries What & Staffing\\
+	\hline \bfseries Why & Lorem ipsum\\
+	\hline \bfseries Who & Project Manager\\
+	\hline \bfseries Artifacts & Staffing Plan\\
+	\hline \bfseries Challenges & Lorem Ipsum\\
+	\hline 
+\end{tabular}
+\end{minipage}
+
+\begin{itemize}
+	\item Special skills needed for staffing the project
+	\item Adaptive Middleware concepts
+	\item System Architect:
+	\begin{itemize}
+		\item Controller Design
+	\end{itemize}
+	\item Software Engineer:
+	\begin{itemize}
+		\item Controller Implementation and Tuning
 	\end{itemize}
 \end{itemize}
 
