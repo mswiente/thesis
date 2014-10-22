@@ -165,15 +165,37 @@ The conceptual framework consists of the following entities:
 
 The following Roles are defined:
 \begin{itemize}
-	\item System Architect 
 	\item Business Architect
-	\item Developer
+	\item System Architect 
+	\item Software Engineer
 	\item Test Engineer
+	\item Operations Engineer
 	\item Project Manager
-	\item Operations Engineer 
-	\item Service Architect 
-	\item Service Developer
 \end{itemize}
+
+\subsection{Business Analyst}
+\begin{minipage}{\textwidth}
+\captionof{table}{Business Architect} \label{table:ch6_Role_Business_Analysist}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
+	\hline \bfseries Description & The Business Architect is responsible for designing the business architecture of the system, including the definition of services and aggregation rules.\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Define Service Interfaces
+		\item Define Aggregation Rules
+	\end{itemize}
+	\\
+	\hline 
+	\bfseries Needed skills &
+	\begin{itemize}
+		\item Integration styles and patterns, e.g. \ac{SOA}
+		\item Concepts of the Adaptive Middleware for Bulk Data Processing
+		\item Business domain knowledge
+	\end{itemize}
+	\\
+	\hline
+\end{tabular}
+\end{minipage}
 
 \subsection{System Architect} 
 \begin{minipage}{\textwidth}
@@ -186,48 +208,55 @@ The following Roles are defined:
 		\item Define System Architecture 
 		\item Define Integration Architecture
 		\item Define Controller Architecture
-		\item Define Service Interfaces (?)
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
-
-\subsection{Business Analyst}
-\begin{minipage}{\textwidth}
-\captionof{table}{Business Architect} \label{table:ch6_Role_Business_Analysist}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
-	\hline \bfseries Description & The Business Architect is responsible for designing the business architecture of the system, including the definition of services and aggregation rules.\\
-	\hline \bfseries Tasks & 
+	\hline
+	\bfseries Needed skills & 
 	\begin{itemize}
-		\item Define Services (?)
-		\item Define Aggregation Rules
+		\item System modelling languages, e.g. \ac{UML} and tools
+		\item Integration styles and patterns, e.g. \ac{SOA}
+		\item Processing styles, e.g. batch and single-event processing
+		\item Integration middleware technologies and products, e.g. Apache Camel, \ac{ESB}
+		\item Concepts of the Adaptive Middleware for Bulk Data Processing
+		\item Control theory
 	\end{itemize}
 	\\
-	\hline 
+	\hline
 \end{tabular}
 \end{minipage}
 
-\subsection{Developer}
+\subsection{Software Engineer}
 \begin{minipage}{\textwidth}
-\captionof{table}{Developer} \label{table:ch6_Role_Developer}
+\captionof{table}{Software Engineer} \label{table:ch6_Role_Developer}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Developer\\
 	\hline \bfseries Description & The Developer is responsible for the implementation of the system, including the implementation and tuning of the feeback-controll loop.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Implement Integration Mechanisms (?)
+		\item Implement Integration Architecture
+		\item Implement Service Interfaces
 		\item Implement Aggregation Rules
-		\item Implement Controller
-		\item Perform Controller Tuning (?)
+		\item Implement Routing Rules
+		\item Implement Feedback-Control
+		\item Perform Controller Tuning
 	\end{itemize}
 	\\
 	\hline 
+	\bfseries Needed skills &
+	\begin{itemize}
+		\item Integration styles and patterns, e.g. \ac{SOA}
+		\item Processing styles, e.g. batch and single-event processing
+		\item Batch optimisations
+		\item Integration middleware technologies and products, e.g. Apache Camel, \ac{ESB}
+		\item Concepts of the Adaptive Middleware for Bulk Data Processing
+		\item Control theory
+	\end{itemize}
+	\\
+	\hline
 \end{tabular}
 \end{minipage}
 
-\subsection{Tester}
+\subsection{Test Engineer}
 \begin{minipage}{\textwidth}
 \captionof{table}{Tester} \label{table:ch6_Role_Tester}
 \begin{tabular}
@@ -235,8 +264,41 @@ The following Roles are defined:
 	\hline \bfseries Description & The Tester is responsible for defining and performing the performance tests of the system.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Define Performance Tests (?)
+		\item Define Performance Tests
 		\item Perform Performance Tests
+		\item Evaluate Performance Tests
+	\end{itemize}
+	\\
+	\hline
+	\bfseries Needed skills &
+	\begin{itemize}
+		\item Design and evaluation of performance tests
+		\item Concepts of the Adaptive Middleware for Bulk Data Processing
+		\item Control theory (basics)
+	\end{itemize}
+	\\
+	\hline
+\end{tabular}
+\end{minipage}
+
+\subsection{Operations Engineer}
+\begin{minipage}{\textwidth}
+\captionof{table}{Operations Engineer} \label{table:ch6_Role_Operations_Engineer}
+\begin{tabular}
+	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Operations Engineer\\
+	\hline \bfseries Description & The Operations Engineer is responsible for operating the system, including setup, deployment and monitoring.\\
+	\hline \bfseries Tasks & 
+	\begin{itemize}
+		\item Setup Monitoring Infrastructure
+		\item Setup System Environments
+		\item Perform System Tuning
+	\end{itemize}
+	\\
+	\hline
+	\bfseries Needed skills &
+	\begin{itemize}
+		\item Monitoring technologies and products, e.g. \ac{JMX}
+		\item Concepts of the Adaptive Middleware for Bulk Data Processing
 	\end{itemize}
 	\\
 	\hline
@@ -251,58 +313,19 @@ The following Roles are defined:
 	\hline \bfseries Description & The Project Manager is responsible for the project coordination, including the staffing and planing of the required environments.\\
 	\hline \bfseries Tasks & 
 	\begin{itemize}
-		\item Plan Staffing (?)
-		\item Plan Project Environments (Development / Testing / Integration / Production)
-	\end{itemize}
-	\\
-	\hline 	
-\end{tabular}
-\end{minipage}
-
-\subsection{Operations Engineer}
-\begin{minipage}{\textwidth}
-\captionof{table}{Operations Engineer} \label{table:ch6_Role_Operations_Engineer}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Operations Engineer\\
-	\hline \bfseries Description & The Operations Engineer is responsible for operating the system, including setup, deployment and monitoring.\\
-	\hline \bfseries Tasks & 
-	\begin{itemize}
-		\item Setup Monitoring Infrastructure
-		\item Setup Test and Integration Environment
-		\item Deploy to Test and Integration Environment 
+		\item Perform Staffing
+		\item Define Training Concept
+		\item Source Project Environments
 	\end{itemize}
 	\\
 	\hline 
-\end{tabular}
-\end{minipage}
-
-\subsection{Service Architect}
-\begin{minipage}{\textwidth}
-\captionof{table}{Service Architect} \label{table:ch6_Role_Service_Architect}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Service Architect\\
-	\hline \bfseries Description & The Service Architect is responsible for designing the technical architecture of services.\\
-	\hline \bfseries Tasks & 
+	\bfseries Needed skills &
 	\begin{itemize}
-		\item Define Service Interfaces
+		\item Framework for Feedback-Controlled Bulk Data Processing Systems
+		\item Concepts of the Adaptive Middleware for Bulk Data Processing
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
-
-\subsection{Service Developer}
-\begin{minipage}{\textwidth}
-\captionof{table}{Service Developer} \label{table:ch6_Role_Service_Developer}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Service Developer\\
-	\hline \bfseries Description & The Service Developer is responsible for implementing the services.\\
-	\hline \bfseries Tasks & 
-	\begin{itemize}
-		\item Implement Service Interface
-	\end{itemize}
-	\\
-	\hline 
+	\hline
 \end{tabular}
 \end{minipage}
 
@@ -312,12 +335,13 @@ The following Roles are defined:
 \begin{itemize}
 	\item Main entities of the conceptual framework, define what should be done.
 	\item Tasks depend on each other, some tasks must be processed in a certain order
+	\item Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks assigned to the different phases of the Conceptual Framework.
 \end{itemize}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=\textwidth]{ch6_dependencies} 
-	\caption{Tasks depend on each other} 
-	\label{fig:ch6_dependencies} 
+	\includegraphics[width=\textwidth]{ch6_overview_tasks} 
+	\caption{Overview of tasks} 
+	\label{fig:ch6_overview_tasks} 
 \end{figure}
 
 \begin{itemize}
@@ -361,14 +385,20 @@ The following Roles are defined:
 	\item Staffing
 \end{itemize}
 
-\subsection{Define Business Architecture}
+\subsection{Business Architecture}
 
 \begin{itemize}
 	\item The business architecture defines the business components of the system and their relationships independantly of the technical implementation.
 	\item Except from the described subtasks, the task is not specific to the conceptual model.
 \end{itemize}
 
-\subsection{Define Service Interfaces}
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_tasks_business_architecture} 
+	\caption{Tasks extending the definition of the business architecture} 
+	\label{fig:ch6_tasks_business_architecture} 
+\end{figure}
+
+\subsubsection{Define Service Interfaces}
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Service Interfaces} \label{table:ch6_Task_Define_Service_Interfaces}
 \begin{tabular}
@@ -391,7 +421,7 @@ The following Roles are defined:
 	\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
 \end{itemize}
 
-\subsection{Define Aggregation Rules}
+\subsubsection{Define Aggregation Rules}
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Aggregation Rules} \label{table:ch6_Task_Define_Aggregation_Rules}
 \begin{tabular}
@@ -430,7 +460,15 @@ The following Roles are defined:
 	\end{itemize}
 \end{itemize}
 
-\subsection{Define System Architecture }
+\subsection{System Architecture }
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_tasks_system_architecture} 
+	\caption{Tasks extending the definition of the system architecture} 
+	\label{fig:ch6_tasks_system_architecture} 
+\end{figure}
+
+
 \begin{minipage}{\textwidth}
 \captionof{table}{Define System Architecture} \label{table:ch6_Task_Define_System_Architecture}
 \begin{tabular}
@@ -460,7 +498,7 @@ The following Roles are defined:
 	\item Except from the described subtasks, the task is not specific to the conceptual model.
 \end{itemize}
 
-\subsection{Define Integration Architecture}
+\subsubsection{Define Integration Architecture}
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Integration Architecture} \label{table:ch6_Task_Define_Integration_Architecture}
 \begin{tabular}
@@ -504,7 +542,7 @@ The following Roles are defined:
 	\end{itemize}
 \end{itemize}
 
-\subsection{Define Routing Rules}
+\subsubsection{Define Routing Rules}
 
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Routing Rules} \label{table:ch6_Task_Define_Routing_Rules}
@@ -528,7 +566,14 @@ The following Roles are defined:
 	\item The routing rules define, which service endpoint should be called for a given aggregation size.
 \end{itemize}
 
-\subsection{Define Controller Architecture}
+\subsection{Feedback-Control}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_tasks_feedback_control} 
+	\caption{Tasks for implementing the feedback-control loop} 
+	\label{fig:ch6_tasks_feedback_control} 
+\end{figure}
+
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Controller Architecture} \label{table:ch6_Task_Define_Controller_Architecture}
 \begin{tabular}
@@ -594,7 +639,7 @@ The following Roles are defined:
 	\item selected input variables should be measured easily and directly, without delay such as when calculating averages
 \end{itemize}
 
-\subsection{Implement Controller}
+\subsubsection{Implement Controller}
 \begin{minipage}{\textwidth}
 \captionof{table}{Implement Controller / Feedback Loop} \label{table:ch6_Task_Implement_Controller}
 \begin{tabular}
@@ -623,7 +668,7 @@ The following Roles are defined:
 	\item Implement JMX Beans for monitoring purposes
 \end{itemize}
 
-\subsection{Perform Controller Tuning}
+\subsubsection{Perform Controller Tuning}
 \subsubsection{System Model/System Identification}
 \todo[inline]{Should this be a Sub-Task of Definition of Controller Architecture?}
 \begin{minipage}{\textwidth}
@@ -664,7 +709,7 @@ The following Roles are defined:
 \end{tabular}
 \end{minipage}
 
-\subsection{Implement Service Interfaces / Test / Deploy}
+\subsection{Implement Service Interfaces}
 \begin{minipage}{\textwidth}
 \captionof{table}{Implement Service Interfaces} \label{table:ch6_Task_Implement_Service_Interfaces}
 \begin{tabular}
@@ -1024,6 +1069,11 @@ The following Roles are defined:
 % section tools (end)
 
 \section{Reference Architecture}
+\todo[inline]{Do we need this?}
+
+\begin{itemize}
+	\item Together with the concept for the Adaptive Middleware presented in Chapter \ref{ch:adaptive_middleware}, the Conceptual Framwork presented in this chapter build a reference architecture for adaptive systems for bulk data processing.
+\end{itemize}
 
 \section{Relationship to Architecture Frameworks and Methodologies} % (fold)
 \label{sec:ch6_relation_frameworks}
