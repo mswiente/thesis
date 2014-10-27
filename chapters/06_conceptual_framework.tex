@@ -536,6 +536,7 @@ The Conceptual Framework defines the following Roles:
 \end{tabular}
 \end{minipage}
 
+\subsubsection{Define Routing Rules}
 \begin{minipage}{\textwidth}
 \captionof{table}{Define Routing Rules} \label{table:ch6_Task_Define_Routing_Rules}
 \begin{tabular}
@@ -977,11 +978,16 @@ The Conceptual Framework defines the following Roles:
 \begin{minipage}{\textwidth}
 \captionof{table}{Business Architecture} \label{table:ch6_Artifact_Service_Interface_Definition}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Business Architecture\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Service Interface Definition\\
+	\hline \bfseries Description & 
+	\begin{itemize}
+		\item Defines the structure of input and output data
+		\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
+	\end{itemize}
+	\\
 	\hline \bfseries Task & 
 	\begin{itemize}
-		\item Define Business Architecture 
+		\item Define Service Interfaces 
 	\end{itemize}
 	\\
 	\hline \bfseries Role & Business Architect\\
@@ -991,16 +997,21 @@ The Conceptual Framework defines the following Roles:
 
 \subsection{Aggregation Rules}
 \begin{minipage}{\textwidth}
-\captionof{table}{Business Architecture} \label{table:ch6_Artifact_Aggregation_Rules}
+\captionof{table}{Aggregation Rules} \label{table:ch6_Artifact_Aggregation_Rules}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Business Architecture\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Aggregation Rules\\
+	\hline \bfseries Description & Defines how events should be correlated with each other by the Aggregator.\\
 	\hline \bfseries Task & 
 	\begin{itemize}
-		\item Define Business Architecture 
+		\item Define Aggregation Rules
 	\end{itemize}
 	\\
-	\hline \bfseries Role & Business Architect\\
+	\hline \bfseries Role & 
+	\begin{itemize}
+		\item Business Architect
+		\item System Architect
+	\end{itemize}
+	\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -1010,7 +1021,13 @@ The Conceptual Framework defines the following Roles:
 \captionof{table}{Integration Architecture} \label{table:ch6_Artifact_Integration_Architecture}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Integration Architecture\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & Defines the technical integration of the business services, including
+	\begin{itemize}
+		\item Middleware technology or product
+		\item Transports, such as \ac{JMS}, \ac{SOAP} or \ac{FTP}
+		\item Technical format of the input and output data, such as \ac{XML} or \ac{JSON}, \ac{CSV} or binary formats.
+	\end{itemize}
+	\\
 	\hline \bfseries Task & 
 	\begin{itemize}
 		\item Define Integration Architecture 
@@ -1023,13 +1040,13 @@ The Conceptual Framework defines the following Roles:
 
 \subsection{Routing Rules}
 \begin{minipage}{\textwidth}
-\captionof{table}{Controller Architecture} \label{table:ch6_Artifact_Routing_Rules}
+\captionof{table}{Routing Rules} \label{table:ch6_Artifact_Routing_Rules}
 \begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Controller Architecture\\
-	\hline \bfseries Description & Lorem ipsum\\
+	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Routing Rules\\
+	\hline \bfseries Description & Defines which service endpoint should be called by the Router for a given aggregation size.\\
 	\hline \bfseries Task & 
 	\begin{itemize}
-		\item Define Controller Architecture 
+		\item Define Routing Rules
 	\end{itemize}
 	\\
 	\hline \bfseries Role & System Architect\\
@@ -1042,7 +1059,7 @@ The Conceptual Framework defines the following Roles:
 \captionof{table}{System Model} \label{table:ch6_Artifact_System_Model}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Model\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
 	\hline \bfseries Task & 
 	\begin{itemize}
 		\item System Identification / Modelling
@@ -1058,7 +1075,7 @@ The Conceptual Framework defines the following Roles:
 \captionof{table}{Controller Configuration} \label{table:ch6_Artifact_Controller_Configuration}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Controller Configuration\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The controller configuration specifies the parameter of the Controller.\\
 	\hline \bfseries Task & 
 	\begin{itemize}
 		\item Perform Controller Tuning
@@ -1074,13 +1091,25 @@ The Conceptual Framework defines the following Roles:
 \captionof{table}{Training Concept} \label{table:ch6_Artifact_Training_Concept}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Training Concept\\
-	\hline \bfseries Description & Lorem ipsum\\
-	\hline \bfseries Task & 
+	\hline \bfseries Description & 
 	\begin{itemize}
-		\item Define System Architecture 
+		\item Defines the audience of the training, for example Operations Engineers, Software Engineers or Test Engineers.
+		\item Defines the content of the training, for example basics of control theory, details about the Adaptive Middleware for Bulk Data Processing.
+		\item Defines the type of training, such as virtual training, on-site training, face-to-face training. 
+		\item Defines a timeplan, learning modules and needed facilities to conduct the training.
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architecture\\
+	\hline \bfseries Task & 
+	\begin{itemize}
+		\item Define Training Concept
+	\end{itemize}
+	\\
+	\hline \bfseries Role & 
+	\begin{itemize}
+		\item Project Manager
+		\item System Architect
+	\end{itemize}
+	\\
 	\hline 
 \end{tabular}
 \end{minipage}
@@ -1090,7 +1119,13 @@ The Conceptual Framework defines the following Roles:
 \captionof{table}{Training Concept} \label{table:ch6_Artifact_Staffing_Plan}
 \begin{tabular}
 	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Staffing Plan\\
-	\hline \bfseries Description & Lorem ipsum\\
+	\hline \bfseries Description & The staffing plan contains
+	\begin{itemize}
+		\item The required team members and their utilisation over the project time (staffing curve).
+		\item The required roles and their assignment to team members.
+		\item A skill matrix that shows the required skills and the knowlegde of each team member.
+	\end{itemize}
+	\\
 	\hline \bfseries Task & 
 	\begin{itemize}
 		\item Perform Staffing
@@ -1118,6 +1153,11 @@ The Conceptual Framework defines the following Roles:
 		\item Gnuplot
 		\item matplotlib
 	\end{itemize}
+	\item Languages for data processing
+	\begin{itemize}
+		\item Perl
+		\item Python
+	\end{itemize}
 \end{itemize}
 
 % section tools (end)
@@ -1131,7 +1171,7 @@ The Conceptual Framework defines the following Roles:
 
 \section{Relationship to Architecture Frameworks and Methodologies} % (fold)
 \label{sec:ch6_relation_frameworks}
-
+\todo[inline]{Maybe move to section \ref{sec:ch6_related_work}}
 \begin{itemize}
 	\item TOGAF
 	\item V-Modell XT
@@ -1142,9 +1182,9 @@ The Conceptual Framework defines the following Roles:
 % section relationship_to_architecture_frameworks_and_methodologies (end)
 
 \section{Related Work}
+\label{sec:ch6_related_work}
 
 \subsection{Software Performance Engineering} % (fold)
-\label{sub:software_performance_engineering}
 
 % subsection software_performance_engineering (end)
 
