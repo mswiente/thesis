@@ -5,7 +5,6 @@
 \chapter[Conceptual Framework]{A Conceptual Framework for Feedback-Controlled Bulk Data Processing Systems}\label{ch:conceptual_framework}
 
 %******************************************************************************
-
 \section{Introduction} 
 
 \begin{itemize}
@@ -26,6 +25,12 @@
 	[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_overview} \caption{Overview of Conceptual Framework} \label{fig:ch6_overview} 
 \end{figure}
+
+\subsection{Reference Architecture}
+
+\begin{itemize}
+	\item Together with the concept for the Adaptive Middleware presented in Chapter \ref{ch:adaptive_middleware}, the Conceptual Framwork presented in this chapter build a reference architecture for adaptive systems for bulk data processing.
+\end{itemize}
 
 \section{Metamodel} 
 The conceptual framework consists of the following entities:
@@ -77,13 +82,14 @@ The conceptual framework consists of the following entities:
 \end{itemize}
 
 \subsection{Plan}
-\begin{minipage}{\textwidth}
-	\captionof{table}{Phase: Plan}\label{table:ch6_View_Plan}
-	\begin{tabular}
-		{|m{2cm}|m{10cm}|} \hline \bfseries Phase & Plan\\
-		\hline \bfseries Description & This phase contains tasks concerning the technical and business design of the system.\\
-		\hline \bfseries Tasks & 
-		\begin{itemize}
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Phase: Plan}\label{table:ch6_View_Plan}\\
+		\toprule
+		\bfseries Phase & Plan\\
+		\midrule 
+		\bfseries Description & This phase contains tasks concerning the technical and business design of the system.\\
+		\midrule
+		\bfseries Tasks & \begin{itemize}
 			\item Define Service Interfaces
 			\item Define Aggregation Rules
 			\item Define Integration Architecture
@@ -94,27 +100,26 @@ The conceptual framework consists of the following entities:
 			\item Perform Staffing
 			\item Define Training Concept
 			\item Source Projct Environments
-		\end{itemize}
-		\\
-		\hline \bfseries Roles &
-		\begin{itemize}
+		\end{itemize}\\
+		\midrule
+		\bfseries Roles & \begin{itemize}
 			\item Project Manager
 			\item Business Analyst
 			\item System Architect
 			\item Test Engineer
-		\end{itemize}
-		\\
-		\hline 
-	\end{tabular}
-\end{minipage}
-
+		\end{itemize}\\
+		\bottomrule
+	\end{tabularx}
+	
 \subsection{Build}
-\begin{minipage}{\textwidth}
-\captionof{table}{Phase: Build}\label{table:ch6_View_Build}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Phase & Build\\
-	\hline \bfseries Description & This phase contains tasks concerning the implementation of the system.\\
-	\hline \bfseries Tasks & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Phase: Build}\label{table:ch6_View_Build}\\
+	\toprule
+	\bfseries Phase & Build\\
+	\midrule 
+	\bfseries Description & This phase contains tasks concerning the implementation of the system.\\
+	\midrule 
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Implement Integration Architecture
 		\item Implement Service Interfaces
@@ -124,37 +129,40 @@ The conceptual framework consists of the following entities:
 		\item Perform Controller Tuning
 	\end{itemize}
 	\\
-	\hline \bfseries Roles &
+	\midrule
+	\bfseries Roles &
 	\begin{itemize}
 		\item Software Engineer
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
 
 \subsection{Run}
-\begin{minipage}{\textwidth}
-\captionof{table}{Phase: Run}\label{table:ch6_View_Run}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Phase & Run\\
-	\hline \bfseries Description & This phase contains tasks concerning the operation of the implemented system in the production environment. \\
-	\hline \bfseries Tasks & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Phase: Run}\label{table:ch6_View_Run}\\
+	\toprule
+	\bfseries Phase & Run\\
+	\midrule 
+	\bfseries Description & This phase contains tasks concerning the operation of the implemented system in the production environment. \\
+	\midrule 
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Setup Monitoring Infrastructure
 		\item Setup Test Environment
 		\item Perform Performance Tests
 	\end{itemize}
 	\\
-	\hline \bfseries Roles &
+	\midrule 
+	\bfseries Roles &
 	\begin{itemize}
 		\item Operations Engineer
 		\item Test Engineer
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
 
 \section{Roles} 
 
@@ -176,18 +184,27 @@ The Conceptual Framework defines the following Roles:
 \end{itemize}
 
 \subsection{Business Analyst}
-\begin{minipage}{\textwidth}
-\captionof{table}{Business Architect} \label{table:ch6_Role_Business_Analysist}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Business Analyst\\
-	\hline \bfseries Description & The Business Architect is responsible for designing the business architecture of the system, including the definition of services and aggregation rules.\\
-	\hline \bfseries Tasks & 
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.6\textwidth]{ch6_role_business_architect} 
+	\caption{Role: Business Architect} 
+	\label{fig:ch6_role_business_architect} 
+\end{figure}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Business Architect} \label{table:ch6_Role_Business_Analysist}\\
+	\toprule
+	\bfseries Role & Business Analyst\\
+	\midrule
+	\bfseries Description & The Business Architect is responsible for designing the business architecture of the system, including the definition of services and aggregation rules.\\
+	\midrule
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Define Service Interfaces
 		\item Define Aggregation Rules
 	\end{itemize}
 	\\
-	\hline 
+	\midrule 
 	\bfseries Needed skills &
 	\begin{itemize}
 		\item Integration styles and patterns, e.g. \ac{SOA}
@@ -195,23 +212,33 @@ The Conceptual Framework defines the following Roles:
 		\item Business domain knowledge
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
+\newpage
 
 \subsection{System Architect} 
-\begin{minipage}{\textwidth}
-\captionof{table}{System Architect}\label{table:ch6_Role_System_Architect}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & System Architect\\
-	\hline \bfseries Description & The System Architect is responsible for designing the technical architecture of the system, including the integration and controller architecture.\\
-	\hline \bfseries Tasks & 
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.6\textwidth]{ch6_role_system_architect} 
+	\caption{Role: System Architect} 
+	\label{fig:ch6_role_system_architect} 
+\end{figure}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{System Architect}\label{table:ch6_Role_System_Architect}\\
+	\toprule 
+	\bfseries Role & System Architect\\
+	\midrule
+	\bfseries Description & The System Architect is responsible for designing the technical architecture of the system, including the integration and controller architecture.\\
+	\midrule
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Define Integration Architecture
 		\item Define Controller Architecture
 	\end{itemize}
 	\\
-	\hline
+	\midrule
 	\bfseries Needed skills & 
 	\begin{itemize}
 		\item System modelling languages, e.g. \ac{UML} and tools
@@ -222,17 +249,26 @@ The Conceptual Framework defines the following Roles:
 		\item Control theory
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
 
 \subsection{Software Engineer}
-\begin{minipage}{\textwidth}
-\captionof{table}{Software Engineer} \label{table:ch6_Role_Developer}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Developer\\
-	\hline \bfseries Description & The Developer is responsible for the implementation of the system, including the implementation and tuning of the feeback-controll loop.\\
-	\hline \bfseries Tasks & 
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.6\textwidth]{ch6_role_software_engineer} 
+	\caption{Role: Software Engineer} 
+	\label{fig:ch6_role_software_engineer} 
+\end{figure}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Software Engineer} \label{table:ch6_Role_Developer}\\
+	\toprule 
+	\bfseries Role & Developer\\
+	\midrule
+	\bfseries Description & The Developer is responsible for the implementation of the system, including the implementation and tuning of the feeback-controll loop.\\
+	\midrule
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Implement Integration Architecture
 		\item Implement Service Interfaces
@@ -242,7 +278,7 @@ The Conceptual Framework defines the following Roles:
 		\item Perform Controller Tuning
 	\end{itemize}
 	\\
-	\hline 
+	\midrule 
 	\bfseries Needed skills &
 	\begin{itemize}
 		\item Integration styles and patterns, e.g. \ac{SOA}
@@ -253,24 +289,33 @@ The Conceptual Framework defines the following Roles:
 		\item Control theory
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
 
 \subsection{Test Engineer}
-\begin{minipage}{\textwidth}
-\captionof{table}{Tester} \label{table:ch6_Role_Tester}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Test Engineer\\
-	\hline \bfseries Description & The Tester is responsible for defining and performing the performance tests of the system.\\
-	\hline \bfseries Tasks & 
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.6\textwidth]{ch6_role_test_engineer} 
+	\caption{Role: Test Engineer} 
+	\label{fig:ch6_role_test_engineer} 
+\end{figure}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Test Engineer} \label{table:ch6_Role_Test_Engineer}\\
+	\toprule
+	\bfseries Role & Test Engineer\\
+	\midrule
+	\bfseries Description & The Tester is responsible for defining and performing the performance tests of the system.\\
+	\midrule
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Define Performance Tests
 		\item Perform Performance Tests
 		\item Evaluate Performance Tests
 	\end{itemize}
 	\\
-	\hline
+	\midrule
 	\bfseries Needed skills &
 	\begin{itemize}
 		\item Design and evaluation of performance tests
@@ -278,57 +323,74 @@ The Conceptual Framework defines the following Roles:
 		\item Control theory (basics)
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
 
 \subsection{Operations Engineer}
-\begin{minipage}{\textwidth}
-\captionof{table}{Operations Engineer} \label{table:ch6_Role_Operations_Engineer}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Operations Engineer\\
-	\hline \bfseries Description & The Operations Engineer is responsible for operating the system, including setup, deployment and monitoring.\\
-	\hline \bfseries Tasks & 
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.6\textwidth]{ch6_role_operations_engineer} 
+	\caption{Role: Operations Engineer} 
+	\label{fig:ch6_role_operations_engineer} 
+\end{figure}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Operations Engineer}\label{table:ch6_Role_Operations_Engineer}\\
+	\toprule
+	\bfseries Role & Operations Engineer\\
+	\midrule
+	\bfseries Description & The Operations Engineer is responsible for operating the system, including setup, deployment and monitoring.\\
+	\midrule
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Setup Monitoring Infrastructure
 		\item Setup System Environments
 		\item Perform System Tuning
 	\end{itemize}
 	\\
-	\hline
+	\midrule
 	\bfseries Needed skills &
 	\begin{itemize}
 		\item Monitoring technologies and products, e.g. \ac{JMX}
 		\item Concepts of the Adaptive Middleware for Bulk Data Processing
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\endline
+\end{tabularx}
+
 
 \subsection{Project Manager}
-\begin{minipage}{\textwidth}
-\captionof{table}{Project Manager} \label{table:ch6_Role_Project_Manager}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Role & Project Manager\\
-	\hline \bfseries Description & The Project Manager is responsible for the project coordination, including the staffing and planing of the required environments.\\
-	\hline \bfseries Tasks & 
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.6\textwidth]{ch6_role_project_manager} 
+	\caption{Role: Project Manager} 
+	\label{fig:ch6_role_project_manager} 
+\end{figure}
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{table}{Project Manager} \label{table:ch6_Role_Project_Manager}\\
+	\toprule
+	\bfseries Role & Project Manager\\
+	\midrule
+	\bfseries Description & The Project Manager is responsible for the project coordination, including the staffing and planing of the required environments.\\
+	\midrule
+	\bfseries Tasks & 
 	\begin{itemize}
 		\item Perform Staffing
 		\item Define Training Concept
 		\item Source Project Environments
 	\end{itemize}
 	\\
-	\hline 
+	\midrule 
 	\bfseries Needed skills &
 	\begin{itemize}
 		\item Framework for Feedback-Controlled Bulk Data Processing Systems
 		\item Concepts of the Adaptive Middleware for Bulk Data Processing
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
 
 \section{Tasks}
 \label{sec:ch6_tasks}
@@ -349,6 +411,7 @@ The Conceptual Framework defines the following Roles:
 \begin{itemize}
 	\item Define Business Architecture
 	\begin{itemize}
+		\item Define Performance Requirements
 		\item Define Service Interfaces
 		\item Define Aggregation Rules
 	\end{itemize}
@@ -400,12 +463,48 @@ The Conceptual Framework defines the following Roles:
 	\label{fig:ch6_tasks_business_architecture} 
 \end{figure}
 
+\subsubsection{Define Performance Requirements}
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Performance Requirements} \label{table:ch6_Task_Define_Performance Requirements}\\
+	\toprule
+	\bfseries Task & Define Performance Requirements\\
+	\midrule\bfseries What & 
+	\begin{itemize}
+		\item Definition of workload scenarios
+		\item Definition of requirements regarding throughput and latency of the system
+		\begin{itemize}
+			\item What is the required minimal latency of the system?
+			\item What is the required minimal throughput of the system?
+		\end{itemize}
+	\end{itemize}
+	\\
+	\midrule
+	\bfseries Why &
+	\begin{itemize}
+		\item The performance requirements are needed for the desing of the system architecture
+	\end{itemize}\\
+	\midrule
+	\bfseries Who & 
+	\begin{itemize}
+		\item Busines Analyst
+		\item System Architect
+	\end{itemize}\\
+	\midrule
+	\bfseries Artifacts & Performance Requirements\\
+	\midrule
+	\bfseries Challenges & 
+	\begin{itemize}
+		\item 
+	\end{itemize}\\
+	\bottomrule
+\end{tabularx}
+
 \subsubsection{Define Service Interfaces}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Service Interfaces} \label{table:ch6_Task_Define_Service_Interfaces}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Service Interfaces\\
-	\hline \bfseries What & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Service Interfaces} \label{table:ch6_Task_Define_Service_Interfaces}\\
+	\toprule
+	\bfseries Task & Define Service Interfaces\\
+	\midrule\bfseries What & 
 	\begin{itemize}
 		\item Structuring the functionality of the system into business services
 		\item Services may already exist or need to be implemented.
@@ -418,27 +517,31 @@ The Conceptual Framework defines the following Roles:
 		\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
 	\end{itemize}
 	\\
-	\hline \bfseries Why &
+	\midrule
+	\bfseries Why &
 	\begin{itemize}
 		\item Defines the business components (services) of the system
 		\item Basis for the definition of the integration architecture and the implementation of the services.
 	\end{itemize}\\
-	\hline \bfseries Who & Business Architect\\
-	\hline \bfseries Artifacts & Service Interface Definitions\\
-	\hline \bfseries Challenges & 
+	\midrule
+	\bfseries Who & Business Architect\\
+	\midrule
+	\bfseries Artifacts & Service Interface Definitions\\
+	\midrule
+	\bfseries Challenges & 
 	\begin{itemize}
 		\item Finding the appropriate services and service granularity
 	\end{itemize}\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
 
 \subsubsection{Define Aggregation Rules}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Aggregation Rules} \label{table:ch6_Task_Define_Aggregation_Rules}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Aggregation Rules\\
-	\hline \bfseries What & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Aggregation Rules} \label{table:ch6_Task_Define_Aggregation_Rules}\\
+	\toprule
+	\bfseries Task & Define Aggregation Rules\\
+	\midrule
+	\bfseries What & 
 	\begin{itemize}
 		\item Definition of rules used in the aggregator for correlating events
 		\item Different options
@@ -465,22 +568,25 @@ The Conceptual Framework defines the following Roles:
 		\end{itemize}
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The aggregation Rules are needed by the Aggregator to correlate events.\\
-	\hline \bfseries Who & 
+	\midrule
+	\bfseries Why & The aggregation Rules are needed by the Aggregator to correlate events.\\
+	\midrule
+	\bfseries Who & 
 	\begin{itemize}
 		\item Business Architect
 		\item System Architect
 	\end{itemize}
 	\\
-	\hline \bfseries Artifacts & Aggregation Rules\\
-	\hline \bfseries Challenges & 
+	\midrule
+	\bfseries Artifacts & Aggregation Rules\\
+	\midrule
+	\bfseries Challenges & 
 	\begin{itemize}
 		\item Finding aggregation rules that allows for an even distribution of events.
 		\item Technical Aggregation Rules can be defined only after the definition of the integration architecture
 	\end{itemize}\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
 
 \subsection{System Architecture }
 
@@ -495,11 +601,12 @@ The Conceptual Framework defines the following Roles:
 \end{itemize}
 
 \subsubsection{Define Integration Architecture}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Integration Architecture} \label{table:ch6_Task_Define_Integration_Architecture}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Integration Architecture\\
-	\hline \bfseries What &
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Integration Architecture} \label{table:ch6_Task_Define_Integration_Architecture}\\
+	\toprule
+	\bfseries Task & Define Integration Architecture\\
+	\midrule
+	\bfseries What &
 	\begin{itemize}
 		\item Definition of integration architecture
 		\begin{itemize}
@@ -526,53 +633,70 @@ The Conceptual Framework defines the following Roles:
 		\end{itemize}
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The integration architecture defines the technologies to integrate the services into the system.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Input & Service Interface Definitions
+	\midrule
+	\bfseries Why & The integration architecture defines the technologies to integrate the services into the system.\\
+	\midrule
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Input & Service Interface Definitions
 	\\
-	\hline \bfseries Output & Integration Architecture\\
-	\hline \bfseries Challenges & Choosing the appropriate middleware technology and or product.\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Output & Integration Architecture\\
+	\midrule
+	\bfseries Challenges & Choosing the appropriate middleware technology and or product.\\
+	\bottomrule
+\end{tabularx}
 
 \subsubsection{Define Routing Rules}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Routing Rules} \label{table:ch6_Task_Define_Routing_Rules}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Routing Rules\\
-	\hline \bfseries What & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{table}{Define Routing Rules} \label{table:ch6_Task_Define_Routing_Rules}\\
+	\toprule 
+	\bfseries Task & Define Routing Rules\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Depending on the size of the aggregated message, the Router routes the message to the appropriate service endpoint, which is either optimized for batch or single event processing.
 		\item The routing rules define, which service endpoint should be called for a given aggregation size.
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The routing rules define, which service endpoint should be called for a given aggregation size.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Input & 
+	\midrule 
+	\bfseries Why & The routing rules define, which service endpoint should be called for a given aggregation size.\\
+	\midrule
+	\bfseries Who & System Architect\\
+	\midrule
+	\bfseries Input & 
 		\begin{itemize}
 			\item Integration Architecture
 		\end{itemize}
 	\\
-	\hline \bfseries Output & Routing Rules Definition\\
-	\hline \bfseries Challenges & Finding the data aggregation threshold to route messages to the appropriate service endpoint.\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Output & Routing Rules Definition\\
+	\midrule 
+	\bfseries Challenges & Finding the data aggregation threshold to route messages to the appropriate service endpoint.\\
+	\bottomrule 
+\end{tabularx}
 
 \subsection{Feedback-Control}
 
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control} 
+	\caption{Activity Diagram: Implement Feedback-Control Loop} 
+	\label{fig:ch6_activiy_feedback_control} 
+\end{figure}
+
+\subsubsection{Define Controller Architecture}
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_tasks_feedback_control} 
 	\caption{Tasks for implementing the feedback-control loop} 
 	\label{fig:ch6_tasks_feedback_control} 
 \end{figure}
 
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Controller Architecture} \label{table:ch6_Task_Define_Controller_Architecture}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Controller Architecture\\
-	\hline \bfseries What & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Controller Architecture} \label{table:ch6_Task_Define_Controller_Architecture}\\
+	\toprule 
+	\bfseries Task & Define Controller Architecture\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Design of the controller architecture implemented by the system
 		\item For example
@@ -583,41 +707,55 @@ The Conceptual Framework defines the following Roles:
 		\item Depends on control problem and system dynamics (linear, non-linear)
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The Controller Architecture is the basis for the implementation of the feedback-control loop.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Input & Integration Architecture\\
-	\hline \bfseries Output & Controller Architecture\\
-	\hline \bfseries Challenges & \\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Why & The Controller Architecture is the basis for the implementation of the feedback-control loop.\\
+	\midrule 
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Input & Integration Architecture\\
+	\midrule 
+	\bfseries Output & Controller Architecture\\
+	\midrule 
+	\bfseries Challenges & \\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsubsection{Define Control Problem}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Control Problem} \label{table:ch6_Task_Define_Control_Problem}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Control Problem\\
-	\hline \bfseries What & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Control Problem} \label{table:ch6_Task_Define_Control_Problem}\\
+	\toprule 
+	\bfseries Task & Define Control Problem\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Define what properties of the system should be controlled.
 		\item In case of the Adaptive Middleware (see Chapter \ref{ch:adaptive_middleware}) the control problem is already defined.
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The control problem defines the goal of the feedback-control.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & Control Problem\\
-	\hline \bfseries Challenges & Lorem Ipsum\\
-	\hline \bfseries Best practises & Lorem ipsum\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Why & The control problem defines the goal of the feedback-control.\\
+	\midrule 
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Artifacts & Control Problem\\
+	\midrule 
+	\bfseries Challenges & Lorem Ipsum\\
+	\midrule 
+	\bfseries Best practises & Lorem ipsum\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsubsection{Define Input/Output Variables}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Input/Output Variables} \label{table:ch6_Task_Define_Controller_Variables}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Input/Output Variables\\
-	\hline \bfseries What &
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Input/Output Variables} \label{table:ch6_Task_Define_Controller_Variables}\\
+	\toprule 
+	\bfseries Task & Define Input/Output Variables\\
+	\midrule 
+	\bfseries What &
 	\begin{itemize}
 		\item Definition of input and output variables of the controller
 		\item for example
@@ -629,21 +767,28 @@ The Conceptual Framework defines the following Roles:
 		\end{itemize}
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The input/output variables are needed for the implementation of the controller.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Input & Control Problem\\
-	\hline \bfseries Output & Input/Output Variables\\
-	\hline \bfseries Challenges & The selected input variables should be measured easily and directly, without delay such as when calculating averages.\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Why & The input/output variables are needed for the implementation of the controller.\\
+	\midrule 
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Input & Control Problem\\
+	\midrule 
+	\bfseries Output & Input/Output Variables\\
+	\midrule 
+	\bfseries Challenges & The selected input variables should be measured easily and directly, without delay such as when calculating averages.\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsubsection{Implement Controller}
-\begin{minipage}{\textwidth}
-\captionof{table}{Implement Controller / Feedback Loop} \label{table:ch6_Task_Implement_Controller}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Implement Feedback-Control Loop\\
-	\hline \bfseries What & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Implement Controller / Feedback Loop} \label{table:ch6_Task_Implement_Controller}\\
+	\toprule 
+	\bfseries Task & Implement Feedback-Control Loop\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Implementation of Controller Architecture including
 		\begin{itemize}
@@ -655,148 +800,188 @@ The Conceptual Framework defines the following Roles:
 		\item Implement mechanisms for performing static and step tests.
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The Feedback-Control Loop implements the automatic adjustment of data granularity at runtime.\\
-	\hline \bfseries Who & Software Engineer\\
-	\hline \bfseries Input & Controller Architecture\\
-	\hline \bfseries Artifacts & Feedback-Control Loop Implementation\\
-	\hline \bfseries Challenges & 
+	\midrule 
+	\bfseries Why & The Feedback-Control Loop implements the automatic adjustment of data granularity at runtime.\\
+	\midrule 
+	\bfseries Who & Software Engineer\\
+	\midrule 
+	\bfseries Input & Controller Architecture\\
+	\midrule 
+	\bfseries Artifacts & Feedback-Control Loop Implementation\\
+	\midrule 
+	\bfseries Challenges & 
 		\begin{itemize}
 			\item Sensor performance
 			\item Distributed sensors 
 			\item Framework vs. custom development
 		\end{itemize}\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \subsubsection{Static Tests}
-\begin{minipage}{\textwidth}
-\captionof{table}{Static Tests} \label{table:ch6_Task_Static_Tests}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Static Tests\\
-	\hline \bfseries What & Perform static tests in order to determine the static behaviour of the system.\\
-	\hline \bfseries Why & The static behaviour of the system is needed to determine the characteristics of the system.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & Controller Architecture\\
-	\hline \bfseries Challenges & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Static Tests} \label{table:ch6_Task_Static_Tests}\\
+	\toprule 
+	\bfseries Task & Static Tests\\
+	\midrule 
+	\bfseries What & Perform static tests in order to determine the static behaviour of the system.\\
+	\midrule 
+	\bfseries Why & The static behaviour of the system is needed to determine the characteristics of the system.\\
+	\midrule 
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Artifacts & Controller Architecture\\
+	\midrule 
+	\bfseries Challenges & 
 	\begin{itemize}
 		\item The system needs to be already implemented.
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \subsubsection{Step Tests}
-\begin{minipage}{\textwidth}
-\captionof{table}{Step Tests} \label{table:ch6_Task_Step_Tests}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Step Tests\\
-	\hline \bfseries What & Perform step tests to determine the dynamic behaviour of the system.\\
-	\hline \bfseries Why & The dynamic behaviour of the system is needed for building a model of the system and to tune the controller.\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & Controller Architecture\\
-	\hline \bfseries Challenges & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Step Tests} \label{table:ch6_Task_Step_Tests}\\
+	\toprule 
+	\bfseries Task & Step Tests\\
+	\midrule 
+	\bfseries What & Perform step tests to determine the dynamic behaviour of the system.\\
+	\midrule 
+	\bfseries Why & The dynamic behaviour of the system is needed for building a model of the system and to tune the controller.\\
+	\midrule 
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Artifacts & Controller Architecture\\
+	\midrule 
+	\bfseries Challenges & 
 	\begin{itemize}
 		\item The system needs to be already implemented.
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \subsubsection{System Model/System Identification}
-\begin{minipage}{\textwidth}
-	\captionof{table}{System Model/System Identification} \label{table:ch6_Task_Controler_Tuning} 
-	\begin{tabular}
-		{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define System Architecture\\
-		\hline \bfseries What & Building a model of the system.\\
-		\hline \bfseries Why & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
-		\hline \bfseries Who & System Architect\\
-		\hline \bfseries Input & Static and dynamic behaviour of the system\\ 
-		\hline \bfseries Output & System Model\\
-		\hline \bfseries Challenges & 
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{System Model/System Identification} \label{table:ch6_Task_Controler_Tuning}\\
+		\toprule 
+		\bfseries Task & Define System Architecture\\
+		\midrule 
+		\bfseries What & Building a model of the system.\\
+		\midrule 
+		\bfseries Why & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
+		\midrule 
+		\bfseries Who & System Architect\\
+		\midrule 
+		\bfseries Input & Static and dynamic behaviour of the system\\ 
+		\midrule 
+		\bfseries Output & System Model\\
+		\midrule 
+		\bfseries Challenges & 
 		\begin{itemize}
 			\item The software engineer needs to have a profound knowlegde of controller theory and system identification in order to build a relevant model of the system.
 		\end{itemize}
 		\\
-		\hline 
-	\end{tabular}
-\end{minipage}
+		\bottomrule 
+	\end{tabularx}
+
 
 \subsubsection{Perform Controller Tuning}
-\begin{minipage}{\textwidth}
-	\captionof{table}{Perform Controller Tuning} \label{table:ch6_Task_Perform_Controller_Tuning} 
-	\begin{tabular}
-		{|m{3cm}|m{10cm}|} \hline \bfseries Task & Perform Controller Tuning\\
-		\hline \bfseries What & 
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Perform Controller Tuning} \label{table:ch6_Task_Perform_Controller_Tuning} \\
+		\toprule 
+		\bfseries Task & Perform Controller Tuning\\
+		\midrule 
+		\bfseries What & 
 		\begin{itemize}
 			\item Controller Tuning can be done using the implementation of the system.
 			\item Alternatively, the tuning can done using a model of the system.
 		\end{itemize}
 		\\
-		\hline \bfseries Why & The Controller needs to be adjusted to the system characteristics.\\
-		\hline \bfseries Who & Software Engineer\\
-		\hline \bfseries Input & Controller Architecture\\
-		\hline \bfseries Challenges & 
+		\midrule 
+		\bfseries Why & The Controller needs to be adjusted to the system characteristics.\\
+		\midrule 
+		\bfseries Who & Software Engineer\\
+		\midrule 
+		\bfseries Input & Controller Architecture\\
+		\midrule 
+		\bfseries Challenges & 
 		\begin{itemize}
 			\item The software engineer needs to have a profound knowlegde of controller theory and the controller architecture in order to properly tune the implemented controller.
 		\end{itemize}
 		\\
-		\hline 
-	\end{tabular}
-\end{minipage}
+		\bottomrule 
+	\end{tabularx}
+
 
 \subsection{Implement Service Interfaces}
-\begin{minipage}{\textwidth}
-\captionof{table}{Implement Service Interfaces} \label{table:ch6_Task_Implement_Service_Interfaces}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Implement Service Interfaces\\
-	\hline \bfseries What & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Implement Service Interfaces} \label{table:ch6_Task_Implement_Service_Interfaces}\\
+	\toprule 
+	\bfseries Task & Implement Service Interfaces\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Implementation of business services
 		\item Batch implementation / single event implementation
 		\item Batch optimisation
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The services implement the business functionality of the system.\\
-	\hline \bfseries Who & Software Engineer\\
-	\hline \bfseries Input & Service Interface Definitions\\
-	\hline \bfseries Challenges & 
+	\midrule 
+	\bfseries Why & The services implement the business functionality of the system.\\
+	\midrule 
+	\bfseries Who & Software Engineer\\
+	\midrule 
+	\bfseries Input & Service Interface Definitions\\
+	\midrule 
+	\bfseries Challenges & 
 	\begin{itemize}
 		\item Implementing appropriate optimisations for batch and single-event processing.
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Implement Aggregator}
-\begin{minipage}{\textwidth}
-\captionof{table}{Implement Aggregator} \label{table:ch6_Task_Implement_Aggregator}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Implement Aggregatator\\
-	\hline \bfseries What & 
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Implement Aggregator} \label{table:ch6_Task_Implement_Aggregator}\\
+	\toprule 
+	\bfseries Task & Implement Aggregatator\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Implementation or configuration of the Aggregator component.
 		\item Implementation of the aggregation rules.
 		\item Rules should be configurable during run-time or configuration-time. Should not be hard-coded.
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The aggregator component is responsible for aggregating events according to the aggregation rules and is one of the main building blocks of the Adaptive Middleware (see Chapter \ref{ch:adaptive_middleware}).\\
-	\hline \bfseries Who & Software Engineer\\
-	\hline \bfseries Input & Aggregation Rules\\
-	\hline \bfseries Challenges & Implementation of mechanisms to dynamically load aggregation rules at run-time or configuration-time.\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Why & The aggregator component is responsible for aggregating events according to the aggregation rules and is one of the main building blocks of the Adaptive Middleware (see Chapter \ref{ch:adaptive_middleware}).\\
+	\midrule 
+	\bfseries Who & Software Engineer\\
+	\midrule 
+	\bfseries Input & Aggregation Rules\\
+	\midrule 
+	\bfseries Challenges & Implementation of mechanisms to dynamically load aggregation rules at run-time or configuration-time.\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Define Performance Tests}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Performance Tests} \label{table:ch6_Task_Define_Performance_Tests}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Performance Tests\\
-	\hline \bfseries What &
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Performance Tests} \label{table:ch6_Task_Define_Performance_Tests}\\
+	\toprule 
+	\bfseries Task & Define Performance Tests\\
+	\midrule 
+	\bfseries What &
 	\begin{itemize}
 		\item Define load scenarios
 		\item Define test data
@@ -804,102 +989,130 @@ The Conceptual Framework defines the following Roles:
 		\item Implement tools and scripts for evaluation and data visualisation
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The Performance Test Concept defines what should be done to test whether the system meets its performance requirements.\\
-	\hline \bfseries Who & Test Engineer\\
-	\hline \bfseries Artifacts & Performance Test Concept\\
-	\hline \bfseries Challenges & The performance test should include tests concerning the adaptive behaviour of the system.\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Why & The Performance Test Concept defines what should be done to test whether the system meets its performance requirements.\\
+	\midrule 
+	\bfseries Who & Test Engineer\\
+	\midrule 
+	\bfseries Artifacts & Performance Test Concept\\
+	\midrule 
+	\bfseries Challenges & The performance test should include tests concerning the adaptive behaviour of the system.\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Setup Monitoring infrastructure}
-\begin{minipage}{\textwidth}
-\captionof{table}{Setup Monitoring infrastructure} \label{table:ch6_Task_Setup_Monitoring_infrastructure}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Setup Monitoring infrastructuree\\
-	\hline \bfseries What & Setting up the monitoring infrastructure, including
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Setup Monitoring infrastructure} \label{table:ch6_Task_Setup_Monitoring_infrastructure}\\
+	\toprule 
+	\bfseries Task & Setup Monitoring infrastructuree\\
+	\midrule 
+	\bfseries What & Setting up the monitoring infrastructure, including
 	\begin{itemize}
 		\item Integrating the monitoring facilities (for example \ac{JMX} Beans) of the system into the existing monitoring infrastructure.
 	\end{itemize}
 	\\
-	\hline \bfseries Why & Lorem ipsum\\
-	\hline \bfseries Who & Operations Engineer\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & none\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Why & Lorem ipsum\\
+	\midrule 
+	\bfseries Who & Operations Engineer\\
+	\midrule 
+	\bfseries Artifacts & System Architecture\\
+	\midrule 
+	\bfseries Challenges & none\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Setup Test Environment}
-\begin{minipage}{\textwidth}
-\captionof{table}{Setup Test Environment} \label{table:ch6_Task_Setup_Test_Environment}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Setup Test Environment\\
-	\hline \bfseries What & Setup up the test environment used for the performance tests, including
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Setup Test Environment} \label{table:ch6_Task_Setup_Test_Environment}\\
+	\toprule \bfseries Task & Setup Test Environment\\
+	\midrule 
+	\bfseries What & Setup up the test environment used for the performance tests, including
 	\begin{itemize}
 		\item Setup / Mock external Services
 		\item setup test data
 		\item Deployment
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The test environment is needed to perform the performance tests.\\
-	\hline \bfseries Who & Operations Engineer\\
-	\hline \bfseries Artifacts & Test Environments\\
-	\hline \bfseries Challenges & 
+	\midrule 
+	\bfseries Why & The test environment is needed to perform the performance tests.\\
+	\midrule 
+	\bfseries Who & Operations Engineer\\
+	\midrule 
+	\bfseries Artifacts & Test Environments\\
+	\midrule 
+	\bfseries Challenges & 
 	\begin{itemize}
 		\item Test environment should be comparable to the production environment to get valid test results.
 		\item Additionally, the test data should also be comparable to production data.
 	\end{itemize}
 	\\
-	\hline
-\end{tabular}
-\end{minipage}
+	\bottomrule
+\end{tabularx}
+
 
 \subsection{Perform Performance Tests}
-\begin{minipage}{\textwidth}
-\captionof{table}{Perform Performance Tests} \label{table:ch6_Task_Perform_Performance_Tests}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Perform Performance Tests\\
-	\hline \bfseries What & \\
-	\hline \bfseries Why & The performance tests are necessary to assure that the system meets the performance requirements.\\
-	\hline \bfseries Who & Tesst Engineer\\
-	\hline \bfseries Input & Performance Test Concept\\
-	\hline \bfseries Output & Performance Test Results\\
-	\hline \bfseries Challenges & none\\
-	\hline 
-\end{tabular}
-\end{minipage}
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Perform Performance Tests} \label{table:ch6_Task_Perform_Performance_Tests}\\
+	\toprule 
+	\bfseries Task & Perform Performance Tests\\
+	\midrule 
+	\bfseries What & \\
+	\midrule 
+	\bfseries Why & The performance tests are necessary to assure that the system meets the performance requirements.\\
+	\midrule 
+	\bfseries Who & Tesst Engineer\\
+	\midrule 
+	\bfseries Input & Performance Test Concept\\
+	\midrule 
+	\bfseries Output & Performance Test Results\\
+	\midrule 
+	\bfseries Challenges & none\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Evaluate Performance Test Results}
-\begin{minipage}{\textwidth}
-\captionof{table}{Evaluate Performance Test Results} \label{table:ch6_Evaluate_Performance_Results}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Evaluate Performance Test Results\\
-	\hline \bfseries What & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Evaluate Performance Test Results} \label{table:ch6_Evaluate_Performance_Results}\\
+	\toprule 
+	\bfseries Task & Evaluate Performance Test Results\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Visualise the test results using the tools/skripts implemented in the task Define Performance Tests.
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The performance test evaluation is conducted to understand the performance characteristics of the system.\\
-	\hline \bfseries Who & 
+	\midrule 
+	\bfseries Why & The performance test evaluation is conducted to understand the performance characteristics of the system.\\
+	\midrule 
+	\bfseries Who & 
 	\begin{itemize}
 		\item Test Engineer
 		\item System Engineer
 	\end{itemize}
 	\\
-	\hline \bfseries Input & Performance Test Result\\
-	\hline \bfseries Output & Performance Test Evaluation\\
-	\hline \bfseries Challenges & none\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Input & Performance Test Result\\
+	\midrule 
+	\bfseries Output & Performance Test Evaluation\\
+	\midrule 
+	\bfseries Challenges & none\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Define Training Concept}
-\begin{minipage}{\textwidth}
-\captionof{table}{Define Training Concept} \label{table:ch6_Task_Define_Training_Concept}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Define Training Concept\\
-	\hline \bfseries What & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Define Training Concept} \label{table:ch6_Task_Define_Training_Concept}\\
+	\toprule 
+	\bfseries Task & Define Training Concept\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item define target audience, e.g. operations engineer
 		\item define training content
@@ -910,25 +1123,31 @@ The Conceptual Framework defines the following Roles:
 		\end{itemize}
 	\end{itemize}
 	\\
-	\hline \bfseries Why & 
+	\midrule 
+	\bfseries Why & 
 	\begin{itemize}
 		\item The operation engineers need to have the knowlegde to operate and tune the system in production.
 		\item Additionally, the team members also need to have the knowlegde to design and implement the system.
 	\end{itemize}
 	\\
-	\hline \bfseries Who & System Architect\\
-	\hline \bfseries Artifacts & System Architecture\\
-	\hline \bfseries Challenges & \\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Who & System Architect\\
+	\midrule 
+	\bfseries Artifacts & System Architecture\\
+	\midrule 
+	\bfseries Challenges & \\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Staffing}
-\begin{minipage}{\textwidth}
-\captionof{table}{Staffing} \label{table:ch6_Task_Staffing}
-\begin{tabular}
-	{|m{3cm}|m{10cm}|} \hline \bfseries Task & Staffing\\
-	\hline \bfseries What & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Staffing} \label{table:ch6_Task_Staffing}\\
+	\toprule 
+	\bfseries Task & Staffing\\
+	\midrule 
+	\bfseries What & 
 	\begin{itemize}
 		\item Special skills needed for staffing the project
 		\item Adaptive Middleware concepts
@@ -942,18 +1161,22 @@ The Conceptual Framework defines the following Roles:
 		\end{itemize}
 	\end{itemize}
 	\\
-	\hline \bfseries Why & The staffing plan is needed to get the appropriate team members with the needed skills.\\
-	\hline \bfseries Who & Project Manager\\
-	\hline \bfseries Artifacts & Staffing Plan\\
-	\hline \bfseries Challenges &
+	\midrule 
+	\bfseries Why & The staffing plan is needed to get the appropriate team members with the needed skills.\\
+	\midrule 
+	\bfseries Who & Project Manager\\
+	\midrule 
+	\bfseries Artifacts & Staffing Plan\\
+	\midrule 
+	\bfseries Challenges &
 	\begin{itemize}
 		\item It may be hard to find the right project members with the needed skillset, since control theory is not a common skill of enterprise software developers. 
 		\item In this case, an appropriate training should be considered upfront.
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \section{Artifacts}
 
@@ -962,7 +1185,14 @@ The Conceptual Framework defines the following Roles:
 	\item Additionally, an artifact can be a prerequisite of a task
 \end{itemize}
 
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_artifacts} 
+	\caption{Artifacts} 
+	\label{fig:ch6_artifacts} 
+\end{figure}
+
 \begin{itemize}
+	\item Performance Requirements
 	\item Service Interface Definition
 	\item Aggregation Rules
 	\item Integration Architecture
@@ -974,124 +1204,177 @@ The Conceptual Framework defines the following Roles:
 	\item Staffing Plan
 \end{itemize}
 
-\subsection{Service Interface Definition}
-\begin{minipage}{\textwidth}
-\captionof{table}{Business Architecture} \label{table:ch6_Artifact_Service_Interface_Definition}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Service Interface Definition\\
-	\hline \bfseries Description & 
+\subsection{Performance Requirements}
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Performance Requirements} \label{table:ch6_Artifact_Performance_Requirements}\\
+	\toprule 
+	\bfseries Artifact & Performance Requirements\\
+	\midrule 
+	\bfseries Description & 
 	\begin{itemize}
 		\item Defines the structure of input and output data
 		\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
 	\end{itemize}
 	\\
-	\hline \bfseries Task & 
+	\midrule 
+	\bfseries Task & 
+	\begin{itemize}
+		\item Define Performance Requirements
+	\end{itemize}
+	\\
+	\midrule 
+	\bfseries Role & 
+	\begin{itemize}
+		\item Business Architect
+		\item System Architect
+	\end{itemize}\\
+	\bottomrule 
+\end{tabularx}
+
+
+\subsection{Service Interface Definition}
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Service Interface Definition} \label{table:ch6_Artifact_Service_Interface_Definition}\\
+	\toprule 
+	\bfseries Artifact & Service Interface Definition\\
+	\midrule 
+	\bfseries Description & 
+	\begin{itemize}
+		\item Defines the structure of input and output data
+		\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
+	\end{itemize}
+	\\
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Define Service Interfaces 
 	\end{itemize}
 	\\
-	\hline \bfseries Role & Business Architect\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Role & Business Architect\\
+	\bottomrule 
+\end{tabularx}
+
+\newpage
 
 \subsection{Aggregation Rules}
-\begin{minipage}{\textwidth}
-\captionof{table}{Aggregation Rules} \label{table:ch6_Artifact_Aggregation_Rules}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Aggregation Rules\\
-	\hline \bfseries Description & Defines how events should be correlated with each other by the Aggregator.\\
-	\hline \bfseries Task & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Aggregation Rules} \label{table:ch6_Artifact_Aggregation_Rules}\\
+	\toprule 
+	\bfseries Artifact & Aggregation Rules\\
+	\midrule 
+	\bfseries Description & Defines how events should be correlated with each other by the Aggregator.\\
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Define Aggregation Rules
 	\end{itemize}
 	\\
-	\hline \bfseries Role & 
+	\midrule 
+	\bfseries Role & 
 	\begin{itemize}
 		\item Business Architect
 		\item System Architect
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Integration Architecture}
-\begin{minipage}{\textwidth}
-\captionof{table}{Integration Architecture} \label{table:ch6_Artifact_Integration_Architecture}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Integration Architecture\\
-	\hline \bfseries Description & Defines the technical integration of the business services, including
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Integration Architecture} \label{table:ch6_Artifact_Integration_Architecture}\\
+	\toprule 
+	\bfseries Artifact & Integration Architecture\\
+	\midrule 
+	\bfseries Description & Defines the technical integration of the business services, including
 	\begin{itemize}
 		\item Middleware technology or product
 		\item Transports, such as \ac{JMS}, \ac{SOAP} or \ac{FTP}
 		\item Technical format of the input and output data, such as \ac{XML} or \ac{JSON}, \ac{CSV} or binary formats.
 	\end{itemize}
 	\\
-	\hline \bfseries Task & 
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Define Integration Architecture 
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architect\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Role & System Architect\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Routing Rules}
-\begin{minipage}{\textwidth}
-\captionof{table}{Routing Rules} \label{table:ch6_Artifact_Routing_Rules}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Routing Rules\\
-	\hline \bfseries Description & Defines which service endpoint should be called by the Router for a given aggregation size.\\
-	\hline \bfseries Task & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Routing Rules} \label{table:ch6_Artifact_Routing_Rules}\\
+	\toprule 
+	\bfseries Artifact & Routing Rules\\
+	\midrule 
+	\bfseries Description & Defines which service endpoint should be called by the Router for a given aggregation size.\\
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Define Routing Rules
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architect\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Role & System Architect\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{System Model}
-\begin{minipage}{\textwidth}
-\captionof{table}{System Model} \label{table:ch6_Artifact_System_Model}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & System Model\\
-	\hline \bfseries Description & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
-	\hline \bfseries Task & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{System Model} \label{table:ch6_Artifact_System_Model}\\
+	\toprule 
+	\bfseries Artifact & System Model\\
+	\midrule 
+	\bfseries Description & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item System Identification / Modelling
 	\end{itemize}
 	\\
-	\hline \bfseries Role & System Architect\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Role & System Architect\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Controller Configuration}
-\begin{minipage}{\textwidth}
-\captionof{table}{Controller Configuration} \label{table:ch6_Artifact_Controller_Configuration}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Controller Configuration\\
-	\hline \bfseries Description & The controller configuration specifies the parameter of the Controller.\\
-	\hline \bfseries Task & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Controller Configuration} \label{table:ch6_Artifact_Controller_Configuration}\\
+	\toprule \bfseries Artifact & Controller Configuration\\
+	\midrule 
+	\bfseries Description & The controller configuration specifies the parameter of the Controller.\\
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Perform Controller Tuning
 	\end{itemize}
 	\\
-	\hline \bfseries Role & Sofware Engineer\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Role & Sofware Engineer\\
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Training Concept}
-\begin{minipage}{\textwidth}
-\captionof{table}{Training Concept} \label{table:ch6_Artifact_Training_Concept}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Training Concept\\
-	\hline \bfseries Description & 
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Training Concept} \label{table:ch6_Artifact_Training_Concept}\\
+	\toprule 
+	\bfseries Artifact & Training Concept\\
+	\midrule 
+	\bfseries Description & 
 	\begin{itemize}
 		\item Defines the audience of the training, for example Operations Engineers, Software Engineers or Test Engineers.
 		\item Defines the content of the training, for example basics of control theory, details about the Adaptive Middleware for Bulk Data Processing.
@@ -1099,48 +1382,58 @@ The Conceptual Framework defines the following Roles:
 		\item Defines a timeplan, learning modules and needed facilities to conduct the training.
 	\end{itemize}
 	\\
-	\hline \bfseries Task & 
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Define Training Concept
 	\end{itemize}
 	\\
-	\hline \bfseries Role & 
+	\midrule 
+	\bfseries Role & 
 	\begin{itemize}
 		\item Project Manager
 		\item System Architect
 	\end{itemize}
 	\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\bottomrule 
+\end{tabularx}
+
 
 \subsection{Staffing Plan}
-\begin{minipage}{\textwidth}
-\captionof{table}{Training Concept} \label{table:ch6_Artifact_Staffing_Plan}
-\begin{tabular}
-	{|m{2cm}|m{10cm}|} \hline \bfseries Artifact & Staffing Plan\\
-	\hline \bfseries Description & The staffing plan contains
+
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Training Concept} \label{table:ch6_Artifact_Staffing_Plan}\\
+	\toprule 
+	\bfseries Artifact & Staffing Plan\\
+	\midrule 
+	\bfseries Description & The staffing plan contains
 	\begin{itemize}
 		\item The required team members and their utilisation over the project time (staffing curve).
 		\item The required roles and their assignment to team members.
 		\item A skill matrix that shows the required skills and the knowlegde of each team member.
 	\end{itemize}
 	\\
-	\hline \bfseries Task & 
+	\midrule 
+	\bfseries Task & 
 	\begin{itemize}
 		\item Perform Staffing
 	\end{itemize}
 	\\
-	\hline \bfseries Role & Project Manager\\
-	\hline 
-\end{tabular}
-\end{minipage}
+	\midrule 
+	\bfseries Role & Project Manager\\
+	\bottomrule 
+\end{tabularx}
+
 
 \section{Tools} % (fold)
 \label{sec:ch6_tools}
 
 \begin{itemize}
-	\item Modeling Framework
+	\item The design and implementation of the Adaptive Middleware for Bulk Data Processing requires the use of some specific tools.
+\end{itemize}
+
+\begin{itemize}
+	\item Tools for System Modelling, System Identification and Simulation
 	\begin{itemize}
 		\item Discrete Event Simulation
 		\item Matlab/Simulink
@@ -1162,13 +1455,6 @@ The Conceptual Framework defines the following Roles:
 
 % section tools (end)
 
-\section{Reference Architecture}
-\todo[inline]{Do we need this?}
-
-\begin{itemize}
-	\item Together with the concept for the Adaptive Middleware presented in Chapter \ref{ch:adaptive_middleware}, the Conceptual Framwork presented in this chapter build a reference architecture for adaptive systems for bulk data processing.
-\end{itemize}
-
 \section{Relationship to Architecture Frameworks and Methodologies} % (fold)
 \label{sec:ch6_relation_frameworks}
 \todo[inline]{Maybe move to section \ref{sec:ch6_related_work}}
@@ -1184,8 +1470,61 @@ The Conceptual Framework defines the following Roles:
 \section{Related Work}
 \label{sec:ch6_related_work}
 
-\subsection{Software Performance Engineering} % (fold)
+\subsection{Software Process Modelling}
 
-% subsection software_performance_engineering (end)
+\begin{itemize}
+	\item Definition Software Process: 
+	\begin{itemize}
+		\item Software process is a partially ordered set of activities untertaken to manage, develop and maintain software systems. \citep{Acuna:2001aa}
+		\item The software process may be described as that collection of policies, procedures, and steps undertaken in the transformation of an expressed need for a software product into a software product to meet that need. \citep{McChesney:1995aa}
+	\end{itemize}
+	\item Definition Software Process Modelling: 
+	\begin{itemize}
+		\item Software process modelling describes the creation of software development models. \citep{Acuna:2001aa}
+		\item A software process model is an abstract representation  of a process architecture, process design or process definition, where each of these describe, at various levels of detail, an organization of process elements of either a completed, current or proposed software process. \citep{Feiler:1993aa}
+	\end{itemize}
+	\item Categorization of software process models \citep{McChesney:1995aa}:
+	\begin{itemize}
+		\item Prescriptive (Manual / Automated)
+		\item Descriptive
+	\end{itemize}
+	\item Typical Elements \citep{Acuna:2001aa}:
+	\begin{itemize}
+		\item Agent or Actor
+		\item Role
+		\item Activity
+		\item Artefact or Product
+	\end{itemize}
+	\item Examples of software process models:
+	\begin{itemize}
+		\item IEEE 1974-1991
+		\item ISO/IEC 12207
+		\item Waterfall model
+		\item Spiral model
+		\item Rational Unified Process
+		\item SAP ASAP
+	\end{itemize}
+	\item Using UML to model software processes
+	\begin{itemize}
+		\item Software process metamodel SPEM 2.0 \citep{Group:2008aa} 
+		\item UML4SPM
+		\item Using UML 2.0 for Modelling Software Processes at Siemens AG
+		\begin{itemize}
+			\item Not restricted to subset of UML
+			\item Using of standard UML 2.0 notation, supported by standard modelling tools.
+			\item Increases readability of processes for software developers since UML is also used for modelling the software itself.
+			\item Four distinct process views: process-oriented view, activity-oriented view, product-oriented view and role-oriented view.
+			\item The following UML diagram types are used: activiy diagrams (process-oriented view), class diagrams (activity-oriented view, product-oriented view, role-oriented view), use-case diagrams (activity-oriented view, product-oriented view, role-oriented view).
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Software Performance Engineering}
+
+\begin{itemize}
+	\item The Future of Performance Engineering \citep{Woodside:2007aa}
+	\item Best Practices for Software Performance Engineering \citep{Smith:2003aa}
+	\item Performance Engineering of Software Systems \citep{Smith:1990aa}
+\end{itemize}
 
 \section{Summary} 

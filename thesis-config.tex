@@ -112,13 +112,32 @@ doctor of philosophy\xspace}
 % ****************************************************************************************************
 % 4. Setup floats: tables, (sub)figures, and captions
 % ****************************************************************************************************
-\usepackage{tabularx} % better tables
-	\setlength{\extrarowheight}{3pt} % increase table row height
-\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+\usepackage{booktabs}
+%\usepackage{tabularx} % better tables
+%	\setlength{\extrarowheight}{3pt} % increase table row height
+%	\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+%	\renewcommand{\tabularxcolumn}[1]{>{\small}m{#1}}
+\usepackage{ltablex}
+	\keepXColumns
 \newcommand{\myfloatalign}{\centering} % to be used with each float for alignment
 \usepackage{caption}
 \captionsetup{format=hang,font=small}
-\usepackage{subfig}  
+\usepackage{subfig}
+
+\setlength{\extrarowheight}{3pt} % increase table row height
+\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+\renewcommand{\tabularxcolumn}[1]{>{\small}m{#1}}
+
+% fixes bug in ltablex which makes the table too narrow when using captions, see http://www.latex-community.org/forum/viewtopic.php?f=45&p=39951
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+\patchcmd{\TX@endtabularx}% <cmd>
+  {\def\caption}% <search>
+  {\def\caption{\caption@withoptargs\TX@caption}%
+   \def\TX@caption##1##2}% <replace>
+  {}{}% <success><failure>
+\makeatother
+
 % ****************************************************************************************************
 
 % ****************************************************************************************************
