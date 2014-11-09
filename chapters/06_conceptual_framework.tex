@@ -19,6 +19,7 @@
 	\item It defines views, roles and tasks and their dependencies to describe the necessary steps for design, implementation and operation of system describe in Chapter \ref{ch:adaptive_middleware}.
 	\item It only describes concepts that are specific to the design and implementation of an Adaptive Middleware as described in the previous chapter. It does not describe common concepts for softwar development.
 	\item The conceptual model can be tailored to specific projects requirements, it does not have to be followed strictly.
+	\item Developing software is a complex process, the quality of a software product depends on the people, the organisation and procedures used to create and deliver it \citep{Fuggetta:2000ds}
 \end{itemize}
 
 \begin{figure}
@@ -1457,13 +1458,143 @@ The Conceptual Framework defines the following Roles:
 
 \section{Relationship to Architecture Frameworks and Methodologies} % (fold)
 \label{sec:ch6_relation_frameworks}
-\todo[inline]{Maybe move to section \ref{sec:ch6_related_work}}
 \begin{itemize}
 	\item TOGAF
-	\item V-Modell XT
+	\item 4+1 View Model of Software Architecture
 	\item Rational Unified Process
 	\item Agile (Scrum)
+	\item Waterfall model
+	\item Spiral model
 \end{itemize}
+
+\begin{itemize}
+	\item A software organisation usually already uses an software development approach therefore the conceptual framework presented in this chapter needs to be integrated in existing development models.
+	\item In principle, the conceptual framework can be integrated in any iterative software lifecycle approach, such as the Rational Unified Process, the spiral model \citep{Boehm:1988cd} or agile development frameworks such as Scrum \citep{Schwaber:2013aa}. Linear lifecycle models such as the waterfall model \citep{Royce:1987tl} are not suited because activities like controller design, controller implementation and controller tuning need to be iterative.
+\end{itemize}
+
+\subsection{TOGAF}
+
+\subsection{Rational Unified Process}
+The \ac{RUP} is an approach to asssigning tasks and responsibilities within a development organization to produce high-quality software that meets the requirements of its users within a predictable schedule and budget \citep{Rational:2001aa}.
+
+\ac{RUP} divides the software lifecycle into cycles, where each cycle is concerned with a new iteration of the software system. A cycle consists of the following phases \citep{Kruchten:1996aa}:
+
+\begin{itemize}
+	\item \textbf{Inception}\\
+	Establish the business case for the system and define the project scope.
+	\item \textbf{Elaboration}\\
+	Analyse the the problem domain, establish an architectural foundation and develop the project plan.
+	\item \textbf{Construction}\\
+	Develop and test the components and application features.
+	\item \textbf{Transition}\\
+	Transition of the software to its end users.
+\end{itemize}
+
+Additionally, \ac{RUP} describes nine core workflows, 6 engineering workflows and 3 supporting workflows:
+
+\begin{itemize}
+	\item Engineering workflows
+	\begin{itemize}
+		\item \textbf{Business modelling workflow}\\
+		Documentation of business processes using business use cases.
+		\item \textbf{Requirements workflow}\\
+		Description of \emph{what} the system should do.
+		\item \textbf{Analysis \& Design workflow}\\
+		Definition \emph{how} the system  will be realised in the implementation phase.
+		\item \textbf{Implementation workflow}\\
+		Implementation, unit testing and integration of the system.
+		\item \textbf{Test workflow}\\
+		Verification that all requirements have been correctly implemented.
+		\item \textbf{Deployment workflow}\\
+		Production of the product release and delivering the software to its end users.
+	\end{itemize}
+	\item Supporting workflows
+	\begin{itemize}
+		\item \textbf{Project Management}\\
+		Management of the software development process including its risks.
+		\item \textbf{Configuration and Change Management}\\
+		Management of the artificats produced by the software development process.
+		\item \textbf{Environment}\\
+		Provisioning the software development organisation with the software development environment.
+	\end{itemize}
+\end{itemize}
+
+Figure \ref{fig:ch6_rup} shows the core workflows of the \ac{RUP} and when they are conduction during the different phases.
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_rup} 
+	\caption{Core process workflows \citep{Kruchten:1996aa}} 
+	\label{fig:ch6_rup} 
+\end{figure}
+
+The following Table \ref{table:ch6_mapping_rup} shows the assignment of the activities of the conceptual framework presented in this chapter to the core workflows of the \ac{RUP}.
+
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Mapping of activities to \ac{RUP} core workflows} \label{table:ch6_mapping_rup}\\
+		\toprule
+		\bfseries \ac{RUP} core workflow & \bfseries Activity\\
+		\midrule
+		Business modelling & 
+		\begin{itemize}
+			\item Define Service Interfaces
+			\item Define Aggregation Rules
+		\end{itemize}
+		\\
+		\midrule
+		Requirements & 
+		\begin{itemize}
+			\item Define Performance Requirements
+		\end{itemize}
+		\\
+		\midrule
+		Analysis \& Design &
+		\begin{itemize}
+			\item Define Integration Architeture
+			\item Define Routing Rules
+			\item Define Controller Architecture
+		\end{itemize}
+		\\
+		\midrule
+		Implementation &
+		\begin{itemize}
+			\item Implement Integration Architecture
+			\item Implement Service Interfaces
+			\item Implement Aggregation Rules
+			\item Implement Routing Rules
+			\item Implement Controller
+			\item Perform Controller Tuning
+		\end{itemize}
+		\\
+		\midrule
+		Test & 
+		\begin{itemize}
+			\item Define Performance Tests
+			\item Evaluate Test Results
+			\item Perform Performance Tests
+		\end{itemize}
+		\\
+		\midrule
+		Deployment & 
+		\begin{itemize}
+			\item Setup Monitoring Infrastructure
+			\item Setup Test environment
+		\end{itemize}
+		\\
+		\midrule
+		Project Management & 
+		\begin{itemize}
+			\item Perform Staffing
+			\item Define Training Concept
+		\end{itemize}
+		\\
+		\midrule
+		Environment & 
+		\begin{itemize}
+			\item Source Project Environments
+		\end{itemize}
+		\\
+		\bottomrule
+	\end{tabularx}
 
 % section relationship_to_architecture_frameworks_and_methodologies (end)
 
@@ -1477,38 +1608,68 @@ The Conceptual Framework defines the following Roles:
 	\begin{itemize}
 		\item Software process is a partially ordered set of activities untertaken to manage, develop and maintain software systems. \citep{Acuna:2001aa}
 		\item The software process may be described as that collection of policies, procedures, and steps undertaken in the transformation of an expressed need for a software product into a software product to meet that need. \citep{McChesney:1995aa}
+		\item A software process can be defined as the coherent set of policies, organizational structures, technologies, procedures, and artifacts that are needed to conceive, develop, deploy, and maintain a softare product. \citep{Fuggetta:2000ds}
+		\item In contrast, a software lifecycle describes the states through which the software passes from the start of the development until the operation and finally the retirement \citep{Acuna:aa}. Examples of software lifecycle models are the waterfall model \citep{Royce:1987tl} oder the spiral model \citep{Boehm:1988cd}.
 	\end{itemize}
 	\item Definition Software Process Modelling: 
 	\begin{itemize}
 		\item Software process modelling describes the creation of software development models. \citep{Acuna:2001aa}
 		\item A software process model is an abstract representation  of a process architecture, process design or process definition, where each of these describe, at various levels of detail, an organization of process elements of either a completed, current or proposed software process. \citep{Feiler:1993aa}
+		\item Process Modells are described using \acp{PML}. A \ac{PML} is defined in terms of a notation, a syntax and semantics, often suitable for computational processing \citep{Bendraou:2005dv}.
+	\end{itemize}
+	\item Different purposes of process models \citep{Fuggetta:2000ds}:
+	\begin{itemize}
+		\item Process understanding
+		\item Process design
+		\item Training and education
+		\item Process simulation  optimization
+		\item Process support
 	\end{itemize}
 	\item Categorization of software process models \citep{McChesney:1995aa}:
 	\begin{itemize}
 		\item Prescriptive (Manual / Automated)
 		\item Descriptive
 	\end{itemize}
-	\item Typical Elements \citep{Acuna:2001aa}:
+	\item Typical Elements \citep{Benali:1992gq} \citep{Acuna:2001aa} \citep{Fuggetta:2000ds} \citep{Curtis:1992kf}:
 	\begin{itemize}
 		\item Agent or Actor
 		\item Role
 		\item Activity
 		\item Artefact or Product
+		\item Tools to be used
+	\end{itemize}
+	\item Process models typically answer the following questions \citep{Curtis:1992kf}:
+	\begin{itemize}
+		\item what is going to be done?
+		\item who is going to do it?
+		\item when and where will it be done?
+		\item how and why it will be done?
+		\item who is dependant on its being done?
+	\end{itemize}
+	\item Process models are commonly using the following perspectives related to these questions:
+	\begin{itemize}
+		\item Functional: what activities are being performed
+		\item Behavioral: In which order (when) are activities performed
+		\item Organizational: where and by whom is an activity performed
+		\item Informational: the entities produced by the process
 	\end{itemize}
 	\item Examples of software process models:
 	\begin{itemize}
 		\item IEEE 1974-1991
 		\item ISO/IEC 12207
-		\item Waterfall model
-		\item Spiral model
-		\item Rational Unified Process
-		\item SAP ASAP
+		\item Unified Process
 	\end{itemize}
 	\item Using UML to model software processes
 	\begin{itemize}
 		\item Software process metamodel SPEM 2.0 \citep{Group:2008aa} 
-		\item UML4SPM
-		\item Using UML 2.0 for Modelling Software Processes at Siemens AG
+		\begin{itemize}
+			\item 
+		\end{itemize}
+		\item UML4SPM \citep{Bendraou:2005dv}
+		\begin{itemize}
+			\item UML4SPM is an \ac{UML}-based metamodel for software process modelling. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling.
+		\end{itemize}
+		\item Using UML 2.0 for Modelling Software Processes at Siemens AG \citep{Dietrich:2013aa}
 		\begin{itemize}
 			\item Not restricted to subset of UML
 			\item Using of standard UML 2.0 notation, supported by standard modelling tools.
@@ -1519,12 +1680,8 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 \end{itemize}
 
-\subsection{Software Performance Engineering}
+\section{Summary}
 
 \begin{itemize}
-	\item The Future of Performance Engineering \citep{Woodside:2007aa}
-	\item Best Practices for Software Performance Engineering \citep{Smith:2003aa}
-	\item Performance Engineering of Software Systems \citep{Smith:1990aa}
+	\item Processes are not fixed during their lifetime, they need to be continuously improved. \citep{Fuggetta:2000ds}
 \end{itemize}
-
-\section{Summary} 

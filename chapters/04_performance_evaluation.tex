@@ -67,30 +67,29 @@ The prototypes are implemented with Java 1.6 using \ac{JPA} for the data-access 
 
 \begin{table}
 	%\renewcommand{\arraystretch}{1.3}
-	\caption{Technologies and frameworks used for the implementation of the prototypes}
-	\label{table:ch4_frameworks}
 	\centering
-	\begin{tabular}{|l|p{5cm}|}
-		\hline
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Technologies and frameworks used for the implementation of the prototypes} \label{table:ch4_frameworks}\\
+		\toprule
 		\bfseries Language & Java 1.6\\
-		\hline
+		\midrule
 		\bfseries Dependancy Injection & Spring\\
-		\hline
+		\midrule
 		\bfseries Persistence API & OpenJPA (JPA 2.0)\\
-		\hline
+		\midrule
 		\bfseries Database & MySQL\\
-		\hline
+		\midrule
 		\bfseries Logging & Logback\\
-		\hline 
+		\midrule
 		\bfseries Test & JUnit\\
-		\hline
+		\midrule
 		\bfseries Batch Framework & Spring Batch\\
-		\hline
+		\midrule
 		\bfseries Messaging Middleware & Apache Camel\\
-		\hline
+		\midrule
 		\bfseries Other Frameworks & Joda-Time, Apache Commons\\
-		\hline 
-	\end{tabular}
+		\bottomrule
+	\end{tabularx}
 \end{table}
 
 \subsection{Common Architecture} % (fold)
@@ -308,60 +307,57 @@ A detailed description of each point is shown in Table \ref{table:ch4_measuring_
 
 \begin{table}
 	%\renewcommand{\arraystretch}{1.3}
-	\caption{Measuring points of the batch prototype}
-	\label{table:ch4_measuring_points_batch}
 	\centering
-	\begin{tabular}{|l|p{5cm}|}
-		\hline
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Measuring points of the batch prototype} \label{table:ch4_measuring_points_batch}\\
+		\toprule
 		\bfseries Measuring point & \bfseries Description\\
-		\hline
+		\midrule
 		PROC\_START & Timestamp denoting the start of processing an event\\
-		\hline
+		\midrule
 		PROC\_END & Timestamp denoting the end of processing an event\\
-		\hline
+		\midrule
 		FILE\_READ & Elapsed time for reading events from file\\
-		\hline
+		\midrule
 		MEDIATION & Elapsed time used by the mediation component\\
-		\hline
+		\midrule
 		FILE\_WRITE & Elapsed time for writing events to file\\
-		\hline
+		\midrule
 		FTP & Elapsed time for file transfer using FTP\\
-		\hline
+		\midrule
 		RATING & Elapsed time used by the rating component\\
-		\hline
+		\midrule
 		DB & Elapsed time for writing event to the database\\
-		\hline 
-	\end{tabular}
+		\bottomrule 
+	\end{tabularx}
 \end{table}
 
 \begin{table}[htpb]
-	\renewcommand{\arraystretch}{1.5}
-	\caption{Measuring points of the messaging prototype}
-	\label{table:ch4_measuring_points_messaging}
 	\centering
-	\begin{tabular}{|l|p{4.5cm}|}
-		\hline
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Measuring points of the messaging prototype} \label{table:ch4_measuring_points_messaging}\\
+		\toprule
 		\bfseries Measuring point & \bfseries Description\\
-		\hline
+		\midrule
 		PROC\_START & Timestamp denoting the start of processing an event\\
-		\hline
+		\midrule
 		PROC\_END & Timestamp denoting the end of processing an event\\
-		\hline
+		\midrule
 		JMS\_CONSUMER & Elapsed time processing a single event\\
-		\hline
+		\midrule
 		UNMARSHALL & Elapsed time for unmarshalling an event\\
-		\hline
+		\midrule
 		MEDIATION\_PROC & Elapsed time needed for calling the mediation service\\
-		\hline
+		\midrule
 		MEDIATION & Elapsed time used by the mediation component\\
-		\hline
+		\midrule
 		RATING\_PROC & Elapsed time needed for calling the rating service\\
-		\hline
+		\midrule
 		RATING & Elapsed time used by the rating component\\
-		\hline
+		\midrule
 		DB & Elapsed time for writing event to the database\\
-		\hline 
-	\end{tabular}
+		\bottomrule 
+	\end{tabularx}
 \end{table}
 
 \subsection{Instrumentation}
@@ -405,37 +401,35 @@ The clocks of the \emph{Mediation Node} and \emph{Rating Node} are synchronized 
 \end{figure}
 
 \begin{table}[htbp]
-	\renewcommand{\arraystretch}{1.3}
-	\caption{Amazon EC2 instance configuration}
-	\label{table:ch4_amazon_ec2}
 	\centering
-	\begin{tabular}{|l|p{3.5cm}|}
-		\hline
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Amazon EC2 instance configuration} \label{table:ch4_amazon_ec2} \\
+		\toprule
 		\bfseries Instance type & M1 Extra Large (EBS optimized)\\
-		\hline
+		\midrule
 		\bfseries Memory & 15 GiB\\
-		\hline
+		\midrule
 		\bfseries Virtual Cores & 8 (4 cores x 2 units)\\
-		\hline
+		\midrule
 		\bfseries Architecture & 64-bit\\
-		\hline
+		\midrule
 		\bfseries EBS Volume & 10 GiB (100 IOPS)\\
-		\hline
+		\midrule
 		\bfseries Instance Store Volumes & 1690 GB (4x420 GB Raid 0)\\
-		\hline
+		\midrule
 		\bfseries Operating System & Ubuntu 12.04 LTS\\
 		& (GNU/Linux 3.2.0-25-virtual x86\_64)\\
-		\hline 
+		\midrule 
 		\bfseries Database & MySQL 5.5.24\\
-		\hline
+		\midrule
 		\bfseries Messaging Middleware & Apache ActiveMQ 5.6.0\\
-		\hline
-	\end{tabular}
+		\bottomrule
+	\end{tabularx}
 \end{table}
 
 \subsection{Preparation and execution of the performance tests}
 For running the performance tests, the Master Data DB has been set up with a list of customers, accounts, products and tariffs with each prototype using the same database and data. While part of the testdata like the products and tariffs have been created manually, the relationship between the customers and the products have been generated by a test data generator.
-
+\newpage
 After setting up the master data, a number of test runs have been executed using different sizes of test data (1.000, 5.000, 10.000, 50.000, 100.000, 500.000, 1.000.000 records). To get reliable results, each test configuration has been run three times. Out of the three runs for each configuration, the run having the median processing time has been used for the evaluation.
 
 For each test run, the following steps have been executed:
@@ -595,36 +589,14 @@ The maximum system utilisation of the Rating node is 25\% with an aggregation si
 When using high levels of data granularity, the messaging system is essentially a batch processing system, providing high throughput with high latency. To provide near-time processing an optimum level of data granularity would allow having the lowest possible latency with the lowest acceptable throughput.
 
 \section{Discussion with respect to related work}\label{sec:ch4_related_work}
-\todo[inline]{Discuss why a prototype has been built instead of using a model of the system.}
 This section gives an overview of work related to the performance evaluation of batch and message-based systems presented in this chapter and discusses the approach that has been taken. 
 
-Related work can be categorised in two different topics, performance measuring and evaluation and performance modelling. 
+Related work can be categorised in two different topics, performance measuring and performance prediction. 
 Performance measuring is applied to evaluate if an implemented system meets its performance requirements and to spot possible performance problems.
 
-\begin{itemize}
-	\item Two different approaches: Performance Measuring and Performance Prediction
-	\item Performance Measuring 
-	\begin{itemize}
-		\item can only be done with an existing system
-	\end{itemize}
-	\item Performance Prediction
-	\begin{itemize}
-		\item allows to predict the performance of a system in an early stage of development before the system is available
-		\item uses Performance Modelling to build a model of the system, evaluation is done with this model
-		\item common approaches use queuing networks to model a messaging system
-	\end{itemize}
-\end{itemize}
+While performance measuring can only be done when the relevant parts of a system are already implemented, performance prediction allows to predict the performance of a system in an early stage of development, before the system is available. It uses performance modelling to build a model of the system, which is then used for the performance evaluation. Common approaches for performance modelling use queueing networks, petri nets or simulations \citep{Balsamo:2004hn}.
 
-\subsection{Performance Modeling}
-
-\begin{itemize}
-	\item instead of using a model a prototype has been implemented, because
-	\item no suitable models exist (? - needs to be checked, there should be many models for messaging systems...)
-	\item it's difficult to build a model since every relevant aspect needs to be modelled (data transfer, data marshalling, database, transactions)
-	\item prototype is a compromise between using a (mathematical or theoretical) model and a real application. 
-	\item By using state-of the art technologies for the implementation, the relevant aspects for comparing the different processing types come for ``free''.
-\end{itemize}
-
+\subsection{Performance Modelling}
 Performance modeling allows to predict the performance of a system in an early stage of development. It facilitates for example capacity and resource planning before the system is already available or helps to evaluate design alternatives in regard of their performance impact.
 
 \citet{Brebner:2008uq} developed a tool for performance modeling of Service-Oriented Architectures. It is comprised of SOA models, a simulation engine and a graphical user interface. The SOA models are generated from architectural artifacts such as UML sequence or deployment diagrams and automatically transformed into runtime models for execution.
@@ -641,13 +613,16 @@ In another work, \citet{Liu:2007vn} developed a performance model of an service-
 
 \citet{DAmbrogio:2007ly} describe ``a model-driven approach for integrating performance prediction into service composition processes carried out by use of BPEL (Business Process Execution Language for Web Services).'' Using their approach, a BPEL process is described using an UML model. The model is automatically annotated with performance data and transformed into a Layered Queueing Network which is used to predict the performance of the BPEL process. For the automatic annotation of the model, a performance-oriented extension to WSDL is utilised called P-WSDL \citep{D-Ambrogio:2005ve}.
 
-\subsection{Performance Measuring and Evaluation}
+Instead of using models to compare batch and message-based processing systems, a prototype for each processing type has been built. Using prototypes in this case has the following advantages over a modelling approach:
 
 \begin{itemize}
-	\item related research is concerned with the performance of messaging middleware such as JMS Servers
-	\item In this research an end-to-end performance evaluation of a batch and messaging prototype implementation has been conducted instead
+	\item It is difficult to build a model since every relevant aspect needs to be modelled, such as data transfer, data marshalling, database transactions.
+	\item The relevant aspects for modelling the processing types were initially not known.
+	\item By using state-of the art technologies and frameworks for the protoype implementation, the relevant aspects for comparing the different processing types come for ``free''.
+	\item The effort to build a prototype is a compromise between creating model and a real application.
 \end{itemize}
 
+\subsection{Performance Measuring and Evaluation}
 Her et al. \citep{Her:2007qf} propose the following set of metrics for measuring the performance of a service-oriented system:
 \begin{itemize}
 	\item \textbf{Service response time}\\
@@ -693,7 +668,7 @@ SPECjms2007 is a standard benchmark for the evaluation of Message-Oriented Middl
 
 \cite{Ueno:2006ly} propose a methodology to evaluate the performance of an ESB in an early stage of development that can be used for capacity planning. Instead of using a performance model for performance prediction, they run the ESB on a real machine with a pseudo-environment using lightweight web service providers and clients. The authors state that model-based approaches ``often require elemental performance measurements and sophisticated modeling of the entire system, which is usuable not feasible for complex systems''.
 
-\todo[inline]{Discuss contributions in this chapter with respect to related work. What is different?}
+Related research is concerned with the performance of messaging middleware such as \ac{JMS} servers or \ac{ESB} middleware. In the research presented in this chapter, an end-to-end performance evaluation of a batch and messaging prototype implementation has been conducted instead.
 
 \section{Summary}\label{sec:ch4_summary}
 Near-time processing of bulk data is hard to achieve. As shown in Section \ref{sec:ch2_latency_throughput}, latency and throughput are opposed performance metrics of a system for bulk data processing. Batch processing, while providding high throughput, leads to high latency, which impedes near-time processing. Message-base processing delivers low latency but cannot provide the throughput for bulk data processing due to the additional overhead for each processed message.
