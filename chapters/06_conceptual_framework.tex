@@ -33,7 +33,18 @@
 	\item Together with the concept for the Adaptive Middleware presented in Chapter \ref{ch:adaptive_middleware}, the Conceptual Framwork presented in this chapter build a reference architecture for adaptive systems for bulk data processing.
 \end{itemize}
 
-\section{Metamodel} 
+This chapter is organised as follows:
+
+\begin{itemize}
+	\item Section \ref{sec:ch6_metamodel} describes the metamodel of the conceptual framework.
+	\item The entities of the process model, roles, tasks, artifacts and tools, are described in the Sections \ref{sec:ch6_roles}, \ref{sec:ch6_tasks}, \ref{sec:ch6_artifacts} and \ref{sec:ch6_tools}.
+	\item Section \ref{sec:ch6_other_frameworks} describes how the conceptual framework can be used with other architectural frameworks and software development methodologies such as TOGAF, \acf{RUP} and Scrum.
+	\item Section \ref{sec:ch6_related_work} discusses other related approaches and work.
+	\item Finally, this chapter concludes with a summary and a discussion of the presented conceptual framework (see Section \ref{sec:ch6_summary}).
+\end{itemize}
+
+\section{Metamodel}
+\label{sec:ch6_metamodel}
 The conceptual framework consists of the following entities:
 \begin{itemize}
 	\item Phase
@@ -51,9 +62,10 @@ The conceptual framework consists of the following entities:
 		\item produces Artifacts
 		\item uses Tools
 	\end{itemize}
-	\item Deliverable
+	\item Artifact
 	\begin{itemize}
 		\item is produced by a Task
+		\item is required by a Task
 	\end{itemize}
 	\item Tool
 	\begin{itemize}
@@ -165,7 +177,8 @@ The conceptual framework consists of the following entities:
 	\bottomrule 
 \end{tabularx}
 
-\section{Roles} 
+\section{Roles}
+\label{sec:ch6_roles}
 
 \begin{itemize}
 	\item Roles describe responsibilities and skills
@@ -215,8 +228,6 @@ The Conceptual Framework defines the following Roles:
 	\\
 	\bottomrule
 \end{tabularx}
-
-\newpage
 
 \subsection{System Architect} 
 
@@ -399,7 +410,7 @@ The Conceptual Framework defines the following Roles:
 \begin{itemize}
 	\item Main entities of the conceptual framework, define what should be done.
 	\item Tasks depend on each other, some tasks must be processed in a certain order
-	\item The Conceptual Framework only describes tasks that are specific to the design and implementation of an Adaptive Middleware for Bulk Data Processing as described in chapter \ref{ch:adaptive_middleware}. It does not describe common tasks that are needed for every software system.
+	\item The Conceptual Framework only describes tasks that are specific to the design and implementation of an Adaptive Middleware for Bulk Data Processing as described in chapter \ref{ch:adaptive_middleware}. It does not describe common tasks or activities that are needed for every software system.
 	\item Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks assigned to the different phases of the Conceptual Framework.
 \end{itemize}
 
@@ -1179,7 +1190,7 @@ The Conceptual Framework defines the following Roles:
 \end{tabularx}
 
 
-\section{Artifacts}
+\section{Artifacts}\label{sec:ch6_artifacts}
 
 \begin{itemize}
 	\item An Artifact is a result of a task
@@ -1255,8 +1266,6 @@ The Conceptual Framework defines the following Roles:
 	\bfseries Role & Business Architect\\
 	\bottomrule 
 \end{tabularx}
-
-\newpage
 
 \subsection{Aggregation Rules}
 
@@ -1456,26 +1465,18 @@ The Conceptual Framework defines the following Roles:
 
 % section tools (end)
 
-\section{Relationship to Architecture Frameworks and Methodologies} % (fold)
-\label{sec:ch6_relation_frameworks}
-\begin{itemize}
-	\item TOGAF
-	\item 4+1 View Model of Software Architecture
-	\item Rational Unified Process
-	\item Agile (Scrum)
-	\item Waterfall model
-	\item Spiral model
-\end{itemize}
+\section{Relationship to Architecture Frameworks and Methodologies} 
+\label{sec:ch6_other_frameworks}
+% (fold)
 
 \begin{itemize}
-	\item A software organisation usually already uses an software development approach therefore the conceptual framework presented in this chapter needs to be integrated in existing development models.
-	\item In principle, the conceptual framework can be integrated in any iterative software lifecycle approach, such as the Rational Unified Process, the spiral model \citep{Boehm:1988cd} or agile development frameworks such as Scrum \citep{Schwaber:2013aa}. Linear lifecycle models such as the waterfall model \citep{Royce:1987tl} are not suited because activities like controller design, controller implementation and controller tuning need to be iterative.
+	\item The conceptual framework is only concerned with the special aspects of the design, implementation and operation of the adaptive middleware presented in Chapter \ref{ch:adaptive_middleware}. It does not describe a complete software development approach. The conceptual framework therefore needs to be integrated in common software development frameworks or methodologies.
+	\item In principle, the conceptual framework can be integrated in any iterative software lifecycle approach, such as the Rational Unified Process, the spiral model \citep{Boehm:1988cd} or agile development frameworks such as Scrum \citep{Schwaber:2013aa}. Linear lifecycle models such as the waterfall model \citep{Royce:1987tl} are not suited because tasks like controller design, controller implementation and controller tuning need to be iterative.
+	\item This section describes briefly how the conceptual framework can be used with two common software development methodologies, the \ac{RUP} and Scrum.
 \end{itemize}
-
-\subsection{TOGAF}
 
 \subsection{Rational Unified Process}
-The \ac{RUP} is an approach to asssigning tasks and responsibilities within a development organization to produce high-quality software that meets the requirements of its users within a predictable schedule and budget \citep{Rational:2001aa}.
+The \acf{RUP} is an approach to asssigning activities and responsibilities within a development organization to produce high-quality software that meets the requirements of its users within a predictable schedule and budget \citep{Rational:2001aa}.
 
 \ac{RUP} divides the software lifecycle into cycles, where each cycle is concerned with a new iteration of the software system. A cycle consists of the following phases \citep{Kruchten:1996aa}:
 
@@ -1527,10 +1528,10 @@ Figure \ref{fig:ch6_rup} shows the core workflows of the \ac{RUP} and when they 
 	\label{fig:ch6_rup} 
 \end{figure}
 
-The following Table \ref{table:ch6_mapping_rup} shows the assignment of the activities of the conceptual framework presented in this chapter to the core workflows of the \ac{RUP}.
+The following Table \ref{table:ch6_mapping_rup} shows the assignment of the tasks of the conceptual framework presented in this chapter to the core workflows of the \ac{RUP}.
 
 	\begin{tabularx}{\textwidth}{@{} l X @{}}
-		\caption{Mapping of activities to \ac{RUP} core workflows} \label{table:ch6_mapping_rup}\\
+		\caption{Mapping of tasks to \acs{RUP} core workflows} \label{table:ch6_mapping_rup}\\
 		\toprule
 		\bfseries \ac{RUP} core workflow & \bfseries Activity\\
 		\midrule
@@ -1595,6 +1596,60 @@ The following Table \ref{table:ch6_mapping_rup} shows the assignment of the acti
 		\\
 		\bottomrule
 	\end{tabularx}
+	
+\subsection{Scrum}
+Scrum is a process framework that has been used to manage complex product development \citep{Schwaber:2013aa}. It consists of Scrum Teams and their roles, artifacts, events, and rules. It is an iterative, incremental approach to optimise predictability and control risks by constantely inspecting and adapting the process.
+
+Scrum partitions the development of software products in Sprints, a timeframe of maximum one month during which a usable and potentially releasable software product is created. 
+
+\begin{itemize}
+	\item All requirements for the software product are kept in the Product Backlog
+	\item The Product Backlog is an ordered list, contains any changes that should be made to the software product
+	\item Higher ordered items are more refined than lower items
+	\item Evolves during the course of the project, items are added, refined, sorted, estimated
+	\item Requirements are sorted according to their business values
+	\item Managed by the Product Owner
+	\item At the start of each sprint, the Scrum team decides which backlog items should be implemented during this sprint
+\end{itemize}
+
+A Backlog item has following properties:
+\begin{itemize}
+	\item description, order, estimate and value
+	\item It should be possible to be implemented during a single sprint 
+	\item contains all tasks, that are necessary to implement the described feature, such as design, coding, configuration and testing.
+\end{itemize}
+
+Table \ref{table:product_backlog} shows an example Backlog containing items for implementing the feedback-control mechanisms.
+
+\begin{landscape}
+	\begin{tabularx}{\columnwidth}{@{} l X X X X X @{}}
+		\caption{Example Product Backlog} \label{table:product_backlog}\\
+		\toprule
+		\bfseries ID & \bfseries Priority & \bfseries Description & \bfseries Epic & \bfseries Estimation & \bfseries Status \\
+		REQ-42 & 1 & Rating Service & Feedback-Control & 15 & Ready\\
+		REQ-43 & 2 & Monitoring & Feedback-Control & 10 & Ready\\
+		REQ-44 & 3 & PID-Controller & Feedback-Control & 10 & Ready\\
+		\bottomrule
+	\end{tabularx}
+\end{landscape}
+
+The Scrum team is self-organised and cross-functional. The team members have all the needed competencies and skill to do their work.
+Scrum defines the following roles:
+\begin{itemize}
+	\item Product Owner
+	\begin{itemize}
+		\item Responsible for maximising the value of the product and the work of the development team.
+	\end{itemize}
+	\item Scrum Master
+	\begin{itemize}
+		\item Ensures that everybody understands the Scrum concepts and that the process is properly enacted.
+		\item Coaches the Development team, removes impediments of the Development Team
+	\end{itemize}
+	\item Development Team
+	\begin{itemize}
+		\item There are no special roles such as system architect or test engineer.
+	\end{itemize}
+\end{itemize}
 
 % section relationship_to_architecture_frameworks_and_methodologies (end)
 
@@ -1657,17 +1712,17 @@ The following Table \ref{table:ch6_mapping_rup} shows the assignment of the acti
 	\begin{itemize}
 		\item IEEE 1974-1991
 		\item ISO/IEC 12207
-		\item Unified Process
+		\item \acf{RUP}
 	\end{itemize}
 	\item Using UML to model software processes
 	\begin{itemize}
-		\item Software process metamodel SPEM 2.0 \citep{Group:2008aa} 
+		\item \ac{SPEM} 2.0 \citep{Group:2008aa}
 		\begin{itemize}
-			\item 
+			\item \ac{SPEM} is a metamodel for modeling software development processes.
 		\end{itemize}
-		\item UML4SPM \citep{Bendraou:2005dv}
+		\item \ac{UML4SPM} \citep{Bendraou:2005dv}
 		\begin{itemize}
-			\item UML4SPM is an \ac{UML}-based metamodel for software process modelling. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling.
+			\item \ac{UML4SPM} is an \ac{UML}-based metamodel for software process modelling. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling.
 		\end{itemize}
 		\item Using UML 2.0 for Modelling Software Processes at Siemens AG \citep{Dietrich:2013aa}
 		\begin{itemize}
@@ -1675,13 +1730,13 @@ The following Table \ref{table:ch6_mapping_rup} shows the assignment of the acti
 			\item Using of standard UML 2.0 notation, supported by standard modelling tools.
 			\item Increases readability of processes for software developers since UML is also used for modelling the software itself.
 			\item Four distinct process views: process-oriented view, activity-oriented view, product-oriented view and role-oriented view.
-			\item The following UML diagram types are used: activiy diagrams (process-oriented view), class diagrams (activity-oriented view, product-oriented view, role-oriented view), use-case diagrams (activity-oriented view, product-oriented view, role-oriented view).
+			\item The following UML diagram types are used: activity diagrams (process-oriented view), class diagrams (activity-oriented view, product-oriented view, role-oriented view), use-case diagrams (activity-oriented view, product-oriented view, role-oriented view).
 		\end{itemize}
 	\end{itemize}
 \end{itemize}
 
 \section{Summary}
-
+\label{sec:ch6_summary}
 \begin{itemize}
 	\item Processes are not fixed during their lifetime, they need to be continuously improved. \citep{Fuggetta:2000ds}
 \end{itemize}
