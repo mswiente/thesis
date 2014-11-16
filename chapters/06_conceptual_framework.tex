@@ -7,19 +7,23 @@
 %******************************************************************************
 \section{Introduction} 
 
+The concept for an adaptive Middleware for bulk data processing presented in chapter \ref{ch:adaptive_middleware} describes the ``What'' (what needs to be done) but not the ``How'' (how should it be done).
+
+The design, implementation and operation of such a system differs from common approaches to implement enterprise systems:
 \begin{itemize}
-	\item The concept for an adaptive Middleware for bulk data processing presented in chapter \ref{ch:adaptive_middleware} describes the ``What'' (what needs to be done) but not the ``How'' (how should it be done).
-	\item The design, implementation and operation of such a system differs from common approaches to implement enterprise systems (what are these differences?)
-	\begin{itemize}
-		\item Design: Defining Service interfaces, defining aggregation rules, defining transports, defining integration architecture
-		\item Implementation: Service implementation, Service Optimisation
-		\item Operation: controller tuning, monitoring
-	\end{itemize}
-	\item In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework is needed
-	\item It defines views, roles and tasks and their dependencies to describe the necessary steps for design, implementation and operation of system describe in Chapter \ref{ch:adaptive_middleware}.
-	\item It only describes concepts that are specific to the design and implementation of an Adaptive Middleware as described in the previous chapter. It does not describe common concepts for softwar development.
-	\item The conceptual model can be tailored to specific projects requirements, it does not have to be followed strictly.
-	\item Developing software is a complex process, the quality of a software product depends on the people, the organisation and procedures used to create and deliver it \citep{Fuggetta:2000ds}
+	\item There are specific activities or tasks needed to implement the feedback-control subsystem.
+	\item There are different roles needed with different skills.
+	\item There are different tools needed to aid the design and development of such as system.
+\end{itemize}
+
+Developing software is a complex process, the quality of a software product depends on the people, the organisation and procedures used to create and deliver it \citep{Fuggetta:2000ds}.
+In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework is needed. It defines artifacts, roles, tasks and their dependencies to describe the necessary steps for design, implementation and operation of a system described in Chapter \ref{ch:adaptive_middleware}.
+
+Figure \ref{fig:ch6_overview} shows an overview of the conceptual framework. It is organized among the phases plan, build and run. Each phase contains tasks, which are relevant for each phase:
+\begin{itemize}
+	\item Design: Defining Service interfaces, defining aggregation rules, defining transports, defining integration architecture
+	\item Implementation: Service implementation, Service Optimisation
+	\item Operation: controller tuning, monitoring
 \end{itemize}
 
 \begin{figure}
@@ -27,11 +31,8 @@
 	\includegraphics[width=\textwidth]{ch6_overview} \caption{Overview of Conceptual Framework} \label{fig:ch6_overview} 
 \end{figure}
 
-\subsection{Reference Architecture}
 
-\begin{itemize}
-	\item Together with the concept for the Adaptive Middleware presented in Chapter \ref{ch:adaptive_middleware}, the Conceptual Framwork presented in this chapter build a reference architecture for adaptive systems for bulk data processing.
-\end{itemize}
+The conceptual framework only describes concepts that are specific to the design and implementation of an Adaptive Middleware as described in the previous chapter. It does not describe common concepts for softwar development.
 
 This chapter is organised as follows:
 
@@ -45,32 +46,26 @@ This chapter is organised as follows:
 
 \section{Metamodel}
 \label{sec:ch6_metamodel}
-The conceptual framework consists of the following entities:
+The conceptual framework consists of the following entities, as shown in Figure \ref{fig:ch6_metamodel}:
 \begin{itemize}
-	\item Phase
+	\item \textbf{Phase}\\
+	Phases correspond to the different phases of an software development process, such as design, implementation and operations and contain the relevant tasks.
+	\item \textbf{Task}\\
+	Tasks represent the activities of the development process. A task
 	\begin{itemize}
-		\item contains Tasks
+		\item is contained in a phase
+		\item is processed by a role
+		\item produces and requires artifacts
+		\item uses tools
 	\end{itemize}
-	\item Role
-	\begin{itemize}
-		\item processes Tasks
-	\end{itemize}
-	\item Task
-	\begin{itemize}
-		\item is contained in a Phase
-		\item is processed by a Role
-		\item produces Artifacts
-		\item uses Tools
-	\end{itemize}
-	\item Artifact
-	\begin{itemize}
-		\item is produced by a Task
-		\item is required by a Task
-	\end{itemize}
-	\item Tool
-	\begin{itemize}
-		\item is used by a Task
-	\end{itemize}
+	\item \textbf{Role}\\
+	Roles represent types of actors with the needed skills to process specific tasks.
+	\item \textbf{Artifact}\\
+	An artifact represents the result of a tasks. Additionally, an artifact is a requirement of a tasks.
+	\item \textbf{Tool}\\
+	A tool is used by a tasks to produce its artifact.
+	\item \textbf{Process}\\
+	A process contains an ordered list of tasks that need to be processed in a certain order.
 \end{itemize}
 
 \begin{figure}
@@ -81,18 +76,19 @@ The conceptual framework consists of the following entities:
 \end{figure}
 
 \section{Phase}
+Phases are the top-level entitis of the conceptual framework. They correspond to the different phases of the software development lifecycle and are a mean to group the different tasks of the framework.
 
+The conceptual framework defines the following phases:
 \begin{itemize}
-	\item Phases are the toplevel building blocks
-	\item The framework defines the following phases
-	\begin{itemize}
-		\item Plan
-		\item Build
-		\item Run
-	\end{itemize}
-	\item Phases are aligned to phases commonly used by other software development frameworks and methodologies (examples?)
-	\item It should be noted that the framework defines no requirements regarding the general order or mode in which theses phases should be processed. It is therefore possible to use this framework with different software development methodologies such as the Waterfall model, Scrum or the V-Modell.
+	\item \textbf{Plan}\\
+	The plan phase contains tasks relevant for the analysis and design of the system, such as the definition of the service interfaces, definition of the integration architecture and definition of performance tests.
+	\item \textbf{Build}\\
+	The build phase contains tasks relevant for the implementation of the system, such as the implementation of services, implementation of the integration layer and the implementation of the feedback-control subsystems.
+	\item \textbf{Run}\\
+	The run phase contains tasks relevant to the operation of the developed system, such as monitoring, setup and tuning.
 \end{itemize}
+
+It should be noted that the framework defines no requirements regarding the general order or mode in which theses phases and their tasks should be processed. It is therefore possible to use this framework with different software development methodologies such as the Waterfall model, Scrum or the V-Modell.
 
 \subsection{Plan}
 	\begin{tabularx}{\textwidth}{@{} l X @{}}
@@ -143,10 +139,7 @@ The conceptual framework consists of the following entities:
 	\end{itemize}
 	\\
 	\midrule
-	\bfseries Roles &
-	\begin{itemize}
-		\item Software Engineer
-	\end{itemize}
+	\bfseries Roles & Software Engineer
 	\\
 	\bottomrule
 \end{tabularx}
@@ -180,27 +173,29 @@ The conceptual framework consists of the following entities:
 \section{Roles}
 \label{sec:ch6_roles}
 
+Roles represent the actors, which process tasks, that is, they describe \emph{who} does something. The description of a role contains its reponsibilities and needed skills. 
+A role is not the same as a person, a single person can have multiple roles and change the role according to the context of the current task.
+
+The Conceptual Framework defines the following roles:
 \begin{itemize}
-	\item Roles describe responsibilities and skills
-	\item Describe who does something
-	\item A Task is processed by a role
-	\item Roles are not the same as persons, a person can fulfill multiple roles at the same time
+	\item \textbf{Business Architect}\\
+	The business architect is responsible for defining the business architecture of the software system.
+	\item \textbf{System Architect}\\ 
+	The system architect is responsible for defining the technical architecture of the software system.
+	\item \textbf{Software Engineer}\\
+	The software engineer ist responsible for implementing the software system.
+	\item \textbf{Test Engineer}\\
+	The test engineer is responsible for defining and performing the system test.
+	\item \textbf{Operations Engineer}\\
+	The operations engineer is responsible for all aspects concerned with running the developed software system.
+	\item \textbf{Project Manager}\\
+	The project manager is responsible for managing the software development process.
 \end{itemize}
 
-The Conceptual Framework defines the following Roles:
-\begin{itemize}
-	\item Business Architect
-	\item System Architect 
-	\item Software Engineer
-	\item Test Engineer
-	\item Operations Engineer
-	\item Project Manager
-\end{itemize}
-
-\subsection{Business Analyst}
+\subsection{Business Architect}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.6\textwidth]{ch6_role_business_architect} 
+	\includegraphics[width=0.5\textwidth]{ch6_role_business_architect} 
 	\caption{Role: Business Architect} 
 	\label{fig:ch6_role_business_architect} 
 \end{figure}
@@ -208,7 +203,7 @@ The Conceptual Framework defines the following Roles:
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Business Architect} \label{table:ch6_Role_Business_Analysist}\\
 	\toprule
-	\bfseries Role & Business Analyst\\
+	\bfseries Role & Business Architect\\
 	\midrule
 	\bfseries Description & The Business Architect is responsible for designing the business architecture of the system, including the definition of services and aggregation rules.\\
 	\midrule
@@ -232,10 +227,12 @@ The Conceptual Framework defines the following Roles:
 \subsection{System Architect} 
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.6\textwidth]{ch6_role_system_architect} 
+	\includegraphics[width=0.5\textwidth]{ch6_role_system_architect} 
 	\caption{Role: System Architect} 
 	\label{fig:ch6_role_system_architect} 
 \end{figure}
+
+\newpage
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{System Architect}\label{table:ch6_Role_System_Architect}\\
@@ -268,7 +265,7 @@ The Conceptual Framework defines the following Roles:
 \subsection{Software Engineer}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.6\textwidth]{ch6_role_software_engineer} 
+	\includegraphics[width=0.5\textwidth]{ch6_role_software_engineer} 
 	\caption{Role: Software Engineer} 
 	\label{fig:ch6_role_software_engineer} 
 \end{figure}
@@ -308,7 +305,7 @@ The Conceptual Framework defines the following Roles:
 \subsection{Test Engineer}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.6\textwidth]{ch6_role_test_engineer} 
+	\includegraphics[width=0.5\textwidth]{ch6_role_test_engineer} 
 	\caption{Role: Test Engineer} 
 	\label{fig:ch6_role_test_engineer} 
 \end{figure}
@@ -341,7 +338,7 @@ The Conceptual Framework defines the following Roles:
 
 \subsection{Operations Engineer}
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.6\textwidth]{ch6_role_operations_engineer} 
+	\includegraphics[width=0.5\textwidth]{ch6_role_operations_engineer} 
 	\caption{Role: Operations Engineer} 
 	\label{fig:ch6_role_operations_engineer} 
 \end{figure}
@@ -374,7 +371,7 @@ The Conceptual Framework defines the following Roles:
 \subsection{Project Manager}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.6\textwidth]{ch6_role_project_manager} 
+	\includegraphics[width=0.5\textwidth]{ch6_role_project_manager} 
 	\caption{Role: Project Manager} 
 	\label{fig:ch6_role_project_manager} 
 \end{figure}
@@ -407,12 +404,14 @@ The Conceptual Framework defines the following Roles:
 \section{Tasks}
 \label{sec:ch6_tasks}
 
-\begin{itemize}
-	\item Main entities of the conceptual framework, define what should be done.
-	\item Tasks depend on each other, some tasks must be processed in a certain order
-	\item The Conceptual Framework only describes tasks that are specific to the design and implementation of an Adaptive Middleware for Bulk Data Processing as described in chapter \ref{ch:adaptive_middleware}. It does not describe common tasks or activities that are needed for every software system.
-	\item Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks assigned to the different phases of the Conceptual Framework.
-\end{itemize}
+Tasks are the main entities of the conceptual framework. A Tasks describes \emph{what} should be done, \emph{why} should it be done, and \emph{who} should do it.
+Additionally, it describes the required and produced artifacts, the tools that should be used to process the task and the expected challenges.
+
+Tasks depend on each other, some tasks must be processed in a certain order. A task can have multiple subtasks.
+
+The Conceptual Framework only describes tasks that are specific to the design and implementation of an Adaptive Middleware for Bulk Data Processing as described in chapter \ref{ch:adaptive_middleware}. It does not describe common tasks or activities that are needed for every software system.
+
+Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks assigned to the different phases of the Conceptual Framework.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_overview_tasks} 
@@ -420,20 +419,18 @@ The Conceptual Framework defines the following Roles:
 	\label{fig:ch6_overview_tasks} 
 \end{figure}
 
+The following tasks are defined:
+
 \begin{itemize}
-	\item Define Business Architecture
+	\item Business Architecture
 	\begin{itemize}
 		\item Define Performance Requirements
 		\item Define Service Interfaces
 		\item Define Aggregation Rules
 	\end{itemize}
-	\item Define System Architecture 
+	\item System Architecture 
 	\begin{itemize}
 		\item Define Integration Architecture
-		\begin{itemize}
-			\item Transports
-			\item Distribution
-		\end{itemize}
 		\item Define Routing Rules
 		\item Define Controller Architecture 
 		\begin{itemize}
@@ -442,32 +439,42 @@ The Conceptual Framework defines the following Roles:
 		\end{itemize}
 		\item Define Routing Rules
 	\end{itemize}
-	\item Implement Controller / Feedback Loop
-	\item Perform Controller Tuning 
+	\item Implementation
 	\begin{itemize}
-		\item System Model/System Identification 
-		\item Static Tests
-		\item Step Tests
+		\item Implement Controller / Feedback Loop
+		\item Perform Controller Tuning 
+		\begin{itemize}
+			\item System Model/System Identification 
+			\item Static Tests
+			\item Step Tests
+		\end{itemize}
+		\item Implement Integration Architecture
+		\item Implement Service Interfaces
+		\item Implement Aggregation Rules 
+		\item Implement Routing Rules
 	\end{itemize}
-	\item Implement Integration Architecture
-	\item Implement Service Interfaces
-	\item Implement Aggregation Rules 
-	\item Implement Routing Rules
-	\item Define Performance Tests 
-	\item Setup Monitoring infrastructure
-	\item Setup Test and Integration Environment
-	\item Perform Performance Tests
-	\item Evaluate Performance Test Results
-	\item Define Training Concept
-	\item Staffing
+	\item Test
+	\begin{itemize}
+		\item Define Performance Tests 
+		\item Evaluate Performance Test Results
+	\end{itemize}
+	\item Operation
+	\begin{itemize}
+		\item Setup Monitoring infrastructure
+		\item Setup Test and Integration Environment
+		\item Perform Performance Tests
+	\end{itemize} 
+	\item Project Management
+	\begin{itemize}
+		\item Define Training Concept
+		\item Staffing
+	\end{itemize}
 \end{itemize}
 
 \subsection{Business Architecture}
 
-\begin{itemize}
-	\item The business architecture defines the business components of the system and their relationships independantly of the technical implementation.
-	\item Except from the described subtasks, the task is not specific to the conceptual model.
-\end{itemize}
+The business architecture defines the business components of the system and their relationships independantly of the technical implementation.
+Except from the described subtasks, the task is not specific to the conceptual model.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_tasks_business_architecture} 
@@ -504,10 +511,7 @@ The Conceptual Framework defines the following Roles:
 	\midrule
 	\bfseries Artifacts & Performance Requirements\\
 	\midrule
-	\bfseries Challenges & 
-	\begin{itemize}
-		\item 
-	\end{itemize}\\
+	\bfseries Challenges & The performance requirements must be explicitely defined in a way that they can be evaluated.\\
 	\bottomrule
 \end{tabularx}
 
@@ -540,10 +544,7 @@ The Conceptual Framework defines the following Roles:
 	\midrule
 	\bfseries Artifacts & Service Interface Definitions\\
 	\midrule
-	\bfseries Challenges & 
-	\begin{itemize}
-		\item Finding the appropriate services and service granularity
-	\end{itemize}\\
+	\bfseries Challenges & Finding the appropriate services and service granularity\\
 	\bottomrule
 \end{tabularx}
 
@@ -575,7 +576,7 @@ The Conceptual Framework defines the following Roles:
 				\item analysation of processed data needed
 				\item Rules can be defined after integration architecture
 				\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
-				\item optimization (?)
+				\item optimization is possible
 			\end{itemize}
 		\end{itemize}
 	\end{itemize}
@@ -600,17 +601,15 @@ The Conceptual Framework defines the following Roles:
 	\bottomrule 
 \end{tabularx}
 
-\subsection{System Architecture }
+\subsection{System Architecture}
+
+The system architecture defines the technical architecture of the system. Except from the described subtasks, the task is not specific to the conceptual model.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_tasks_system_architecture} 
 	\caption{Tasks extending the definition of the system architecture} 
 	\label{fig:ch6_tasks_system_architecture} 
 \end{figure}
-
-\begin{itemize}
-	\item Except from the described subtasks, the task is not specific to the conceptual model.
-\end{itemize}
 
 \subsubsection{Define Integration Architecture}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
@@ -676,10 +675,7 @@ The Conceptual Framework defines the following Roles:
 	\midrule
 	\bfseries Who & System Architect\\
 	\midrule
-	\bfseries Input & 
-		\begin{itemize}
-			\item Integration Architecture
-		\end{itemize}
+	\bfseries Input & Integration Architecture
 	\\
 	\midrule 
 	\bfseries Output & Routing Rules Definition\\
@@ -688,20 +684,7 @@ The Conceptual Framework defines the following Roles:
 	\bottomrule 
 \end{tabularx}
 
-\subsection{Feedback-Control}
-
-\begin{figure}[htpb] \centering 
-	\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control} 
-	\caption{Activity Diagram: Implement Feedback-Control Loop} 
-	\label{fig:ch6_activiy_feedback_control} 
-\end{figure}
-
 \subsubsection{Define Controller Architecture}
-\begin{figure}[htpb] \centering 
-	\includegraphics[width=\textwidth]{ch6_tasks_feedback_control} 
-	\caption{Tasks for implementing the feedback-control loop} 
-	\label{fig:ch6_tasks_feedback_control} 
-\end{figure}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Define Controller Architecture} \label{table:ch6_Task_Define_Controller_Architecture}\\
@@ -728,10 +711,9 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Output & Controller Architecture\\
 	\midrule 
-	\bfseries Challenges & \\
+	\bfseries Challenges & Finding the right controller architecture is an iterative process. A simple solution should be used initially, which should be refined when the system is implemented. Alternatively, a simulation can be used to evaluate the controller architecture beforehand.\\
 	\bottomrule 
 \end{tabularx}
-
 
 \subsubsection{Define Control Problem}
 
@@ -753,9 +735,7 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Artifacts & Control Problem\\
 	\midrule 
-	\bfseries Challenges & Lorem Ipsum\\
-	\midrule 
-	\bfseries Best practises & Lorem ipsum\\
+	\bfseries Challenges & \\
 	\bottomrule 
 \end{tabularx}
 
@@ -774,8 +754,8 @@ The Conceptual Framework defines the following Roles:
 		\begin{itemize}
 			\item Number of messages in the system
 			\item Input queue length
-			\item current end-to-end latency
-			\item current throughput
+			\item Current end-to-end latency
+			\item Current throughput
 		\end{itemize}
 	\end{itemize}
 	\\
@@ -792,6 +772,7 @@ The Conceptual Framework defines the following Roles:
 	\bottomrule 
 \end{tabularx}
 
+\subsection{Implementation}
 
 \subsubsection{Implement Controller}
 
@@ -846,12 +827,9 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Artifacts & Controller Architecture\\
 	\midrule 
-	\bfseries Challenges & 
-	\begin{itemize}
-		\item The system needs to be already implemented.
-	\end{itemize}
+	\bfseries Challenges & The system needs to be already implemented. Alternatively, an appropriate model of the system can be used.
 	\\
-	\bottomrule 
+	\bottomrule
 \end{tabularx}
 
 
@@ -870,10 +848,7 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Artifacts & Controller Architecture\\
 	\midrule 
-	\bfseries Challenges & 
-	\begin{itemize}
-		\item The system needs to be already implemented.
-	\end{itemize}
+	\bfseries Challenges & The system needs to be already implemented. Alternatively, an appropriate model of the system can be used.
 	\\
 	\bottomrule 
 \end{tabularx}
@@ -895,11 +870,8 @@ The Conceptual Framework defines the following Roles:
 		\midrule 
 		\bfseries Output & System Model\\
 		\midrule 
-		\bfseries Challenges & 
-		\begin{itemize}
-			\item The software engineer needs to have a profound knowlegde of controller theory and system identification in order to build a relevant model of the system.
-		\end{itemize}
-		\\
+		\bfseries Challenges & The software engineer needs to have a profound knowlegde of controller theory and system identification in order to build a relevant model of the system.
+			\\
 		\bottomrule 
 	\end{tabularx}
 
@@ -923,16 +895,13 @@ The Conceptual Framework defines the following Roles:
 		\midrule 
 		\bfseries Input & Controller Architecture\\
 		\midrule 
-		\bfseries Challenges & 
-		\begin{itemize}
-			\item The software engineer needs to have a profound knowlegde of controller theory and the controller architecture in order to properly tune the implemented controller.
-		\end{itemize}
+		\bfseries Challenges & The software engineer needs to have a profound knowlegde of controller theory and the controller architecture in order to properly tune the implemented controller.
 		\\
 		\bottomrule 
 	\end{tabularx}
 
 
-\subsection{Implement Service Interfaces}
+\subsubsection{Implement Service Interfaces}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Implement Service Interfaces} \label{table:ch6_Task_Implement_Service_Interfaces}\\
@@ -953,16 +922,13 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Input & Service Interface Definitions\\
 	\midrule 
-	\bfseries Challenges & 
-	\begin{itemize}
-		\item Implementing appropriate optimisations for batch and single-event processing.
-	\end{itemize}
+	\bfseries Challenges & Implementing appropriate optimisations for batch and single-event processing.
 	\\
 	\bottomrule 
 \end{tabularx}
 
 
-\subsection{Implement Aggregator}
+\subsubsection{Implement Aggregator}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Implement Aggregator} \label{table:ch6_Task_Implement_Aggregator}\\
 	\toprule 
@@ -986,8 +952,9 @@ The Conceptual Framework defines the following Roles:
 	\bottomrule 
 \end{tabularx}
 
+\subsection{Test}
 
-\subsection{Define Performance Tests}
+\subsubsection{Define Performance Tests}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Define Performance Tests} \label{table:ch6_Task_Define_Performance_Tests}\\
 	\toprule 
@@ -1012,8 +979,39 @@ The Conceptual Framework defines the following Roles:
 	\bottomrule 
 \end{tabularx}
 
+\subsubsection{Evaluate Performance Test Results}
 
-\subsection{Setup Monitoring infrastructure}
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Evaluate Performance Test Results} \label{table:ch6_Evaluate_Performance_Results}\\
+	\toprule 
+	\bfseries Task & Evaluate Performance Test Results\\
+	\midrule 
+	\bfseries What & 
+	\begin{itemize}
+		\item Visualise the test results using the tools/skripts implemented in the task Define Performance Tests.
+	\end{itemize}
+	\\
+	\midrule 
+	\bfseries Why & The performance test evaluation is conducted to understand the performance characteristics of the system.\\
+	\midrule 
+	\bfseries Who & 
+	\begin{itemize}
+		\item Test Engineer
+		\item System Engineer
+	\end{itemize}
+	\\
+	\midrule 
+	\bfseries Input & Performance Test Result\\
+	\midrule 
+	\bfseries Output & Performance Test Evaluation\\
+	\midrule 
+	\bfseries Challenges & \\
+	\bottomrule 
+\end{tabularx}
+
+\subsection{Operations}
+
+\subsubsection{Setup Monitoring infrastructure}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Setup Monitoring infrastructure} \label{table:ch6_Task_Setup_Monitoring_infrastructure}\\
 	\toprule 
@@ -1025,18 +1023,17 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Why & Lorem ipsum\\
+	\bfseries Why & The monitoring infrastructure is needed to monitor the system at run-time. Based on the monitoring the operation engineer is able to further tune the system.\\
 	\midrule 
 	\bfseries Who & Operations Engineer\\
 	\midrule 
 	\bfseries Artifacts & System Architecture\\
 	\midrule 
-	\bfseries Challenges & none\\
+	\bfseries Challenges & \\
 	\bottomrule 
 \end{tabularx}
 
-
-\subsection{Setup Test Environment}
+\subsubsection{Setup Test Environment}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Setup Test Environment} \label{table:ch6_Task_Setup_Test_Environment}\\
 	\toprule \bfseries Task & Setup Test Environment\\
@@ -1065,7 +1062,7 @@ The Conceptual Framework defines the following Roles:
 \end{tabularx}
 
 
-\subsection{Perform Performance Tests}
+\subsubsection{Perform Performance Tests}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Perform Performance Tests} \label{table:ch6_Task_Perform_Performance_Tests}\\
 	\toprule 
@@ -1081,43 +1078,13 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Output & Performance Test Results\\
 	\midrule 
-	\bfseries Challenges & none\\
+	\bfseries Challenges & To ensure the reliability of the performance test results, the tests should be run multiple times. This is often difficult with regard of the needed ressources for the performance test, such as availability of external systems.\\
 	\bottomrule 
 \end{tabularx}
 
+\subsection{Project Management}
 
-\subsection{Evaluate Performance Test Results}
-
-\begin{tabularx}{\textwidth}{@{} l X @{}}
-	\caption{Evaluate Performance Test Results} \label{table:ch6_Evaluate_Performance_Results}\\
-	\toprule 
-	\bfseries Task & Evaluate Performance Test Results\\
-	\midrule 
-	\bfseries What & 
-	\begin{itemize}
-		\item Visualise the test results using the tools/skripts implemented in the task Define Performance Tests.
-	\end{itemize}
-	\\
-	\midrule 
-	\bfseries Why & The performance test evaluation is conducted to understand the performance characteristics of the system.\\
-	\midrule 
-	\bfseries Who & 
-	\begin{itemize}
-		\item Test Engineer
-		\item System Engineer
-	\end{itemize}
-	\\
-	\midrule 
-	\bfseries Input & Performance Test Result\\
-	\midrule 
-	\bfseries Output & Performance Test Evaluation\\
-	\midrule 
-	\bfseries Challenges & none\\
-	\bottomrule 
-\end{tabularx}
-
-
-\subsection{Define Training Concept}
+\subsubsection{Define Training Concept}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Define Training Concept} \label{table:ch6_Task_Define_Training_Concept}\\
@@ -1147,12 +1114,12 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Artifacts & System Architecture\\
 	\midrule 
-	\bfseries Challenges & \\
+	\bfseries Challenges & The training concept should consider the respective audience and its existing knowlegde.\\
 	\bottomrule 
 \end{tabularx}
 
 
-\subsection{Staffing}
+\subsubsection{Staffing}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Staffing} \label{table:ch6_Task_Staffing}\\
@@ -1189,19 +1156,74 @@ The Conceptual Framework defines the following Roles:
 	\bottomrule 
 \end{tabularx}
 
+\section{Processes}
+A process contains an ordered list of tasks that are concerned with the implementation of a certain feature of the software system.
+Processes are modeled using \ac{UML} activity diagrams. The conceptual framework describes the following processes:
+\begin{itemize}
+	\item Implement Integration
+	\item Implement Aggregation
+	\item Implement Feedback-Control
+\end{itemize}
+
+\subsection{Implement Integration}
+This process describes the necessary tasks to implement the integration layer and the integrated service interfaces, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_integration}.
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.3\textwidth]{ch6_activity_integration} 
+	\caption{\ac{UML} Activity Diagram: Implement Integration} 
+	\label{fig:ch6_activiy_integration} 
+\end{figure}
+
+\subsection{Implement Aggregation}
+This process is concerned with the implementation of the message aggregation, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_aggregation}.
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.3\textwidth]{ch6_activity_aggregation} 
+	\caption{\ac{UML} Activity Diagram: Implement Aggregation} 
+	\label{fig:ch6_activiy_aggregation} 
+\end{figure}
+
+\subsection{Implement Feedback-Control}
+
+This process contains tasks that are concerned with the design, implementation and tuning of the feedback-control loop, as shown in Figure \ref{fig:ch6_tasks_feedback_control}.
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_tasks_feedback_control} 
+	\caption{Tasks for implementing the feedback-control loop} 
+	\label{fig:ch6_tasks_feedback_control} 
+\end{figure}
+
+There are two options for implementing the feedback-control loop:
+\begin{itemize}
+	\item Using a system model for performing the controller tuning, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_feedback_control_model}.
+	\item Without using model, as shown in the \ac{UML} diagram in Figure \ref{fig:ch6_activiy_feedback_control}.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control_modelling} 
+	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop using a model} 
+	\label{fig:ch6_activiy_feedback_control_model} 
+\end{figure}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control} 
+	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop} 
+	\label{fig:ch6_activiy_feedback_control} 
+\end{figure}
 
 \section{Artifacts}\label{sec:ch6_artifacts}
 
-\begin{itemize}
-	\item An Artifact is a result of a task
-	\item Additionally, an artifact can be a prerequisite of a task
-\end{itemize}
+An artifact is a result of a task. It is an intermediate result, that is needed for development of the software, but not the software product itself. Additionally, it can also be prerequisite of another task. 
+
+The conceptual framework only describes artifacts that are specific for the implementation of the adaptive middleware as described in Chapter \ref{ch:adaptive_middleware}. Artifacts that are common to every software development process are out of scope.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_artifacts} 
 	\caption{Artifacts} 
 	\label{fig:ch6_artifacts} 
 \end{figure}
+
+The conceptual framework describes the following artifacts:
 
 \begin{itemize}
 	\item Performance Requirements
@@ -1211,6 +1233,7 @@ The Conceptual Framework defines the following Roles:
 	\item Routing Rules
 	\item Controller Architecture
 	\item System Model
+	\item Controller Configuration
 	\item Performance Test Concept
 	\item Training Concept
 	\item Staffing Plan
@@ -1229,10 +1252,7 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Define Performance Requirements
-	\end{itemize}
+	\bfseries Task & Define Performance Requirements
 	\\
 	\midrule 
 	\bfseries Role & 
@@ -1257,10 +1277,7 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Define Service Interfaces 
-	\end{itemize}
+	\bfseries Task & Define Service Interfaces 
 	\\
 	\midrule 
 	\bfseries Role & Business Architect\\
@@ -1276,11 +1293,8 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Description & Defines how events should be correlated with each other by the Aggregator.\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Define Aggregation Rules
-	\end{itemize}
-	\\
+	\bfseries Task & Define Aggregation Rules
+		\\
 	\midrule 
 	\bfseries Role & 
 	\begin{itemize}
@@ -1307,11 +1321,8 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Define Integration Architecture 
-	\end{itemize}
-	\\
+	\bfseries Task & Define Integration Architecture 
+		\\
 	\midrule 
 	\bfseries Role & System Architect\\
 	\bottomrule 
@@ -1327,11 +1338,8 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Description & Defines which service endpoint should be called by the Router for a given aggregation size.\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Define Routing Rules
-	\end{itemize}
-	\\
+	\bfseries Task & Define Routing Rules
+		\\
 	\midrule 
 	\bfseries Role & System Architect\\
 	\bottomrule 
@@ -1347,10 +1355,7 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Description & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item System Identification / Modelling
-	\end{itemize}
+	\bfseries Task & System Identification / Modelling
 	\\
 	\midrule 
 	\bfseries Role & System Architect\\
@@ -1366,11 +1371,8 @@ The Conceptual Framework defines the following Roles:
 	\midrule 
 	\bfseries Description & The controller configuration specifies the parameter of the Controller.\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Perform Controller Tuning
-	\end{itemize}
-	\\
+	\bfseries Task & Perform Controller Tuning
+		\\
 	\midrule 
 	\bfseries Role & Sofware Engineer\\
 	\bottomrule 
@@ -1393,10 +1395,7 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Define Training Concept
-	\end{itemize}
+	\bfseries Task & Define Training Concept
 	\\
 	\midrule 
 	\bfseries Role & 
@@ -1424,10 +1423,7 @@ The Conceptual Framework defines the following Roles:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & 
-	\begin{itemize}
-		\item Perform Staffing
-	\end{itemize}
+	\bfseries Task & Perform Staffing
 	\\
 	\midrule 
 	\bfseries Role & Project Manager\\
@@ -1438,29 +1434,43 @@ The Conceptual Framework defines the following Roles:
 \section{Tools} % (fold)
 \label{sec:ch6_tools}
 
-\begin{itemize}
-	\item The design and implementation of the Adaptive Middleware for Bulk Data Processing requires the use of some specific tools.
-\end{itemize}
+The design and implementation of the adaptive middleware requires the use of some specific tools. Tools are grouped in the following tool categories:
 
 \begin{itemize}
-	\item Tools for System Modelling, System Identification and Simulation
-	\begin{itemize}
-		\item Discrete Event Simulation
-		\item Matlab/Simulink
-		\item Scilab/Xcos
-	\end{itemize}
-	\item Tools for Data Visualisation
-	\begin{itemize}
-		\item Excel
-		\item Matlab
-		\item Gnuplot
-		\item matplotlib
-	\end{itemize}
-	\item Languages for data processing
-	\begin{itemize}
-		\item Perl
-		\item Python
-	\end{itemize}
+	\item Tools for system modelling, system identification and simulation
+	\item Tool for data visualisation
+	\item Tools for data processing
+\end{itemize}
+
+\subsection{Tools for System Modelling, System Identification and Simulation}
+
+The implementation of the feedback-controll loop can be aided with special tools for system modelling, system identification or simulation.
+Examples of such tools include:
+
+\begin{itemize}
+	\item Discrete Event Simulation Frameworks, such as SimPy, SystemC
+	\item Matlab/Simulink
+	\item Scilab/Xcos
+\end{itemize}
+
+\subsection{Tools for Data Visualisation}
+
+In order to gain insights from the performance test  and controller tuning results, the test results should be visualized with a suitable data visualisation tool. Examples of data visualisation tools include:
+
+\begin{itemize}
+	\item Microsoft Excel
+	\item Matlab
+	\item Gnuplot
+	\item matplotlib
+\end{itemize}
+
+\subsection{Languages for data processing}
+
+For the evaluation of the performance test results, it is often necessary to process log files, which have been generated during the the test runs. For example for the calculation of statistical values. While this can be done with an arbitrary programming language, the following programming or scripting languages are in particular suitable for data processing:
+
+\begin{itemize}
+	\item Perl 
+	\item Python
 \end{itemize}
 
 % section tools (end)
@@ -1469,11 +1479,11 @@ The Conceptual Framework defines the following Roles:
 \label{sec:ch6_other_frameworks}
 % (fold)
 
-\begin{itemize}
-	\item The conceptual framework is only concerned with the special aspects of the design, implementation and operation of the adaptive middleware presented in Chapter \ref{ch:adaptive_middleware}. It does not describe a complete software development approach. The conceptual framework therefore needs to be integrated in common software development frameworks or methodologies.
-	\item In principle, the conceptual framework can be integrated in any iterative software lifecycle approach, such as the Rational Unified Process, the spiral model \citep{Boehm:1988cd} or agile development frameworks such as Scrum \citep{Schwaber:2013aa}. Linear lifecycle models such as the waterfall model \citep{Royce:1987tl} are not suited because tasks like controller design, controller implementation and controller tuning need to be iterative.
-	\item This section describes briefly how the conceptual framework can be used with two common software development methodologies, the \ac{RUP} and Scrum.
-\end{itemize}
+The conceptual framework is only concerned with the special aspects of the design, implementation and operation of the adaptive middleware presented in Chapter \ref{ch:adaptive_middleware}. It does not describe a complete software development approach. The conceptual framework therefore needs to be integrated in common software development frameworks or methodologies.
+
+In principle, the conceptual framework can be integrated in any iterative software lifecycle approach, such as the Rational Unified Process, the spiral model \citep{Boehm:1988cd} or agile development frameworks such as Scrum \citep{Schwaber:2013aa}. Linear lifecycle models such as the waterfall model \citep{Royce:1987tl} are not suited because tasks like controller design, controller implementation and controller tuning need to be iterative.
+
+This section describes briefly how the conceptual framework can be used with two common software development methodologies, the \ac{RUP} and Scrum.
 
 \subsection{Rational Unified Process}
 The \acf{RUP} is an approach to asssigning activities and responsibilities within a development organization to produce high-quality software that meets the requirements of its users within a predictable schedule and budget \citep{Rational:2001aa}.
@@ -1614,21 +1624,27 @@ Scrum partitions the development of software products in Sprints, a timeframe of
 
 A Backlog item has following properties:
 \begin{itemize}
-	\item description, order, estimate and value
-	\item It should be possible to be implemented during a single sprint 
-	\item contains all tasks, that are necessary to implement the described feature, such as design, coding, configuration and testing.
+	\item It has a description, order, estimate and value.
+	\item It should be possible to be implemented during a single sprint.
+	\item Contains all tasks, that are necessary to implement the described feature, such as design, coding, configuration and testing.
+	\item Items can be grouped into epics, which represent an important theme of the software product.
 \end{itemize}
 
-Table \ref{table:product_backlog} shows an example Backlog containing items for implementing the feedback-control mechanisms.
+Table \ref{table:product_backlog} shows an example Backlog containing items for implementing a system based on the adaptive middleware.
+Every item contains all the necessary tasks to design, implement and test a feature. For example, the item \emph{REQ-13} contains the tasks define controller architecture, implement control architecture and perform controller tuning.
 
 \begin{landscape}
 	\begin{tabularx}{\columnwidth}{@{} l X X X X X @{}}
 		\caption{Example Product Backlog} \label{table:product_backlog}\\
 		\toprule
 		\bfseries ID & \bfseries Priority & \bfseries Description & \bfseries Epic & \bfseries Estimation & \bfseries Status \\
-		REQ-42 & 1 & Rating Service & Feedback-Control & 15 & Ready\\
-		REQ-43 & 2 & Monitoring & Feedback-Control & 10 & Ready\\
-		REQ-44 & 3 & PID-Controller & Feedback-Control & 10 & Ready\\
+		REQ-5 & 1 & Rating of basic events & Rating Service & 15 & Ready\\
+		REQ-6 & 2 & Mediation of basic events & Mediation Service & 10 & Ready\\
+		REQ-11 & 3 & Monitoring & Feedback-Control & 10 & Ready\\
+		REQ-10 & 4 & Message-Aggregatio & Integration Layer & 8 & Ready\\
+		REQ-12 & 5 & Message-Routing & Integration Layer & 8 & Ready\\
+		REQ-13 & 6 & Basic Controller & Feedback-Control & 10 & Ready\\
+		\ldots & \ldots & \ldots & \ldots & \ldots & \ldots\\
 		\bottomrule
 	\end{tabularx}
 \end{landscape}
@@ -1651,92 +1667,115 @@ Scrum defines the following roles:
 	\end{itemize}
 \end{itemize}
 
+Although Scrum does not define specific roles for the development team, the skills needed for the design and implementation of an enterprise system based on the adapative middleware defined by the conceptual framework need to be considered when staffing the scrum team. 
+
 % section relationship_to_architecture_frameworks_and_methodologies (end)
 
 \section{Related Work}
 \label{sec:ch6_related_work}
 
-\subsection{Software Process Modelling}
+This section discusses work related to the conceptual framework presented in this chapter. It introduces the terms \emph{Software Process} and \emph{Software Process Modelling} and discusses approaches to model the software process using \ac{UML}.  
 
+\subsection{Software Process}
+
+``The software process is a partially ordered set of activities untertaken to manage, develop and maintain software systems.'' \citep{Acuna:2001aa}
+
+\cite{McChesney:1995aa} describes the software process as ``collection of policies, procedures, and steps undertaken in the transformation of an expressed need for a software product into a software product to meet that need.''.
+
+Another similar definition comes from \cite{Fuggetta:2000ds}. He defines the software process as the ``coherent set of policies, organizational structures, technologies, procedures, and artifacts that are needed to conceive, develop, deploy, and maintain a software product.''
+
+It is necessary to differentiate between the terms software process and software lifecycle. A software lifecycle describes the states through which the software passes from the start of the development until the operation and finally the retirement \citep{Acuna:aa}. 
+Examples of software lifecycle models are the waterfall model \citep{Royce:1987tl} oder the spiral model \citep{Boehm:1988cd}.
+
+\subsection{Software Process Modelling}
+Software process modelling describes the creation of software development models \citep{Acuna:2001aa}. \cite{Feiler:1993aa} describes the software process model as ``an abstract representation  of a process architecture, process design or process definition, where each of these describe, at various levels of detail, an organization of process elements of either a completed, current or proposed software process.''
+
+Process models are described using \acp{PML}. A \ac{PML} is defined in terms of a notation, a syntax and semantics, often suitable for computational processing \citep{Bendraou:2005dv}.
+
+\cite{Fuggetta:2000ds} describes different purposes of process models:
 \begin{itemize}
-	\item Definition Software Process: 
-	\begin{itemize}
-		\item Software process is a partially ordered set of activities untertaken to manage, develop and maintain software systems. \citep{Acuna:2001aa}
-		\item The software process may be described as that collection of policies, procedures, and steps undertaken in the transformation of an expressed need for a software product into a software product to meet that need. \citep{McChesney:1995aa}
-		\item A software process can be defined as the coherent set of policies, organizational structures, technologies, procedures, and artifacts that are needed to conceive, develop, deploy, and maintain a softare product. \citep{Fuggetta:2000ds}
-		\item In contrast, a software lifecycle describes the states through which the software passes from the start of the development until the operation and finally the retirement \citep{Acuna:aa}. Examples of software lifecycle models are the waterfall model \citep{Royce:1987tl} oder the spiral model \citep{Boehm:1988cd}.
-	\end{itemize}
-	\item Definition Software Process Modelling: 
-	\begin{itemize}
-		\item Software process modelling describes the creation of software development models. \citep{Acuna:2001aa}
-		\item A software process model is an abstract representation  of a process architecture, process design or process definition, where each of these describe, at various levels of detail, an organization of process elements of either a completed, current or proposed software process. \citep{Feiler:1993aa}
-		\item Process Modells are described using \acp{PML}. A \ac{PML} is defined in terms of a notation, a syntax and semantics, often suitable for computational processing \citep{Bendraou:2005dv}.
-	\end{itemize}
-	\item Different purposes of process models \citep{Fuggetta:2000ds}:
-	\begin{itemize}
-		\item Process understanding
-		\item Process design
-		\item Training and education
-		\item Process simulation  optimization
-		\item Process support
-	\end{itemize}
-	\item Categorization of software process models \citep{McChesney:1995aa}:
-	\begin{itemize}
-		\item Prescriptive (Manual / Automated)
-		\item Descriptive
-	\end{itemize}
-	\item Typical Elements \citep{Benali:1992gq} \citep{Acuna:2001aa} \citep{Fuggetta:2000ds} \citep{Curtis:1992kf}:
-	\begin{itemize}
-		\item Agent or Actor
-		\item Role
-		\item Activity
-		\item Artefact or Product
-		\item Tools to be used
-	\end{itemize}
-	\item Process models typically answer the following questions \citep{Curtis:1992kf}:
-	\begin{itemize}
-		\item what is going to be done?
-		\item who is going to do it?
-		\item when and where will it be done?
-		\item how and why it will be done?
-		\item who is dependant on its being done?
-	\end{itemize}
-	\item Process models are commonly using the following perspectives related to these questions:
-	\begin{itemize}
-		\item Functional: what activities are being performed
-		\item Behavioral: In which order (when) are activities performed
-		\item Organizational: where and by whom is an activity performed
-		\item Informational: the entities produced by the process
-	\end{itemize}
-	\item Examples of software process models:
-	\begin{itemize}
-		\item IEEE 1974-1991
-		\item ISO/IEC 12207
-		\item \acf{RUP}
-	\end{itemize}
-	\item Using UML to model software processes
-	\begin{itemize}
-		\item \ac{SPEM} 2.0 \citep{Group:2008aa}
-		\begin{itemize}
-			\item \ac{SPEM} is a metamodel for modeling software development processes.
-		\end{itemize}
-		\item \ac{UML4SPM} \citep{Bendraou:2005dv}
-		\begin{itemize}
-			\item \ac{UML4SPM} is an \ac{UML}-based metamodel for software process modelling. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling.
-		\end{itemize}
-		\item Using UML 2.0 for Modelling Software Processes at Siemens AG \citep{Dietrich:2013aa}
-		\begin{itemize}
-			\item Not restricted to subset of UML
-			\item Using of standard UML 2.0 notation, supported by standard modelling tools.
-			\item Increases readability of processes for software developers since UML is also used for modelling the software itself.
-			\item Four distinct process views: process-oriented view, activity-oriented view, product-oriented view and role-oriented view.
-			\item The following UML diagram types are used: activity diagrams (process-oriented view), class diagrams (activity-oriented view, product-oriented view, role-oriented view), use-case diagrams (activity-oriented view, product-oriented view, role-oriented view).
-		\end{itemize}
-	\end{itemize}
+	\item Process understanding
+	\item Process design
+	\item Training and education
+	\item Process simulation  optimization
+	\item Process support
 \end{itemize}
+
+Typical elements of \acp{PML} are (see for example \cite{Benali:1992gq}, \cite{Acuna:2001aa}, \cite{Fuggetta:2000ds} and \cite{Curtis:1992kf}):
+\begin{itemize}
+	\item Agent or Actor
+	\item Role
+	\item Activity
+	\item Artefact or Product
+	\item Tools 
+\end{itemize}
+
+Process models typically answer the following questions \citep{Curtis:1992kf}:
+\begin{itemize}
+	\item what is going to be done?
+	\item who is going to do it?
+	\item when and where will it be done?
+	\item how and why will it be done?
+	\item who is dependant on its being done?
+\end{itemize}
+
+Additionally, process models commonly use the following perspectives related to these questions:
+\begin{itemize}
+	\item Functional: what activities are being performed
+	\item Behavioral: In which order (when) are activities performed
+	\item Organizational: where and by whom is an activity performed
+	\item Informational: the entities produced by the process
+\end{itemize}
+
+\cite{McChesney:1995aa} provides two main categories of software process models (see also \cite{Acuna:2001aa})
+\begin{itemize}
+	\item \textbf{Prescriptive}\\
+	A prescripte software process model defines the required or recommended means of executing the software development process. It answers the question ``how should the software be developed''.
+	\item \textbf{Descriptive}\\
+	A descriptive software process model describes an existing process model. It answers the question ``how has the software been developed''.
+\end{itemize}
+
+Examples of software process models include the IEEE and ISO standards IEEE 1974-1991, ISO/IEC 12207 and the \acf{RUP}.
+
+\subsection{Software Process Modelling using \ac{UML}}
+\ac{UML} is commonly used for modelling software processes. 
+
+\ac{SPEM} is a metamodel for modeling software development processes.
+
+\ac{UML4SPM} is an \ac{UML}-based metamodel for software process modelling. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling.
+
+\cite{Dietrich:2013aa} use \ac{UML} 2.0 for modelling software processes at Siemens AG. According to the authors, the usage of standard UML 2.0 notation, which is supported by standard modelling tools, increases readability of processes for software developers since UML is also used for modelling the software itself.
+They describe four distinct process views: 
+\begin{itemize}
+	\item Process-oriented view
+	\item Activity-oriented view
+	\item Product-oriented view
+	\item Role-oriented view
+\end{itemize}
+
+The following UML diagram types are used by their approach: 
+\begin{itemize}
+	\item Activity diagrams (process-oriented view)
+	\item Class diagrams (activity-oriented view, product-oriented view, role-oriented view)
+	\item Use-case diagrams (activity-oriented view, product-oriented view, role-oriented view)
+\end{itemize} 
+
+The conceptual framework for feedback-controlled systems for bulk data processing presented in this chapter is based on the properties of the described approaches in this section for modelling the software development process. For simplification, it uses standard \ac{UML} use-case and activity diagrams for describing the tasks and their relationships. Standard metamodels for software process modelling such as \ac{SPEM} have not been used because they seemed to heavyweight for this purpose.
 
 \section{Summary}
 \label{sec:ch6_summary}
+In this chapter a conceptual framework has been presented to guide the design, implementation and operation of an enterprise system that implements the adaptive middleware for bulk data processing as described in the previous Chapter \ref{ch:adaptive_middleware}.
+
+The conceptual consists of the entities phases, roles, tasks, artifacts and tools. It describes:
 \begin{itemize}
-	\item Processes are not fixed during their lifetime, they need to be continuously improved. \citep{Fuggetta:2000ds}
+	\item The needed roles and their skills for the design, implementation and operation.
+	\item The necessary tasks and their relationships for the design, implementation and operation.
+	\item The artifacts that are created and required by the different tasks.
+	\item The tools that are needed to process the different tasks.
+	\item The processes that describe how tasks depend on each other.
 \end{itemize}
+
+
+
+It should be noted that software processes are not fixed during their lifetime, they need to be continuously improved. \citep{Fuggetta:2000ds}
+The conceptual model can therefore be tailored to specific projects requirements, it does not have to be followed strictly.
