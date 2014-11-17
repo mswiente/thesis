@@ -1196,19 +1196,13 @@ This process contains tasks that are concerned with the design, implementation a
 There are two options for implementing the feedback-control loop:
 \begin{itemize}
 	\item Using a system model for performing the controller tuning, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_feedback_control_model}.
-	\item Without using model, as shown in the \ac{UML} diagram in Figure \ref{fig:ch6_activiy_feedback_control}.
+	\item Without using a model, the control architecture needs to be implemented prior to the controller tuning, as shown in the \ac{UML} diagram in Figure \ref{fig:ch6_activiy_feedback_control}.
 \end{itemize}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control_modelling} 
-	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop using a model} 
-	\label{fig:ch6_activiy_feedback_control_model} 
-\end{figure}
-
-\begin{figure}[htpb] \centering 
-	\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control} 
+	\subfloat[Using a model]{\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control_modelling}\label{fig:ch6_activiy_feedback_control_model}}\qquad
+	\subfloat[Without a model]{\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control}\label{fig:ch6_activiy_feedback_control}}
 	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop} 
-	\label{fig:ch6_activiy_feedback_control} 
 \end{figure}
 
 \section{Artifacts}\label{sec:ch6_artifacts}
@@ -1712,11 +1706,11 @@ Typical elements of \acp{PML} are (see for example \cite{Benali:1992gq}, \cite{A
 
 Process models typically answer the following questions \citep{Curtis:1992kf}:
 \begin{itemize}
-	\item what is going to be done?
-	\item who is going to do it?
-	\item when and where will it be done?
-	\item how and why will it be done?
-	\item who is dependant on its being done?
+	\item What is going to be done?
+	\item Who is going to do it?
+	\item When and where will it be done?
+	\item How and why will it be done?
+	\item Who is dependant on its being done?
 \end{itemize}
 
 Additionally, process models commonly use the following perspectives related to these questions:
@@ -1740,9 +1734,27 @@ Examples of software process models include the IEEE and ISO standards IEEE 1974
 \subsection{Software Process Modelling using \ac{UML}}
 \ac{UML} is commonly used for modelling software processes. 
 
-\ac{SPEM} is a metamodel for modeling software development processes.
+\ac{UML4SPM} is an \ac{UML}-based metamodel for software process modelling \citep{Bendraou:2005dv,Bendraou:2006aa}. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling. \ac{UML4SPM} contains two packages. The process structure package, which contains the set of primary process elements and the foundation package, which contains the subset of \ac{UML} 2.0 concepts extended by this process elements to provide concepts and mechanisms for the coordination and execution of activities.
 
-\ac{UML4SPM} is an \ac{UML}-based metamodel for software process modelling. It takes advantages of the expressiveness of \ac{UML} 2.0 by extending a subset of its elements suitable for process modelling.
+\ac{SPEM} 2.0 is a metamodel for modeling software development processes and a conceptual framework, which provides concepts for for modeling, documenting, presenting, managing, interchanging, and enacting development methods and processes \citep{Group:2008aa}. It provides a clear separation between method content, for example deliverables and key roles, and workflows supporting different software lifecycle models. The \ac{SPEM} 2.0 metamodel consists of seven main metamodel packages, with each package extending the package it depends on:
+\begin{itemize}
+	\item \textbf{Core}\\
+	Contains common classes and abstractions as the base for classes in all other packages.
+	\item \textbf{Process Structure}\\
+	Defines the base for all process models.
+	\item \textbf{Process Behaviour}\\
+	Extends the concepts of the process structure package with behavioural models.
+	\item \textbf{Managed Content}\\
+	Contains concepts for managing the textual content of natural language documentation.
+	\item \textbf{Method Content}\\
+	Provides concepts to build up development knowledge base independent of any specific processes and development projects.
+	\item \textbf{Process With Methods}\\
+	Defines structures for integrating processes defined with concepts of process structure package with instances of concepts of the method content package.
+	\item \textbf{Method Plugin}\\
+	Contains concepts for designing and managing maintainable, large scale, reusable, and configurable libraries or repositories of method content and processes.
+\end{itemize}
+
+Both approaches, \ac{UML4SPM} and \ac{SPEM} 2.0 extend the \ac{UML} 2.0 notation with additional elements, which does not allow the usage of standard \ac{UML} tools.
 
 \cite{Dietrich:2013aa} use \ac{UML} 2.0 for modelling software processes at Siemens AG. According to the authors, the usage of standard UML 2.0 notation, which is supported by standard modelling tools, increases readability of processes for software developers since UML is also used for modelling the software itself.
 They describe four distinct process views: 
@@ -1760,7 +1772,7 @@ The following UML diagram types are used by their approach:
 	\item Use-case diagrams (activity-oriented view, product-oriented view, role-oriented view)
 \end{itemize} 
 
-The conceptual framework for feedback-controlled systems for bulk data processing presented in this chapter is based on the properties of the described approaches in this section for modelling the software development process. For simplification, it uses standard \ac{UML} use-case and activity diagrams for describing the tasks and their relationships. Standard metamodels for software process modelling such as \ac{SPEM} have not been used because they seemed to heavyweight for this purpose.
+The conceptual framework for feedback-controlled systems for bulk data processing presented in this chapter is based on the properties of the described approaches in this section for modelling the software development process. For simplification, it uses standard \ac{UML} use-case and activity diagrams for describing tasks and their relationship. Standard metamodels for software process modelling such as \ac{SPEM} 2.0 have not been used because they seemed to heavyweight for this purpose.
 
 \section{Summary}
 \label{sec:ch6_summary}
