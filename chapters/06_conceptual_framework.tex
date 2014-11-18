@@ -108,7 +108,7 @@ It should be noted that the framework defines no requirements regarding the gene
 			\item Evaluate Test Results
 			\item Perform Staffing
 			\item Define Training Concept
-			\item Source Projct Environments
+			\item Source Project Environments
 		\end{itemize}\\
 		\midrule
 		\bfseries Roles & \begin{itemize}
@@ -367,6 +367,7 @@ The Conceptual Framework defines the following roles:
 	\endline
 \end{tabularx}
 
+\newpage
 
 \subsection{Project Manager}
 
@@ -411,7 +412,7 @@ Tasks depend on each other, some tasks must be processed in a certain order. A t
 
 The Conceptual Framework only describes tasks that are specific to the design and implementation of an Adaptive Middleware for Bulk Data Processing as described in chapter \ref{ch:adaptive_middleware}. It does not describe common tasks or activities that are needed for every software system.
 
-Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks assigned to the different phases of the Conceptual Framework.
+Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks grouped by the different phases of the Conceptual Framework.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_overview_tasks} 
@@ -509,7 +510,7 @@ Except from the described subtasks, the task is not specific to the conceptual m
 		\item System Architect
 	\end{itemize}\\
 	\midrule
-	\bfseries Artifacts & Performance Requirements\\
+	\bfseries Output & Performance Requirements\\
 	\midrule
 	\bfseries Challenges & The performance requirements must be explicitely defined in a way that they can be evaluated.\\
 	\bottomrule
@@ -542,7 +543,7 @@ Except from the described subtasks, the task is not specific to the conceptual m
 	\midrule
 	\bfseries Who & Business Architect\\
 	\midrule
-	\bfseries Artifacts & Service Interface Definitions\\
+	\bfseries Output & Service Interface Definitions\\
 	\midrule
 	\bfseries Challenges & Finding the appropriate services and service granularity\\
 	\bottomrule
@@ -591,7 +592,7 @@ Except from the described subtasks, the task is not specific to the conceptual m
 	\end{itemize}
 	\\
 	\midrule
-	\bfseries Artifacts & Aggregation Rules\\
+	\bfseries Output & Aggregation Rules\\
 	\midrule
 	\bfseries Challenges & 
 	\begin{itemize}
@@ -733,7 +734,7 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & System Architect\\
 	\midrule 
-	\bfseries Artifacts & Control Problem\\
+	\bfseries Output & Control Problem\\
 	\midrule 
 	\bfseries Challenges & \\
 	\bottomrule 
@@ -800,8 +801,6 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Input & Controller Architecture\\
 	\midrule 
-	\bfseries Artifacts & Feedback-Control Loop Implementation\\
-	\midrule 
 	\bfseries Challenges & 
 		\begin{itemize}
 			\item Sensor performance
@@ -825,8 +824,14 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & System Architect\\
 	\midrule 
-	\bfseries Artifacts & Controller Architecture\\
+	\bfseries Output & Static Test Results\\
 	\midrule 
+	\bfseries Tools & 
+	\begin{itemize}
+		\item Tools for data processing
+		\item Tools for data visualisation
+	\end{itemize}\\
+	\midrule
 	\bfseries Challenges & The system needs to be already implemented. Alternatively, an appropriate model of the system can be used.
 	\\
 	\bottomrule
@@ -846,8 +851,14 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & System Architect\\
 	\midrule 
-	\bfseries Artifacts & Controller Architecture\\
+	\bfseries Output & Step Test Results\\
 	\midrule 
+	\bfseries Tools & 
+	\begin{itemize}
+		\item Tools for data processing
+		\item Tools for data visualisation
+	\end{itemize}\\
+	\midrule
 	\bfseries Challenges & The system needs to be already implemented. Alternatively, an appropriate model of the system can be used.
 	\\
 	\bottomrule 
@@ -870,11 +881,12 @@ The system architecture defines the technical architecture of the system. Except
 		\midrule 
 		\bfseries Output & System Model\\
 		\midrule 
+		\bfseries Tools & Tools for system modelling and system identification \\
+		\midrule 
 		\bfseries Challenges & The software engineer needs to have a profound knowlegde of controller theory and system identification in order to build a relevant model of the system.
 			\\
 		\bottomrule 
 	\end{tabularx}
-
 
 \subsubsection{Perform Controller Tuning}
 	\begin{tabularx}{\textwidth}{@{} l X @{}}
@@ -894,6 +906,10 @@ The system architecture defines the technical architecture of the system. Except
 		\bfseries Who & Software Engineer\\
 		\midrule 
 		\bfseries Input & Controller Architecture\\
+		\midrule 
+		\bfseries Output & Controler Configuration\\
+		\midrule
+		\bfseries Tools & Tools for Simulation\\
 		\midrule 
 		\bfseries Challenges & The software engineer needs to have a profound knowlegde of controller theory and the controller architecture in order to properly tune the implemented controller.
 		\\
@@ -973,8 +989,14 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & Test Engineer\\
 	\midrule 
-	\bfseries Artifacts & Performance Test Concept\\
-	\midrule 
+	\bfseries Output & Performance Test Concept\\
+	\midrule
+	\bfseries Tools & 
+	\begin{itemize}
+		\item Tools for data processing 
+		\item Tools for data visualisation
+	\end{itemize}\\
+	\midrule
 	\bfseries Challenges & The performance test should include tests concerning the adaptive behaviour of the system.\\
 	\bottomrule 
 \end{tabularx}
@@ -1005,7 +1027,12 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Output & Performance Test Evaluation\\
 	\midrule 
-	\bfseries Challenges & \\
+	\bfseries Tools & 
+	\begin{itemize}
+		\item Tools for data processing
+		\item Tools for data visualisation
+	\end{itemize}
+	\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1027,7 +1054,7 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & Operations Engineer\\
 	\midrule 
-	\bfseries Artifacts & System Architecture\\
+	\bfseries Input & System Architecture\\
 	\midrule 
 	\bfseries Challenges & \\
 	\bottomrule 
@@ -1050,11 +1077,11 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & Operations Engineer\\
 	\midrule 
-	\bfseries Artifacts & Test Environments\\
+	\bfseries Input & Performance Test Concept\\
 	\midrule 
 	\bfseries Challenges & 
 	\begin{itemize}
-		\item Test environment should be comparable to the production environment to get valid test results.
+		\item The test environment should be comparable to the production environment to get valid test results.
 		\item Additionally, the test data should also be comparable to production data.
 	\end{itemize}
 	\\
@@ -1112,7 +1139,9 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & System Architect\\
 	\midrule 
-	\bfseries Artifacts & System Architecture\\
+	\bfseries Input & System Architecture\\
+	\midrule
+	\bfseries Output & Training Concept\\
 	\midrule 
 	\bfseries Challenges & The training concept should consider the respective audience and its existing knowlegde.\\
 	\bottomrule 
@@ -1145,7 +1174,7 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Who & Project Manager\\
 	\midrule 
-	\bfseries Artifacts & Staffing Plan\\
+	\bfseries Output & Staffing Plan\\
 	\midrule 
 	\bfseries Challenges &
 	\begin{itemize}
@@ -1428,7 +1457,7 @@ The conceptual framework describes the following artifacts:
 \section{Tools} % (fold)
 \label{sec:ch6_tools}
 
-The design and implementation of the adaptive middleware requires the use of some specific tools. Tools are grouped in the following tool categories:
+The design and implementation of the adaptive middleware requires the use of some specific tools. Tools are grouped in the following categories:
 
 \begin{itemize}
 	\item Tools for system modelling, system identification and simulation
@@ -1442,9 +1471,9 @@ The implementation of the feedback-controll loop can be aided with special tools
 Examples of such tools include:
 
 \begin{itemize}
-	\item Discrete Event Simulation Frameworks, such as SimPy, SystemC
-	\item Matlab/Simulink
-	\item Scilab/Xcos
+	\item Discrete Event Simulation Frameworks, such as SimPy \citep{simpy}, SystemC \citep{systemc}
+	\item MATLAB/Simulink \citep{matlab}
+	\item Scilab/Xcos \citep{scilab}
 \end{itemize}
 
 \subsection{Tools for Data Visualisation}
@@ -1452,19 +1481,19 @@ Examples of such tools include:
 In order to gain insights from the performance test  and controller tuning results, the test results should be visualized with a suitable data visualisation tool. Examples of data visualisation tools include:
 
 \begin{itemize}
-	\item Microsoft Excel
-	\item Matlab
-	\item Gnuplot
-	\item matplotlib
+	\item Microsoft Excel \citep{excel}
+	\item MATLAB \citep{matlab}
+	\item Gnuplot \citep{gnuplot}
+	\item matplotlib \citep{matplotlib}
 \end{itemize}
 
-\subsection{Languages for data processing}
+\subsection{Tools for data processing}
 
 For the evaluation of the performance test results, it is often necessary to process log files, which have been generated during the the test runs. For example for the calculation of statistical values. While this can be done with an arbitrary programming language, the following programming or scripting languages are in particular suitable for data processing:
 
 \begin{itemize}
-	\item Perl 
-	\item Python
+	\item Perl \citep{perl}
+	\item Python \citep{python}
 \end{itemize}
 
 % section tools (end)
@@ -1635,7 +1664,7 @@ Every item contains all the necessary tasks to design, implement and test a feat
 		REQ-5 & 1 & Rating of basic events & Rating Service & 15 & Ready\\
 		REQ-6 & 2 & Mediation of basic events & Mediation Service & 10 & Ready\\
 		REQ-11 & 3 & Monitoring & Feedback-Control & 10 & Ready\\
-		REQ-10 & 4 & Message-Aggregatio & Integration Layer & 8 & Ready\\
+		REQ-10 & 4 & Message-Aggregation & Integration Layer & 8 & Ready\\
 		REQ-12 & 5 & Message-Routing & Integration Layer & 8 & Ready\\
 		REQ-13 & 6 & Basic Controller & Feedback-Control & 10 & Ready\\
 		\ldots & \ldots & \ldots & \ldots & \ldots & \ldots\\
@@ -1772,7 +1801,15 @@ The following UML diagram types are used by their approach:
 	\item Use-case diagrams (activity-oriented view, product-oriented view, role-oriented view)
 \end{itemize} 
 
-The conceptual framework for feedback-controlled systems for bulk data processing presented in this chapter is based on the properties of the described approaches in this section for modelling the software development process. For simplification, it uses standard \ac{UML} use-case and activity diagrams for describing tasks and their relationship. Standard metamodels for software process modelling such as \ac{SPEM} 2.0 have not been used because they seemed to heavyweight for this purpose.
+The conceptual framework for feedback-controlled systems for bulk data processing presented in this chapter is based on the properties of the described approaches in this section for modelling the software development process. It uses standard \ac{UML} use-case and activity diagrams for describing tasks and processes for the following reasons:
+\begin{itemize}
+	\item \textbf{Understandability}\\
+	Using standard \ac{UML} 2.0 notation elements and diagrams facilitate the understanding of the conceptual framework since they are commonly used by software engineers for the design of the software system itself. 
+	\item \ac{Tool support}\\
+	Standard \ac{UML} 2.0 notation elements and diagrams are supported by a wide range of modelling tools.
+\end{itemize}
+
+Standard metamodels for software process modelling such as \ac{SPEM} 2.0 have not been used because they seemed to heavyweight for this purpose.
 
 \section{Summary}
 \label{sec:ch6_summary}
@@ -1784,7 +1821,7 @@ The conceptual consists of the entities phases, roles, tasks, artifacts and tool
 	\item The necessary tasks and their relationships for the design, implementation and operation.
 	\item The artifacts that are created and required by the different tasks.
 	\item The tools that are needed to process the different tasks.
-	\item The processes that describe how tasks depend on each other.
+	\item The processes that describe the order of tasks to implement a certain feature of the software system.
 \end{itemize}
 
 

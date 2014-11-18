@@ -74,11 +74,11 @@
 \include{FrontBackmatter/Titleback}
 %\cleardoublepage\include{FrontBackmatter/Dedication}
 %\cleardoublepage\include{FrontBackmatter/Foreword}
-%\cleardoublepage\include{FrontBackmatter/Abstract}
-%\cleardoublepage\include{FrontBackmatter/Acknowledgments}
-%\cleardoublepage\include{FrontBackmatter/Declaration}
+\cleardoublepage\include{FrontBackmatter/Abstract}
 \pagestyle{scrheadings}
 \cleardoublepage\include{FrontBackmatter/Contents}
+\cleardoublepage\include{FrontBackmatter/Acknowledgments}
+\cleardoublepage\include{FrontBackmatter/Declaration}
 %********************************************************************
 % Mainmatter
 %*******************************************************
@@ -109,9 +109,14 @@
 %********************************************************************
 % Other Stuff in the Back
 %*******************************************************
-%\cleardoublepage\include{chapters/source_code}
+\cleardoublepage\include{chapters/source_code}
 \cleardoublepage\include{FrontBackmatter/Bibliography}
 \cleardoublepage\include{FrontBackmatter/Publication}
+%\cleardoublepage
+%\includepdf[pages={-}]{appendix/paper1.pdf}
+%\includepdf[pages={-}]{appendix/paper2.pdf}
+%\includepdf[pages={-}]{appendix/paper3.pdf}
+
 %\cleardoublepage\include{FrontBackmatter/Colophon}
 % ********************************************************************
 % Game Over: Restore, Restart, or Quit?
