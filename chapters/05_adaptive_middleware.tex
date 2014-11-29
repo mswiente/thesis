@@ -59,6 +59,7 @@ Table \ref{table:ch4_middleware_components} shows the components of the middlewa
 \end{table}
 
 \subsection{Aggregator}
+\label{sec:ch05_aggregator}
 The Aggregator is a stateful filter which stores correlated messages until a set of messages is complete and sends this set to the next processing stage in the messaging route. 
 
 There are different options to aggregate messages, which can be implemented by the Aggregator:
@@ -68,6 +69,28 @@ There are different options to aggregate messages, which can be implemented by t
 	\item \textbf{Technical correlation:} Messages are aggregated by their technical properties, for example by message size or message format.
 	\item \textbf{Business correlation}: Messages are aggregated by business rules, for example by customer segments or product segments.
 \end{itemize}
+
+	\begin{itemize}
+		\item No correlation
+		\begin{itemize}
+			\item Simple solution
+			\item even distribution of events
+			\item optimization is not or hardly possible
+		\end{itemize}
+		\item Business correlation
+		\begin{itemize}
+			\item analysation of processed data needed
+			\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
+			\item optimization is possible
+		\end{itemize}
+		\item Technical correlation
+		\begin{itemize}
+			\item analysation of processed data needed
+			\item Rules can be defined after integration architecture
+			\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
+			\item optimization is possible
+		\end{itemize}
+	\end{itemize}
 
 \subsection{Feedback Loop}
 
@@ -89,6 +112,7 @@ Ultimately, we want to control the average end-to-end latency depending on the c
 \end{figure}
 The concrete architecture and tuning of the feedback loop and the controller is subject to our ongoing research.
 \subsection{Router}
+\label{sec:ch05_router}
 
 \begin{itemize}
 	\item{static router}
@@ -129,6 +153,7 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 \end{itemize}	
 
 \section{Service Design}
+\label{sec:ch05_service_design}
 
 \begin{itemize}
 	\item Services that implement the business functionality of the system need to be designed properly to support the runtime adaption between single and batch processing
@@ -158,7 +183,7 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 \end{lstlisting}
 
 \section{Controller Design}
-
+\label{sec:ch05_controller_design}
 \subsection{Control Problem}
 
 \begin{itemize}
@@ -194,12 +219,22 @@ With high levels of message aggregation, it is not preferred to send the aggrega
 \end{itemize}
 
 \section{Transports}
+\label{sec:ch05_transports}
 
 \begin{itemize}
 	\item with high aggregation sizes it is not feasible to use the same transport as with single event processing, such as JMS, SOAP etc.
 	\item Instead a file based, using FTP, or database based transport should be used
 	\item When using a messaging system, the payload of large messages (messages that have a high aggregation size) should not be transported over the messaging system. 
 	\item EIP Claim Check
+\end{itemize}
+
+\begin{itemize}
+	\item Large messages should not be transferred over the messaging bus
+	\item Options for large messages:
+	\begin{itemize}
+		\item File-based integration and transfer using FTP or database
+		\item Message-Slip EIP pattern
+	\end{itemize}
 \end{itemize}
 
 \section{Error Handling}
@@ -368,8 +403,10 @@ public class AggregateSizeActuator implements Processor, Actuator<Double> {
 \subsection{Test Design}
 
 \subsubsection{Static Tests}
+\label{sec:ch05_static_tests}
 
 \subsubsection{Step Tests}
+\label{sec:ch05_step_tests}
 
 \subsubsection{Dynamic Tests}
 

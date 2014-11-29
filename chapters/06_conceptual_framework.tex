@@ -2,7 +2,7 @@
 
 %!TEX root = ../thesis.tex
 %******************************************************************************
-\chapter[Conceptual Framework]{A Conceptual Framework for Feedback-Controlled Bulk Data Processing Systems}\label{ch:conceptual_framework}
+\chapter[Conceptual Framework]{A Conceptual Framework to Guide the Development of Feedback-Controlled Bulk Data Processing Systems}\label{ch:conceptual_framework}
 
 %******************************************************************************
 \section{Introduction} 
@@ -12,18 +12,21 @@ The concept for an adaptive Middleware for bulk data processing presented in cha
 The design, implementation and operation of such a system differs from common approaches to implement enterprise systems:
 \begin{itemize}
 	\item There are specific activities or tasks needed to implement the feedback-control subsystem.
-	\item There are different roles needed with different skills.
-	\item There are different tools needed to aid the design and development of such as system.
+	\item There are roles needed with different skills.
+	\item There are different tools needed to aid the design and development of such a system.
 \end{itemize}
 
 Developing software is a complex process, the quality of a software product depends on the people, the organisation and procedures used to create and deliver it \citep{Fuggetta:2000ds}.
-In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework is needed. It defines artifacts, roles, tasks and their dependencies to describe the necessary steps for design, implementation and operation of a system described in Chapter \ref{ch:adaptive_middleware}.
+In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework is needed. It defines artifacts, roles, tasks and their dependencies, and processes to describe the necessary steps for design, implementation and operation of a system described in Chapter \ref{ch:adaptive_middleware}.
 
 Figure \ref{fig:ch6_overview} shows an overview of the conceptual framework. It is organized among the phases plan, build and run. Each phase contains tasks, which are relevant for each phase:
 \begin{itemize}
-	\item Design: Defining Service interfaces, defining aggregation rules, defining transports, defining integration architecture
-	\item Implementation: Service implementation, Service Optimisation
-	\item Operation: controller tuning, monitoring
+	\item \textbf{Plan}\\
+	Contains tasks for designing the business and technical architecture of the system, tasks for defining and evaluating performance tests, and tasks for managing the development process.
+	\item \textbf{Build}\\
+	Contains tasks for implementing the system, such as implementing the integration architecture, implementing the feedback-control subsystem, and tuning the the controller. 
+	\item \textbf{Run}\\
+	Contains tasks for operating the system, such as monitoring, setup and tuning.
 \end{itemize}
 
 \begin{figure}
@@ -31,6 +34,28 @@ Figure \ref{fig:ch6_overview} shows an overview of the conceptual framework. It 
 	\includegraphics[width=\textwidth]{ch6_overview} \caption{Overview of Conceptual Framework} \label{fig:ch6_overview} 
 \end{figure}
 
+The conceptual framework uses \ac{UML} 2.0 notation elements and diagrams, such as class diagrams, activity diagrams and use-case diagrams to describe the developtment process. It consists of the following packages, as shown in Figure \ref{fig:ch6_packages}:
+\begin{itemize}
+	\item \textbf{Metamodel}\\
+	Contains elements and class-diagrams for describing the metamodel of the conceptual framework.
+	\item \textbf{Tasks}\\
+	Contains elements describing the tasks of the conceptual framework.
+	\item \textbf{Roles}\\
+	Contains elements and use-case diagrams for describing the roles of the conceptual framework.
+	\item \textbf{Processes}\\
+	Contains activity diagrams for describing the processes of the conceptual framwork.
+	\item \textbf{Artifacts}\\
+	Contains elements to describe the artifacts of the conceptual framework.
+	\item \textbf{Phases}\\
+	Contains elements to describe the phases of the conceptual framework.
+	\item \textbf{Tools}\\
+	Contains elements to describe the tools needed for processing the tasks of the conceptual framework.
+\end{itemize}
+
+\begin{figure}
+	[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_conceptual_framework_packages} \caption{Package structure} \label{fig:ch6_packages} 
+\end{figure}
 
 The conceptual framework only describes concepts that are specific to the design and implementation of an Adaptive Middleware as described in the previous chapter. It does not describe common concepts for softwar development.
 
@@ -49,7 +74,7 @@ This chapter is organised as follows:
 The conceptual framework consists of the following entities, as shown in Figure \ref{fig:ch6_metamodel}:
 \begin{itemize}
 	\item \textbf{Phase}\\
-	Phases correspond to the different phases of an software development process, such as design, implementation and operations and contain the relevant tasks.
+	Phases correspond to the different phases of a software development lifecycle, such as design, implementation and operations and contain the relevant tasks.
 	\item \textbf{Task}\\
 	Tasks represent the activities of the development process. A task
 	\begin{itemize}
@@ -77,6 +102,24 @@ The conceptual framework consists of the following entities, as shown in Figure 
 
 \section{Phase}
 Phases are the top-level entitis of the conceptual framework. They correspond to the different phases of the software development lifecycle and are a mean to group the different tasks of the framework.
+
+A phase is described by the following attribute, as shown in Figure \ref{fig:ch6_metamodel_phase}:
+\begin{itemize}
+	\item \textbf{Name}\\
+	Name of the phase.
+	\item \textbf{Description}\\
+	Description of the phase.
+	\item \textbf{Tasks}\\
+	The tasks that the phase contains.
+	\item \textbf{Roles}\\
+	The needed roles by the phase.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_metamodel_phase} 
+	\caption{Attributes of a phase} 
+	\label{fig:ch6_metamodel_phase} 
+\end{figure}
 
 The conceptual framework defines the following phases:
 \begin{itemize}
@@ -175,6 +218,24 @@ It should be noted that the framework defines no requirements regarding the gene
 
 Roles represent the actors, which process tasks, that is, they describe \emph{who} does something. The description of a role contains its reponsibilities and needed skills. 
 A role is not the same as a person, a single person can have multiple roles and change the role according to the context of the current task.
+
+A role is described by the following attributes, as shown in Figure \ref{fig:ch6_metamodel_role}:
+\begin{itemize}
+	\item \textbf{Name}\\
+	The name of the role.
+	\item \textbf{Description}\\
+	Description of the responsibilities of the role.
+	\item \textbf{Tasks}\\
+	The tasks the role is responsible to process.
+	\item \textbf{Needed skills}\\
+	The skills the role has to have in order to successfully process its tasks.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_metamodel_role} 
+	\caption{Attributes of a role} 
+	\label{fig:ch6_metamodel_role} 
+\end{figure}
 
 The Conceptual Framework defines the following roles:
 \begin{itemize}
@@ -420,6 +481,54 @@ Figure \ref{fig:ch6_overview_tasks} shows an overview of the tasks grouped by th
 	\label{fig:ch6_overview_tasks} 
 \end{figure}
 
+Tasks are organised in different packages, as shown in Figure \ref{fig:ch6_tasks_packages}:
+\begin{itemize}
+	\item \textbf{Business Architecture}\\
+	Contains tasks concerned with the business architecture of the system.
+	\item \textbf{System Architecture}\\
+	Contains tasks concerned with the system architecture of the system.
+	\item \textbf{Implementation}\\
+	Contains tasks concerned with the implementation of the system.
+	\item \textbf{Test}\\
+	Contains tasks concerned with the test of the system.
+	\item \textbf{Operation}\\
+	Contains tasks concerned with the operation of the system.
+	\item \textbf{Project Management}\\
+	Contains tasks concerned with management of the development process.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_tasks_packages} 
+	\caption{Subpackages of the Tasks package} 
+	\label{fig:ch6_tasks_packages} 
+\end{figure}
+
+A Task is described by the following attributes, as shown in Figure \ref{fig:ch6_metamodel_task}:
+\begin{itemize}
+	\item \textbf{Name}\\
+	The name of the task.
+	\item \textbf{What}\\
+	Describes the content of the task.
+	\item \textbf{Why}\\
+	Describes the purpose of the task. 
+	\item \textbf{Who}\\
+	Describes the roles, that are responsible for processing the task.
+	\item \textbf{Input}\\
+	The required artificats of the task.
+	\item \textbf{Output}\\
+	The artifacts produced by the task.
+	\item \textbf{Tools}\\
+	The tools that are needed to process the task.
+	\item \textbf{Challenges}\\
+	Describes the expectable challenges when processing the task.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_metamodel_task} 
+	\caption{Attributes of a task} 
+	\label{fig:ch6_metamodel_task} 
+\end{figure}
+
 The following tasks are defined:
 
 \begin{itemize}
@@ -473,9 +582,7 @@ The following tasks are defined:
 \end{itemize}
 
 \subsection{Business Architecture}
-
-The business architecture defines the business components of the system and their relationships independantly of the technical implementation.
-Except from the described subtasks, the task is not specific to the conceptual model.
+This packages contains tasks concerned with defining the business architecture of the system. The business architecture defines the business components of the system and their relationships independantly of the technical implementation. It contains only tasks that are specific to the developement of the adaptive middleware.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_tasks_business_architecture} 
@@ -489,20 +596,19 @@ Except from the described subtasks, the task is not specific to the conceptual m
 	\toprule
 	\bfseries Task & Define Performance Requirements\\
 	\midrule\bfseries What & 
+	This task is concerned with the definition of the performance requirements of the system, including
 	\begin{itemize}
 		\item Definition of workload scenarios
+		\item Definition of the adaptive features of the system
 		\item Definition of requirements regarding throughput and latency of the system
 		\begin{itemize}
-			\item What is the required minimal latency of the system?
-			\item What is the required minimal throughput of the system?
+			\item What is the required range (minimum/maximum) of latency of the system?
+			\item What is the required range (minimum/maximum) of throughput of the system?
 		\end{itemize}
 	\end{itemize}
 	\\
 	\midrule
-	\bfseries Why &
-	\begin{itemize}
-		\item The performance requirements are needed for the desing of the system architecture
-	\end{itemize}\\
+	\bfseries Why & The performance requirements are needed for the desing of the system architecture.\\
 	\midrule
 	\bfseries Who & 
 	\begin{itemize}
@@ -522,30 +628,30 @@ Except from the described subtasks, the task is not specific to the conceptual m
 	\toprule
 	\bfseries Task & Define Service Interfaces\\
 	\midrule\bfseries What & 
+	This task is concerned with the definition of the service interfaces, that together implement the business functionality of the system, including:
 	\begin{itemize}
 		\item Structuring the functionality of the system into business services
-		\item Services may already exist or need to be implemented.
-		\item Definition of needed services and their operations, every service needs operations for single event and batch processing
+		\item Defining the needed services and their operations. Every service needs operations for single event and batch processing, with the following options (see Section \ref{sec:ch05_service_design} for details).
 		\begin{itemize}
 			\item Distinct operations for batch and single event processing
-			\item common operation for both processing styles (list interface)
+			\item Common operation for both processing styles
 		\end{itemize}
-		\item Defines the structure of input and output data
-		\item Does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}
+		\item Evaluating which services already exist or need to be implemented or adapted.
+		\item Defining the structure of input and output data. This does not include informations about the technical format, such as \ac{XML} or \ac{JSON}, and the integration style, such SOAP or \ac{REST}.
 	\end{itemize}
 	\\
 	\midrule
 	\bfseries Why &
 	\begin{itemize}
 		\item Defines the business components (services) of the system
-		\item Basis for the definition of the integration architecture and the implementation of the services.
+		\item Basis for the definition of the integration architecture and the implementation of the services
 	\end{itemize}\\
 	\midrule
 	\bfseries Who & Business Architect\\
 	\midrule
 	\bfseries Output & Service Interface Definitions\\
 	\midrule
-	\bfseries Challenges & Finding the appropriate services and service granularity\\
+	\bfseries Challenges & Finding the appropriate services and service granularity.\\
 	\bottomrule
 \end{tabularx}
 
@@ -555,32 +661,13 @@ Except from the described subtasks, the task is not specific to the conceptual m
 	\toprule
 	\bfseries Task & Define Aggregation Rules\\
 	\midrule
-	\bfseries What & 
-	\begin{itemize}
-		\item Definition of rules used in the aggregator for correlating events
-		\item Different options
-		\begin{itemize}
-			\item No correlation
-			\begin{itemize}
-				\item Simple solution
-				\item even distribution of events
-				\item optimization is not or hardly possible
-			\end{itemize}
-			\item Business correlation
-			\begin{itemize}
-				\item analysation of processed data needed
-				\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
-				\item optimization is possible
-			\end{itemize}
-			\item Technical correlation
-			\begin{itemize}
-				\item analysation of processed data needed
-				\item Rules can be defined after integration architecture
-				\item no even distribution of data (depending on correlation rule), leads to uneven distribution of latency
-				\item optimization is possible
-			\end{itemize}
-		\end{itemize}
-	\end{itemize}
+	\bfseries What &
+	This task is concerned with the definition of rules used in the aggregator for correlating events. There are different options for the aggregation (see Section \ref{sec:ch05_aggregator} for details):
+\begin{itemize}
+	\item \textbf{No correlation}: Messages are aggregated in the order in which they are read from the input message queue. In this case, an optimized processing is not simply possible.
+	\item \textbf{Technical correlation}: Messages are aggregated by their technical properties, for example by message size or message format.
+	\item \textbf{Business correlation}: Messages are aggregated by business rules, for example by customer segments or product segments.
+\end{itemize}
 	\\
 	\midrule
 	\bfseries Why & The aggregation Rules are needed by the Aggregator to correlate events.\\
@@ -597,14 +684,13 @@ Except from the described subtasks, the task is not specific to the conceptual m
 	\bfseries Challenges & 
 	\begin{itemize}
 		\item Finding aggregation rules that allows for an even distribution of events.
-		\item Technical Aggregation Rules can be defined only after the definition of the integration architecture
+		\item Rules using the technical correlation of events can be defined only after the definition of the integration architecture.
 	\end{itemize}\\
 	\bottomrule 
 \end{tabularx}
 
 \subsection{System Architecture}
-
-The system architecture defines the technical architecture of the system. Except from the described subtasks, the task is not specific to the conceptual model.
+This package contains tasks concerned with the system architecture of the system. The system architecture defines the technical architecture of the system. It contains only tasks that are specific to the development of the adaptive middleware.
 
 \begin{figure}[htpb] \centering 
 	\includegraphics[width=\textwidth]{ch6_tasks_system_architecture} 
@@ -619,30 +705,23 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Define Integration Architecture\\
 	\midrule
 	\bfseries What &
+	This task is concerned with the definition of the integration architecture of the system, including
 	\begin{itemize}
-		\item Definition of integration architecture
+		\item Definition of communication styles, such as
 		\begin{itemize}
-			\item Sychronous, e.g. webservices
-			\item Asynchronous, e.g. message queues
+			\item Sychronous communication
+			\item Asynchronous communication
 		\end{itemize}
 		\item Choosing a middleware technology or product
-		\item Definition of transports
+		\item Definition of transports, for example
 		\begin{itemize}
-			\item JMS
+			\item \ac{JMS}
 			\item SOAP
-			\item REST
-			\item FTP
-			\item DB
+			\item \ac{REST}
+			\item \ac{FTP}
+			\item \ac{DB}
 		\end{itemize}
-		\item Different transports / integration patterns needed for different aggregation sizes:
-		\begin{itemize}
-			\item Large messages should not be transferred over the messaging bus
-			\item Options for large messages:
-			\begin{itemize}
-				\item File-based integration and transfer using FTP or database
-				\item Message-Slip EIP pattern
-			\end{itemize}
-		\end{itemize}
+		\item Different transports and integration patterns need to considered for different aggregation sizes (see Section \ref{sec:ch05_transports} for details).
 	\end{itemize}
 	\\
 	\midrule
@@ -661,23 +740,22 @@ The system architecture defines the technical architecture of the system. Except
 
 \subsubsection{Define Routing Rules}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
-	\caption{table}{Define Routing Rules} \label{table:ch6_Task_Define_Routing_Rules}\\
+	\caption{Define Routing Rules}\label{table:ch6_Task_Define_Routing_Rules}\\
 	\toprule 
 	\bfseries Task & Define Routing Rules\\
 	\midrule 
 	\bfseries What & 
+	This task is concerned with the definition of the routing rules used by the message router. The message router routes the messages to the appropriate service endpoint, depending on the aggregation size of the message (see Section \ref{sec:ch05_router} for details). This tasks includes
 	\begin{itemize}
-		\item Depending on the size of the aggregated message, the Router routes the message to the appropriate service endpoint, which is either optimized for batch or single event processing.
-		\item The routing rules define, which service endpoint should be called for a given aggregation size.
+		\item Defining which service endpoint should be called for a given aggregation size.
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Why & The routing rules define, which service endpoint should be called for a given aggregation size.\\
+	\bfseries Why & The routing rules define, which service endpoint should be called for a given aggregation size to facilitate optimised processing for single-event and batch processing.\\
 	\midrule
 	\bfseries Who & System Architect\\
 	\midrule
-	\bfseries Input & Integration Architecture
-	\\
+	\bfseries Input & Integration Architecture\\
 	\midrule 
 	\bfseries Output & Routing Rules Definition\\
 	\midrule 
@@ -693,26 +771,32 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Define Controller Architecture\\
 	\midrule 
 	\bfseries What & 
+	This task is concerned with the definition of the controller architecture, including
 	\begin{itemize}
-		\item Design of the controller architecture implemented by the system
-		\item For example
+		\item Defining the controller type, for example
 		\begin{itemize}
 			\item PID Controller
 			\item Fuzzy Controller
 		\end{itemize}
-		\item Depends on control problem and system dynamics (linear, non-linear)
+		\item Defining sensors and actuators and their distribution architecture
+		\item Defining filters and additional components of the control-loop.
+		\item Depends on the \emph{Control Problem} and the system dynamics (linear, non-linear).
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Why & The Controller Architecture is the basis for the implementation of the feedback-control loop.\\
+	\bfseries Why & The \emph{Controller Architecture} is the basis for the implementation of the feedback-control loop to control the message aggregation size at run-time\\
+	\midrule
+	\bfseries Who & \emph{System Architect}\\
 	\midrule 
-	\bfseries Who & System Architect\\
+	\bfseries Input & 
+	\begin{itemize}
+		\item \emph{Integration Architecture}
+		\item \emph{Control Problem}
+	\end{itemize}\\
 	\midrule 
-	\bfseries Input & Integration Architecture\\
+	\bfseries Output & \emph{Controller Architecture}\\
 	\midrule 
-	\bfseries Output & Controller Architecture\\
-	\midrule 
-	\bfseries Challenges & Finding the right controller architecture is an iterative process. A simple solution should be used initially, which should be refined when the system is implemented. Alternatively, a simulation can be used to evaluate the controller architecture beforehand.\\
+	\bfseries Challenges & Finding the right \emph{Controller Architecture} is an iterative process. A simple solution should be used initially, which should be refined when the system is implemented. Alternatively, a simulation can be used to evaluate the \emph{Controller Architecture} beforehand.\\
 	\bottomrule 
 \end{tabularx}
 
@@ -724,19 +808,20 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Define Control Problem\\
 	\midrule 
 	\bfseries What & 
+	This task is concerned with the definition of the \emph{Control Problem}, including
 	\begin{itemize}
-		\item Define what properties of the system should be controlled.
+		\item Defining what properties of the system should be controlled.
 		\item In case of the Adaptive Middleware (see Chapter \ref{ch:adaptive_middleware}) the control problem is already defined.
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Why & The control problem defines the goal of the feedback-control.\\
+	\bfseries Why & The \emph{Control Problem} defines the goal of the feedback-control.\\
 	\midrule 
-	\bfseries Who & System Architect\\
+	\bfseries Who & \emph{System Architect}\\
 	\midrule 
-	\bfseries Output & Control Problem\\
+	\bfseries Output & \emph{Control Problem}\\
 	\midrule 
-	\bfseries Challenges & \\
+	\bfseries Challenges & The \emph{Control Problem} is not in all cases obvious and needs to be derived from the \emph{Performance Requirements} of the system.\\
 	\bottomrule 
 \end{tabularx}
 
@@ -749,31 +834,29 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Define Input/Output Variables\\
 	\midrule 
 	\bfseries What &
+	This task is concerned with the definition of the input and output variables used by the controller, for example
 	\begin{itemize}
-		\item Definition of input and output variables of the controller
-		\item for example
-		\begin{itemize}
-			\item Number of messages in the system
-			\item Input queue length
-			\item Current end-to-end latency
-			\item Current throughput
-		\end{itemize}
+		\item Number of messages in the system
+		\item Input queue length
+		\item Current end-to-end latency
+		\item Current throughput
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Why & The input/output variables are needed for the implementation of the controller.\\
+	\bfseries Why & The \emph{Input/Output Variables} are needed for the implementation of the controller.\\
 	\midrule 
-	\bfseries Who & System Architect\\
+	\bfseries Who & \emph{System Architect}\\
 	\midrule 
-	\bfseries Input & Control Problem\\
+	\bfseries Input & \emph{Control Problem}\\
 	\midrule 
-	\bfseries Output & Input/Output Variables\\
+	\bfseries Output & \emph{Input/Output Variables}\\
 	\midrule 
 	\bfseries Challenges & The selected input variables should be measured easily and directly, without delay such as when calculating averages.\\
 	\bottomrule 
 \end{tabularx}
 
 \subsection{Implementation}
+This package contains specific tasks that are concerned with the implementation of an adaptive system for bulk data processing. 
 
 \subsubsection{Implement Controller}
 
@@ -783,48 +866,42 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Implement Feedback-Control Loop\\
 	\midrule 
 	\bfseries What & 
+	This task is concerned with the implementation of the \emph{Controller Architecture}, including
 	\begin{itemize}
-		\item Implementation of Controller Architecture including
-		\begin{itemize}
-			\item Sensors
-			\item Controller
-			\item Actuator
-		\end{itemize}
-		\item Implement JMX Beans for monitoring purposes
-		\item Implement mechanisms for performing static and step tests.
+		\item Implementation of sensors
+		\item Implementation of the controller
+		\item Implementation of actuators
+		\item Implementation of additional components, such as filters
+		\item Implementation of monitoring components, such as \ac{JMX} beans
+		\item Implementation of mechanisms for performing static and step tests
 	\end{itemize}
 	\\
 	\midrule 
 	\bfseries Why & The Feedback-Control Loop implements the automatic adjustment of data granularity at runtime.\\
 	\midrule 
-	\bfseries Who & Software Engineer\\
+	\bfseries Who & \emph{Software Engineer}\\
 	\midrule 
-	\bfseries Input & Controller Architecture\\
+	\bfseries Input & \emph{Controller Architecture}\\
 	\midrule 
-	\bfseries Challenges & 
-		\begin{itemize}
-			\item Sensor performance
-			\item Distributed sensors 
-			\item Framework vs. custom development
-		\end{itemize}\\
+	\bfseries Challenges & The implementation of the feedback-control loop should provide the appropriate performance for collecting and aggregating sensor data.\\
 	\bottomrule 
 \end{tabularx}
 
 
-\subsubsection{Static Tests}
+\subsubsection{Perform Static Tests}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
-	\caption{Static Tests} \label{table:ch6_Task_Static_Tests}\\
+	\caption{Perform Static Tests} \label{table:ch6_Task_Static_Tests}\\
 	\toprule 
-	\bfseries Task & Static Tests\\
+	\bfseries Task & Perform Static Tests\\
 	\midrule 
-	\bfseries What & Perform static tests in order to determine the static behaviour of the system.\\
+	\bfseries What & Perform static tests in order to determine the static behaviour of the system. See Section \ref{sec:ch05_static_tests} for details.\\
 	\midrule 
 	\bfseries Why & The static behaviour of the system is needed to determine the characteristics of the system.\\
 	\midrule 
-	\bfseries Who & System Architect\\
+	\bfseries Who & \emph{System Architect}\\
 	\midrule 
-	\bfseries Output & Static Test Results\\
+	\bfseries Output & \emph{Static Test Results}\\
 	\midrule 
 	\bfseries Tools & 
 	\begin{itemize}
@@ -837,21 +914,20 @@ The system architecture defines the technical architecture of the system. Except
 	\bottomrule
 \end{tabularx}
 
-
-\subsubsection{Step Tests}
+\subsubsection{Perform Step Tests}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
-	\caption{Step Tests} \label{table:ch6_Task_Step_Tests}\\
+	\caption{Perform Step Tests} \label{table:ch6_Task_Step_Tests}\\
 	\toprule 
-	\bfseries Task & Step Tests\\
+	\bfseries Task & Perform Step Tests\\
 	\midrule 
-	\bfseries What & Perform step tests to determine the dynamic behaviour of the system.\\
+	\bfseries What & Perform step tests to determine the dynamic behaviour of the system. See Section \ref{sec:ch05_step_tests} for details.\\
 	\midrule 
 	\bfseries Why & The dynamic behaviour of the system is needed for building a model of the system and to tune the controller.\\
 	\midrule 
-	\bfseries Who & System Architect\\
+	\bfseries Who & \emph{System Architect}\\
 	\midrule 
-	\bfseries Output & Step Test Results\\
+	\bfseries Output & \emph{Step Test Results}\\
 	\midrule 
 	\bfseries Tools & 
 	\begin{itemize}
@@ -871,19 +947,19 @@ The system architecture defines the technical architecture of the system. Except
 		\toprule 
 		\bfseries Task & Define System Architecture\\
 		\midrule 
-		\bfseries What & Building a model of the system.\\
+		\bfseries What & Build a model of the system.\\
 		\midrule 
-		\bfseries Why & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
+		\bfseries Why & The system model is used to build a simulation of the system, which can be used for implementing the controller.\\
 		\midrule 
-		\bfseries Who & System Architect\\
+		\bfseries Who & \emph{System Architect}\\
 		\midrule 
 		\bfseries Input & Static and dynamic behaviour of the system\\ 
 		\midrule 
-		\bfseries Output & System Model\\
+		\bfseries Output & \emph{System Model}\\
 		\midrule 
-		\bfseries Tools & Tools for system modelling and system identification \\
+		\bfseries Tools & Tools for system modelling and system identification\\
 		\midrule 
-		\bfseries Challenges & The software engineer needs to have a profound knowlegde of controller theory and system identification in order to build a relevant model of the system.
+		\bfseries Challenges & The \emph{Software Engineer} needs to have a profound knowlegde of controller theory and system identification in order to build a relevant model of the system.
 			\\
 		\bottomrule 
 	\end{tabularx}
@@ -895,25 +971,25 @@ The system architecture defines the technical architecture of the system. Except
 		\bfseries Task & Perform Controller Tuning\\
 		\midrule 
 		\bfseries What & 
+		This task is concerned with the tuning of the implemented controller. 
 		\begin{itemize}
-			\item Controller Tuning can be done using the implementation of the system.
-			\item Alternatively, the tuning can done using a model of the system.
-		\end{itemize}
-		\\
+			\item The Controller Tuning can either be done using the implementation of the system or with using a model of the system, alternatively.
+			\item The specific tuning depends on the chosen \emph{Controller Architecture}.
+		\end{itemize}\\
 		\midrule 
 		\bfseries Why & The Controller needs to be adjusted to the system characteristics.\\
 		\midrule 
-		\bfseries Who & Software Engineer\\
+		\bfseries Who & \emph{Software Engineer}\\
 		\midrule 
-		\bfseries Input & Controller Architecture\\
+		\bfseries Input & \emph{Controller Architecture}\\
 		\midrule 
-		\bfseries Output & Controler Configuration\\
+		\bfseries Output & \emph{Controller Configuration}\\
 		\midrule
 		\bfseries Tools & Tools for Simulation\\
 		\midrule 
 		\bfseries Challenges & The software engineer needs to have a profound knowlegde of controller theory and the controller architecture in order to properly tune the implemented controller.
 		\\
-		\bottomrule 
+		\bottomrule
 	\end{tabularx}
 
 
@@ -925,24 +1001,23 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Implement Service Interfaces\\
 	\midrule 
 	\bfseries What & 
+	This task is concerned with the implementation of the business services, including
 	\begin{itemize}
-		\item Implementation of business services
-		\item Batch implementation / single event implementation
-		\item Batch optimisation
+		\item Implementation of batch operations
+		\item Implementation of single-event operations
 	\end{itemize}
 	\\
 	\midrule 
 	\bfseries Why & The services implement the business functionality of the system.\\
 	\midrule 
-	\bfseries Who & Software Engineer\\
+	\bfseries Who & \emph{Software Engineer}\\
 	\midrule 
-	\bfseries Input & Service Interface Definitions\\
+	\bfseries Input & \emph{Service Interface Definitions}\\
 	\midrule 
 	\bfseries Challenges & Implementing appropriate optimisations for batch and single-event processing.
 	\\
 	\bottomrule 
 \end{tabularx}
-
 
 \subsubsection{Implement Aggregator}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
@@ -951,24 +1026,26 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Implement Aggregatator\\
 	\midrule 
 	\bfseries What & 
+	This task is concerned with the implementation of the message aggregation, including
 	\begin{itemize}
-		\item Implementation or configuration of the Aggregator component.
+		\item Implementation and configuration of the Aggregator component.
 		\item Implementation of the aggregation rules.
-		\item Rules should be configurable during run-time or configuration-time. Should not be hard-coded.
 	\end{itemize}
+	The \emph{Aggregation Rules} should be configurable during run-time or configuration-time and should not be hard-coded.
 	\\
 	\midrule 
 	\bfseries Why & The aggregator component is responsible for aggregating events according to the aggregation rules and is one of the main building blocks of the Adaptive Middleware (see Chapter \ref{ch:adaptive_middleware}).\\
 	\midrule 
-	\bfseries Who & Software Engineer\\
+	\bfseries Who & \emph{Software Engineer}\\
 	\midrule 
-	\bfseries Input & Aggregation Rules\\
+	\bfseries Input & \emph{Aggregation Rules}\\
 	\midrule 
 	\bfseries Challenges & Implementation of mechanisms to dynamically load aggregation rules at run-time or configuration-time.\\
 	\bottomrule 
 \end{tabularx}
 
 \subsection{Test}
+This package contains the specific tasks that are concerned with the test of an adaptive system for bulk data processing. 
 
 \subsubsection{Define Performance Tests}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
@@ -977,19 +1054,21 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries Task & Define Performance Tests\\
 	\midrule 
 	\bfseries What &
+	This task is concerned with the definition of the performance tests, including
 	\begin{itemize}
-		\item Define load scenarios
-		\item Define test data
-		\item Implement event generator
-		\item Implement tools and scripts for evaluation and data visualisation
+		\item Definition of load scenarios
+		\item Definition of test data
+		\item Definition of the test environment
+		\item Implementation of the workload generator
+		\item Implementation of tools and scripts for the evaluation and data visualisation
 	\end{itemize}
 	\\
 	\midrule 
 	\bfseries Why & The Performance Test Concept defines what should be done to test whether the system meets its performance requirements.\\
 	\midrule 
-	\bfseries Who & Test Engineer\\
+	\bfseries Who & \emph{Test Engineer}\\
 	\midrule 
-	\bfseries Output & Performance Test Concept\\
+	\bfseries Output & \emph{Performance Test Concept}\\
 	\midrule
 	\bfseries Tools & 
 	\begin{itemize}
@@ -1008,24 +1087,21 @@ The system architecture defines the technical architecture of the system. Except
 	\toprule 
 	\bfseries Task & Evaluate Performance Test Results\\
 	\midrule 
-	\bfseries What & 
-	\begin{itemize}
-		\item Visualise the test results using the tools/skripts implemented in the task Define Performance Tests.
-	\end{itemize}
+	\bfseries What & Visualise the test results using the tools/skripts implemented in the task \emph{Define Performance Tests}.
 	\\
 	\midrule 
 	\bfseries Why & The performance test evaluation is conducted to understand the performance characteristics of the system.\\
 	\midrule 
 	\bfseries Who & 
 	\begin{itemize}
-		\item Test Engineer
-		\item System Engineer
+		\item \emph{Test Engineer}
+		\item \emph{System Engineer}
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Input & Performance Test Result\\
+	\bfseries Input & \emph{Performance Test Result}\\
 	\midrule 
-	\bfseries Output & Performance Test Evaluation\\
+	\bfseries Output & \emph{Performance Test Evaluation}\\
 	\midrule 
 	\bfseries Tools & 
 	\begin{itemize}
@@ -1037,6 +1113,7 @@ The system architecture defines the technical architecture of the system. Except
 \end{tabularx}
 
 \subsection{Operations}
+This package contains the specific tasks that are concerned with the operation of an adaptive system for bulk data processing.
 
 \subsubsection{Setup Monitoring infrastructure}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
@@ -1052,11 +1129,11 @@ The system architecture defines the technical architecture of the system. Except
 	\midrule 
 	\bfseries Why & The monitoring infrastructure is needed to monitor the system at run-time. Based on the monitoring the operation engineer is able to further tune the system.\\
 	\midrule 
-	\bfseries Who & Operations Engineer\\
+	\bfseries Who & \emph{Operations Engineer}\\
 	\midrule 
-	\bfseries Input & System Architecture\\
+	\bfseries Input & \emph{System Architecture}\\
 	\midrule 
-	\bfseries Challenges & \\
+	\bfseries Challenges & The infrastructure needs to be adjusted to the adaptive capabilities of the system.\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1068,16 +1145,16 @@ The system architecture defines the technical architecture of the system. Except
 	\bfseries What & Setup up the test environment used for the performance tests, including
 	\begin{itemize}
 		\item Setup / Mock external Services
-		\item setup test data
-		\item Deployment
+		\item Setup test data
+		\item Deployment of the system to the test environment
 	\end{itemize}
 	\\
 	\midrule 
 	\bfseries Why & The test environment is needed to perform the performance tests.\\
 	\midrule 
-	\bfseries Who & Operations Engineer\\
+	\bfseries Who & \emph{Operations Engineer}\\
 	\midrule 
-	\bfseries Input & Performance Test Concept\\
+	\bfseries Input & \emph{Performance Test Concept}\\
 	\midrule 
 	\bfseries Challenges & 
 	\begin{itemize}
@@ -1095,21 +1172,22 @@ The system architecture defines the technical architecture of the system. Except
 	\toprule 
 	\bfseries Task & Perform Performance Tests\\
 	\midrule 
-	\bfseries What & \\
+	\bfseries What & Perform the tests as defined by the task \emph{Define Performance Tests}.\\
 	\midrule 
 	\bfseries Why & The performance tests are necessary to assure that the system meets the performance requirements.\\
 	\midrule 
-	\bfseries Who & Tesst Engineer\\
+	\bfseries Who & \emph{Test Engineer}\\
 	\midrule 
-	\bfseries Input & Performance Test Concept\\
+	\bfseries Input & \emph{Performance Test Concept}\\
 	\midrule 
-	\bfseries Output & Performance Test Results\\
+	\bfseries Output & \emph{Performance Test Results}\\
 	\midrule 
 	\bfseries Challenges & To ensure the reliability of the performance test results, the tests should be run multiple times. This is often difficult with regard of the needed ressources for the performance test, such as availability of external systems.\\
 	\bottomrule 
 \end{tabularx}
 
 \subsection{Project Management}
+This package contains specific tasks that concerned with the management of the development process an adaptive system for bulk data processing. 
 
 \subsubsection{Define Training Concept}
 
@@ -1118,13 +1196,13 @@ The system architecture defines the technical architecture of the system. Except
 	\toprule 
 	\bfseries Task & Define Training Concept\\
 	\midrule 
-	\bfseries What & 
+	\bfseries What & Definition of the training concept, including
 	\begin{itemize}
-		\item define target audience, e.g. operations engineer
-		\item define training content
+		\item Definition of target audience, for example \emph{Operation Engineers}, \emph{System Engineers}
+		\item Definition of training content, for example
 		\begin{itemize}
-			\item Different operation modes (batch, single event processing)
-			\item performance characteristics (regarding latency and throughput) depend on current operation mode
+			\item Discussion of the different operation modes (batch, single event processing)
+			\item Performance characteristics (regarding latency and throughput) depend on current operation mode
 			\item Tuning options (Controller, Aggregation Rules, Routing Rules)
 		\end{itemize}
 	\end{itemize}
@@ -1137,51 +1215,43 @@ The system architecture defines the technical architecture of the system. Except
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Who & System Architect\\
+	\bfseries Who & \emph{System Architect}\\
 	\midrule 
-	\bfseries Input & System Architecture\\
+	\bfseries Input & 
+	\begin{itemize}
+		\item \emph{Business Architecture}
+		\item \emph{System Architecture}
+		\item \emph{Controller Architecture}
+	\end{itemize}\\
 	\midrule
-	\bfseries Output & Training Concept\\
+	\bfseries Output & \emph{Training Concept}\\
 	\midrule 
-	\bfseries Challenges & The training concept should consider the respective audience and its existing knowlegde.\\
+	\bfseries Challenges & The \emph{Training Concept} should consider the respective audience and its existing knowlegde.\\
 	\bottomrule 
 \end{tabularx}
 
 
-\subsubsection{Staffing}
+\subsubsection{Perform Staffing}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
 	\caption{Staffing} \label{table:ch6_Task_Staffing}\\
 	\toprule 
-	\bfseries Task & Staffing\\
+	\bfseries Task & Perform Staffing\\
 	\midrule 
-	\bfseries What & 
+	\bfseries What & This task is concerned with the staffing of the project. There are special skills needed for staffing the project, for example
 	\begin{itemize}
-		\item Special skills needed for staffing the project
-		\item Adaptive Middleware concepts
-		\item System Architect:
-		\begin{itemize}
-			\item Controller Design
-		\end{itemize}
-		\item Software Engineer:
-		\begin{itemize}
-			\item Controller Implementation and Tuning
-		\end{itemize}
+		\item Know how about the adaptive middleware concepts as introduced in Chapter \ref{ch:adaptive_middleware}.
+		\item Controller design, implementation, and tuning
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Why & The staffing plan is needed to get the appropriate team members with the needed skills.\\
+	\bfseries Why & The \emph{Staffing Plan} is needed to get the appropriate team members with the needed skills.\\
 	\midrule 
-	\bfseries Who & Project Manager\\
+	\bfseries Who & \emph{Project Manager}\\
 	\midrule 
-	\bfseries Output & Staffing Plan\\
+	\bfseries Output & \emph{Staffing Plan}\\
 	\midrule 
-	\bfseries Challenges &
-	\begin{itemize}
-		\item It may be hard to find the right project members with the needed skillset, since control theory is not a common skill of enterprise software developers. 
-		\item In this case, an appropriate training should be considered upfront.
-	\end{itemize}
-	\\
+	\bfseries Challenges & It may be hard to find the right project members with the needed skillset, since control theory is not a common skill of enterprise software developers. In this case, an appropriate training should be considered upfront.\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1195,42 +1265,58 @@ Processes are modeled using \ac{UML} activity diagrams. The conceptual framework
 \end{itemize}
 
 \subsection{Implement Integration}
-This process describes the necessary tasks to implement the integration layer and the integrated service interfaces, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_integration}.
+This process describes the necessary tasks to implement the integration layer and the integrated service interfaces. It contains the following tasks, as shown in Figure \ref{fig:ch6_process_integration_tasks}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.3\textwidth]{ch6_activity_integration} 
+	\includegraphics[width=\textwidth]{ch6_process_integration_tasks} 
+	\caption{Tasks of the process Implement Integration} 
+	\label{fig:ch6_process_integration_tasks} 
+\end{figure}
+
+Figure \ref{fig:ch6_activiy_integration} shows the \ac{UML} activity diagram of the process.
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_process_integration} 
 	\caption{\ac{UML} Activity Diagram: Implement Integration} 
 	\label{fig:ch6_activiy_integration} 
 \end{figure}
 
 \subsection{Implement Aggregation}
-This process is concerned with the implementation of the message aggregation, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_aggregation}.
+This process is concerned with the implementation of the message aggregation. It contains the following tasks, as shown in Figure \ref{fig:ch6_process_aggregation_tasks}
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=0.3\textwidth]{ch6_activity_aggregation} 
+	\includegraphics[width=\textwidth]{ch6_process_aggregation_tasks} 
+	\caption{Tasks of the process Implement Aggregation} 
+	\label{fig:ch6_process_aggregation_tasks} 
+\end{figure}
+
+Figure \ref{fig:ch6_activiy_aggregation} shows the \ac{UML} activity diagram of the process.
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_process_aggregation} 
 	\caption{\ac{UML} Activity Diagram: Implement Aggregation} 
 	\label{fig:ch6_activiy_aggregation} 
 \end{figure}
 
 \subsection{Implement Feedback-Control}
 
-This process contains tasks that are concerned with the design, implementation and tuning of the feedback-control loop, as shown in Figure \ref{fig:ch6_tasks_feedback_control}.
+This process contains tasks that are concerned with the design, implementation and tuning of the feedback-control loop. It contains the following tasks, as shown in Figure \ref{fig:ch6_tasks_feedback_control}.
 
 \begin{figure}[htpb] \centering 
-	\includegraphics[width=\textwidth]{ch6_tasks_feedback_control} 
+	\includegraphics[width=\textwidth]{ch6_process_feedback-control_tasks} 
 	\caption{Tasks for implementing the feedback-control loop} 
 	\label{fig:ch6_tasks_feedback_control} 
 \end{figure}
 
 There are two options for implementing the feedback-control loop:
 \begin{itemize}
-	\item Using a system model for performing the controller tuning, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_activiy_feedback_control_model}.
-	\item Without using a model, the control architecture needs to be implemented prior to the controller tuning, as shown in the \ac{UML} diagram in Figure \ref{fig:ch6_activiy_feedback_control}.
+	\item Using a system model for performing the controller tuning, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_process_feedback-control_modelling}.
+	\item Without using a model, the control architecture needs to be implemented prior to the controller tuning, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_process_feedback-control}.
 \end{itemize}
 
 \begin{figure}[htpb] \centering 
-	\subfloat[Using a model]{\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control_modelling}\label{fig:ch6_activiy_feedback_control_model}}\qquad
-	\subfloat[Without a model]{\includegraphics[width=0.3\textwidth]{ch6_activity_feedback_control}\label{fig:ch6_activiy_feedback_control}}
+	\subfloat[Using a model]{\includegraphics[width=0.5\textwidth]{ch6_process_feedback-control_modelling}\label{fig:ch6_process_feedback-control_modelling}}\qquad
+	\subfloat[Without a model]{\includegraphics[width=0.5\textwidth]{ch6_process_feedback-control}\label{fig:ch6_process_feedback-control}}
 	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop} 
 \end{figure}
 
@@ -1244,6 +1330,24 @@ The conceptual framework only describes artifacts that are specific for the impl
 	\includegraphics[width=\textwidth]{ch6_artifacts} 
 	\caption{Artifacts} 
 	\label{fig:ch6_artifacts} 
+\end{figure}
+
+An artifact is described by the following attributes, as shown in Figure \ref{fig:ch6_metamodel_task}:
+\begin{itemize}
+	\item \textbf{Name}\\
+	The name of the artifact.
+	\item \textbf{Description}\\
+	A description of the artifact.
+	\item \textbf{Task}\\
+	The task that produces the artifact.
+	\item \textbf{Role}\\
+	The role that is responsible for producing the artifact.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_metamodel_artifact} 
+	\caption{Attributes of an artifact} 
+	\label{fig:ch6_metamodel_artifact} 
 \end{figure}
 
 The conceptual framework describes the following artifacts:
@@ -1361,10 +1465,9 @@ The conceptual framework describes the following artifacts:
 	\midrule 
 	\bfseries Description & Defines which service endpoint should be called by the Router for a given aggregation size.\\
 	\midrule 
-	\bfseries Task & Define Routing Rules
-		\\
+	\bfseries Task & \emph{Define Routing Rules}\\
 	\midrule 
-	\bfseries Role & System Architect\\
+	\bfseries Role & \emph{System Architect}\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1378,10 +1481,10 @@ The conceptual framework describes the following artifacts:
 	\midrule 
 	\bfseries Description & The system model is used to build a simulation of the system which can be used for implementing the controller.\\
 	\midrule 
-	\bfseries Task & System Identification / Modelling
+	\bfseries Task & \emph{System Identification / Modelling}
 	\\
 	\midrule 
-	\bfseries Role & System Architect\\
+	\bfseries Role & \emph{System Architect}\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1394,10 +1497,10 @@ The conceptual framework describes the following artifacts:
 	\midrule 
 	\bfseries Description & The controller configuration specifies the parameter of the Controller.\\
 	\midrule 
-	\bfseries Task & Perform Controller Tuning
+	\bfseries Task & \emph{Perform Controller Tuning}
 		\\
 	\midrule 
-	\bfseries Role & Sofware Engineer\\
+	\bfseries Role & \emph{Sofware Engineer}\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1418,13 +1521,13 @@ The conceptual framework describes the following artifacts:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & Define Training Concept
+	\bfseries Task & \emph{Define Training Concept}
 	\\
 	\midrule 
 	\bfseries Role & 
 	\begin{itemize}
-		\item Project Manager
-		\item System Architect
+		\item \emph{Project Manager}
+		\item \emph{System Architect}
 	\end{itemize}
 	\\
 	\bottomrule 
@@ -1446,10 +1549,10 @@ The conceptual framework describes the following artifacts:
 	\end{itemize}
 	\\
 	\midrule 
-	\bfseries Task & Perform Staffing
+	\bfseries Task & \emph{Perform Staffing}
 	\\
 	\midrule 
-	\bfseries Role & Project Manager\\
+	\bfseries Role & \emph{Project Manager}\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1457,11 +1560,27 @@ The conceptual framework describes the following artifacts:
 \section{Tools} % (fold)
 \label{sec:ch6_tools}
 
-The design and implementation of the adaptive middleware requires the use of some specific tools. Tools are grouped in the following categories:
+The design and implementation of the adaptive middleware requires the use of some specific tools. A tool is decribed by the following attributes, as shown in Figure \ref{fig:ch6_metamodel_tool}:
+\begin{itemize}
+	\item \textbf{Name}\\
+	The name of the tool.
+	\item \textbf{Description}\\
+	The description of the tool.
+	\item \textbf{Category}\\
+	The category the tool belongs to.
+\end{itemize}
+
+\begin{figure}[htpb] \centering 
+	\includegraphics[width=\textwidth]{ch6_metamodel_tool} 
+	\caption{Attributes of a tool} 
+	\label{fig:ch6_metamodel_tool} 
+\end{figure}
+
+Tools are grouped in the following categories:
 
 \begin{itemize}
 	\item Tools for system modelling, system identification and simulation
-	\item Tool for data visualisation
+	\item Tools for data visualisation
 	\item Tools for data processing
 \end{itemize}
 
@@ -1498,7 +1617,7 @@ For the evaluation of the performance test results, it is often necessary to pro
 
 % section tools (end)
 
-\section{Relationship to Architecture Frameworks and Methodologies} 
+\section{Relationship to other Software Developement Approaches} 
 \label{sec:ch6_other_frameworks}
 % (fold)
 
@@ -1622,6 +1741,12 @@ The following Table \ref{table:ch6_mapping_rup} shows the assignment of the task
 		\end{itemize}
 		\\
 		\midrule
+		Configuration \& Change Management &
+		\begin{itemize}
+			\item Perform Controller Tuning
+		\end{itemize}
+		\\
+		\midrule
 		Environment & 
 		\begin{itemize}
 			\item Source Project Environments
@@ -1697,7 +1822,7 @@ Although Scrum does not define specific roles for the development team, the skil
 \section{Related Work}
 \label{sec:ch6_related_work}
 
-This section discusses work related to the conceptual framework presented in this chapter. It introduces the terms \emph{Software Process} and \emph{Software Process Modelling} and discusses approaches to model the software process using \ac{UML}.  
+This section discusses work related to the conceptual framework presented in this chapter. It introduces the terms \emph{Software Process} and \emph{Software Process Modelling} and discusses approaches to model the general software process using \ac{UML} and process models for adaptive software systems.
 
 \subsection{Software Process}
 
@@ -1805,11 +1930,28 @@ The conceptual framework for feedback-controlled systems for bulk data processin
 \begin{itemize}
 	\item \textbf{Understandability}\\
 	Using standard \ac{UML} 2.0 notation elements and diagrams facilitate the understanding of the conceptual framework since they are commonly used by software engineers for the design of the software system itself. 
-	\item \ac{Tool support}\\
+	\item \textbf{Tool support}\\
 	Standard \ac{UML} 2.0 notation elements and diagrams are supported by a wide range of modelling tools.
 \end{itemize}
 
 Standard metamodels for software process modelling such as \ac{SPEM} 2.0 have not been used because they seemed to heavyweight for this purpose.
+
+\subsection{Software Processes for Adaptive Software Systems}
+
+\begin{itemize}
+	\item It has been understood that the software processes need to reconceptualised to engineer self-adaptive software systems.
+	\begin{itemize}
+		\item Activities are shifted from development-time to run-time
+		\item See for example \cite{Blair:2009aa}, \cite{Inverardi:2008cz} or \cite{DeLemos:2013ty}
+	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item Software Engineering Processes for Self-Adaptive Systems \citep{Andersson:2013aa}
+	\item Friends or foes?: a conceptual analysis of self-adaptation and it change management. \citep{Gacek:2008ei}
+	\item Methodologies for Self-Organising Systems: A SPEM Approach \citep{Puviani:2009kz}
+	\item Methodology Fragments Definition in SPEM for Designing Adaptive Methodology: A First Step \citep{Rougemaille:2009ex}
+\end{itemize}
 
 \section{Summary}
 \label{sec:ch6_summary}
