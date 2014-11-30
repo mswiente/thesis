@@ -551,13 +551,11 @@ The following tasks are defined:
 	\end{itemize}
 	\item Implementation
 	\begin{itemize}
-		\item Implement Controller / Feedback Loop
+		\item Implement Feedback-Control Loop
+		\item Create System Model / Perform System Identification 
+		\item Perform Static Tests
+		\item Perform Step Tests
 		\item Perform Controller Tuning 
-		\begin{itemize}
-			\item System Model/System Identification 
-			\item Static Tests
-			\item Step Tests
-		\end{itemize}
 		\item Implement Integration Architecture
 		\item Implement Service Interfaces
 		\item Implement Aggregation Rules 
@@ -577,7 +575,7 @@ The following tasks are defined:
 	\item Project Management
 	\begin{itemize}
 		\item Define Training Concept
-		\item Staffing
+		\item Perform Staffing
 	\end{itemize}
 \end{itemize}
 
@@ -858,10 +856,10 @@ This package contains tasks concerned with the system architecture of the system
 \subsection{Implementation}
 This package contains specific tasks that are concerned with the implementation of an adaptive system for bulk data processing. 
 
-\subsubsection{Implement Controller}
+\subsubsection{Feedback-Control Loop}
 
 \begin{tabularx}{\textwidth}{@{} l X @{}}
-	\caption{Implement Controller / Feedback Loop} \label{table:ch6_Task_Implement_Controller}\\
+	\caption{Implement Feedback-Control Loop} \label{table:ch6_Task_Implement_Controller}\\
 	\toprule 
 	\bfseries Task & Implement Feedback-Control Loop\\
 	\midrule 
@@ -941,11 +939,11 @@ This package contains specific tasks that are concerned with the implementation 
 \end{tabularx}
 
 
-\subsubsection{System Model/System Identification}
+\subsubsection{Create System Model / Perform System Identification}
 	\begin{tabularx}{\textwidth}{@{} l X @{}}
-		\caption{System Model/System Identification} \label{table:ch6_Task_Controler_Tuning}\\
+		\caption{Create System Model / Perform System Identification} \label{table:ch6_Task_Controler_Tuning}\\
 		\toprule 
-		\bfseries Task & Define System Architecture\\
+		\bfseries Task & Create System Model / Perform System Identification\\
 		\midrule 
 		\bfseries What & Build a model of the system.\\
 		\midrule 
@@ -1019,11 +1017,11 @@ This package contains specific tasks that are concerned with the implementation 
 	\bottomrule 
 \end{tabularx}
 
-\subsubsection{Implement Aggregator}
+\subsubsection{Implement Aggregation Rules}
 \begin{tabularx}{\textwidth}{@{} l X @{}}
-	\caption{Implement Aggregator} \label{table:ch6_Task_Implement_Aggregator}\\
+	\caption{Implement Aggregation Rules} \label{table:ch6_Task_Implement_Aggregator}\\
 	\toprule 
-	\bfseries Task & Implement Aggregatator\\
+	\bfseries Task & Implement Aggregation Rules\\
 	\midrule 
 	\bfseries What & 
 	This task is concerned with the implementation of the message aggregation, including
@@ -1041,6 +1039,31 @@ This package contains specific tasks that are concerned with the implementation 
 	\bfseries Input & \emph{Aggregation Rules}\\
 	\midrule 
 	\bfseries Challenges & Implementation of mechanisms to dynamically load aggregation rules at run-time or configuration-time.\\
+	\bottomrule 
+\end{tabularx}
+
+\subsubsection{Implement Routing-Rules}
+\begin{tabularx}{\textwidth}{@{} l X @{}}
+	\caption{Implement Routing Rules} \label{table:ch6_Task_Implement_Routing_Rules}\\
+	\toprule 
+	\bfseries Task & Implement Routing Rules\\
+	\midrule 
+	\bfseries What & 
+	This task is concerned with the implementation of the message routing, including
+	\begin{itemize}
+		\item Implementation and configuration of the Router component.
+		\item Implementation of the routing rules.
+	\end{itemize}
+	The \emph{Routing Rules} should be configurable during run-time or configuration-time and should not be hard-coded.
+	\\
+	\midrule 
+	\bfseries Why & The message router routes messages to the appropriate service endpoint depending on the current aggregation size. It is one of the main building blocks of the \emph{Adaptive Middleware} (see Section \ref{sec:ch05_router} for details).\\
+	\midrule 
+	\bfseries Who & \emph{Software Engineer}\\
+	\midrule 
+	\bfseries Input & \emph{Routing Rules}\\
+	\midrule 
+	\bfseries Challenges & Implementation of mechanisms to dynamically load routing rules at run-time or configuration-time.\\
 	\bottomrule 
 \end{tabularx}
 
@@ -1938,26 +1961,42 @@ Standard metamodels for software process modelling such as \ac{SPEM} 2.0 have no
 
 \subsection{Software Processes for Adaptive Software Systems}
 
+It has been understood that software processes need to be reconceptualised to engineer self-adaptive software systems (see for example \cite{Blair:2009aa}, \cite{Inverardi:2008cz}, \cite{DeLemos:2013ty} or \cite{Andersson:2013aa}). Self-adaptive systems adjust their behaviour automatically to respond to changes in their context and requirements. Activities that are traditionally done at development-time need to be shifted to run-time. Additionally, some activities that are previousley performed by software engineers are now performed by the system itself. In a way, the role of the human software engineer is to some extend shifted from operational to strategic. The engineer implements the adaption mechanisms, the adaption itself is performed by system.
+
+\cite{Andersson:2013aa} extend the \ac{SPEM} metamodel to specify which activities should be performed off-line and on-line and the dependencies between them.
+They distinguish between off-line activities, manual activities that are performed externally at development-time and on-line activities, that are performed internally at run-time, by the system itself, for example evolution and adaption activities performed by the adaption logic of the system.
+The authors argue, that on-line activities must be explicitely reflected in software process models, since they are not independet from off-line activities. In addition to on-line activities, on-line roles and work products also need to be adressed by process models. To meet this requirements, they extend the \ac{SPEM} metamodel with
 \begin{itemize}
-	\item It has been understood that the software processes need to reconceptualised to engineer self-adaptive software systems.
-	\begin{itemize}
-		\item Activities are shifted from development-time to run-time
-		\item See for example \cite{Blair:2009aa}, \cite{Inverardi:2008cz} or \cite{DeLemos:2013ty}
-	\end{itemize}
+	\item On-line and off-line stereotypes to define whether an activity should be performed on-line or off-line
+	\item Dependencies to relate two or more arbitrary process elements
+	\item Elements to describe the costs and benefits of performing an activity on-line in constrast to perform it off-line.
 \end{itemize}
 
+\cite{Inverardi:2010ki} describe a process methodology to support the development of context-aware adaptive applications. It consists of four different activities: \emph{Explore}, \emph{Integrate}, \emph{Validate} and \emph{Evolve}:
 \begin{itemize}
-	\item Software Engineering Processes for Self-Adaptive Systems \citep{Andersson:2013aa}
-	\item Friends or foes?: a conceptual analysis of self-adaptation and it change management. \citep{Gacek:2008ei}
-	\item Methodologies for Self-Organising Systems: A SPEM Approach \citep{Puviani:2009kz}
-	\item Methodology Fragments Definition in SPEM for Designing Adaptive Methodology: A First Step \citep{Rougemaille:2009ex}
+	\item \textbf{Exploration Phase}\\
+	Exploits a feature library containing the implementation and coresponding requirements description.
+	\item \textbf{Integration phase}\\
+	Uses these features to produce a feature-diagram to describe the space of system changes, called variants.
+	\item \textbf{Validation phase}\\
+	Validates the variants by using context analysis and model checking.
+	\item \textbf{Evolution phase}\\
+	Reconfigures the system by switching to the new configuration.
 \end{itemize}
+
+\cite{Gacek:2008ei} propose a conceptual model for self-adaptation which uses the ITIL Change Management process as a starting point. It consists of a reference process, activities, roles and responsibilities and artificats. The reference process consists of two processes that interact iteratively, the adaption process and the evolution process:
+\begin{itemize}
+	\item The inner \emph{Adaption Process} relates to the feedback-loop of a single adaptable element of the system and is comprised of the activities \emph{Sense}, \emph{Trigger}, \emph{Select Adaption Rules} and \emph{Change}. All these activities are fully automated.
+	\item The \emph{Evolution Process} is executed for a single or multiple occurences of the inner adaptive process. It consists of the activities \emph{Aggregate Metrics}, \emph{Analyze}, \emph{Evolve Adaption Rules}, \emph{Adjust and Synchronize}, and \emph{Reflect}. Theses tasks might require human involvement.
+\end{itemize}
+
+The related work on process models for adaptive systems is focused on generic adaptation mechanisms to evolve and adapt a system, which are carried out at run-time. In contrast, the conceptual framework presented in this chapter is aimed to guide the design, development and operation of a specific system, that is, an adaptive system for bulk data processing, which provides a specific adaptation mechanism, that is, the adaption of the aggregation size at run-time depending on the current load of the system. 
 
 \section{Summary}
 \label{sec:ch6_summary}
-In this chapter a conceptual framework has been presented to guide the design, implementation and operation of an enterprise system that implements the adaptive middleware for bulk data processing as described in the previous Chapter \ref{ch:adaptive_middleware}.
+In this chapter a conceptual framework has been presented to guide the design, implementation and operation of an enterprise system for bulk data processing that is based on the adaptive middleware as described in the previous Chapter \ref{ch:adaptive_middleware}.
 
-The conceptual consists of the entities phases, roles, tasks, artifacts and tools. It describes:
+The conceptual consists of the entities phases, roles, tasks, artifacts, processes and tools. It describes:
 \begin{itemize}
 	\item The needed roles and their skills for the design, implementation and operation.
 	\item The necessary tasks and their relationships for the design, implementation and operation.
@@ -1966,7 +2005,9 @@ The conceptual consists of the entities phases, roles, tasks, artifacts and tool
 	\item The processes that describe the order of tasks to implement a certain feature of the software system.
 \end{itemize}
 
+It uses standard \ac{UML} notation elements, which facilates understandability by software architects and developers. Additionally, this approach offers an extensive tool support.
 
+The conceptual framework is only concerned with the special aspects of the design, implementation and operation of an adaptive system for bulk data processing. It does not describe a complete software development approach. The conceptual framework therefore needs to be integrated in common software development frameworks or methodologies. It has been shown how the conceptual framework can be used with two common software development methodologies, the \ac{RUP} and Scrum.
 
 It should be noted that software processes are not fixed during their lifetime, they need to be continuously improved. \citep{Fuggetta:2000ds}
 The conceptual model can therefore be tailored to specific projects requirements, it does not have to be followed strictly.
