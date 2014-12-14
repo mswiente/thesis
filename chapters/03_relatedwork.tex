@@ -125,7 +125,36 @@ Tempo is a real-time messaging system written in Java that can be used on either
 The authors state that a coarse-grained data granularity reduces the communication overhead, since the number of network transfers is decreased.
 ``Especially in the case of Web services, this overhead is high since asynchronous messaging requires multiple queuing operations and numerous XML transformations''.
 
-\section{Self-Adaptive Middleware}
+\section{Self-Adaptive Software Systems}
+
+\begin{itemize}
+	\item Definition Self-Adaptive Software
+	\item Reference Architectures for self-adaptive software systems
+	\begin{itemize}
+		\item Three Layer Architecture Model for Self-Management \citep{Kramer:2007ff}
+		\item Conceptual Architecture for Self-Adaptive Software Systems \citep{Andersson:2009bq}
+		\item Mape-K \citep{Group:2005ug}
+	\end{itemize}
+	\item Self-adaptive properties
+	\begin{itemize}
+		\item Automatic Workarounds
+	\end{itemize}
+	\item Self-adaptive middleware
+	\begin{itemize}
+		\item Self-adaptive \ac{SOA}
+		\item Self-adaptive \ac{ESB}
+	\end{itemize}
+	\item Self-adaptive frameworks
+	\begin{itemize}
+		\item Rainbow framework
+		\item PLASTIC
+		\item Javeleon
+		\item JavAdaptor
+		\item ArchJava
+	\end{itemize}
+\end{itemize}
+
+\subsection{Definition}
 Self-Adaptive Software is a ``a closed-loop system with a feedback loop aiming to adjust itself to changes during its operation'' \citep{Salehie:2009pi}. These changes can originate from internal causes of the system (the system's self) or from the context of the system.
 
 \citet{Laddaga:2008ff} provides a definition for self-adaptive software: ``Self-adaptive software evaluates its own behavior and changes behavior when the evaluation indicates that it is not accomplishing what the software is intended to do, or when better functionality or performance is possible.'' 
@@ -151,6 +180,8 @@ More general self-* properties are described as:
 	\item \textbf{Context-Awareness}\\
 	The system is aware of its context.
 \end{itemize}
+
+\section{Self-Adaptive Middleware}
 
 \citet{Duran-Limon:2004mi} argue that ``the moste adequate level and natural locus for applying adaption is at the middleware level''. Adaption at the operating system level is platform-dependent and changes at this level affect every application running on the same node. On the other hand, adaption at application level assigns the responsibility to the developer and is also not reusable.
 

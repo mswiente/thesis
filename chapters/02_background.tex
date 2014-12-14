@@ -52,6 +52,25 @@ Applications that are usually implemented as batch processing systems are billin
 
 \subsection{Batch Architectures}
 
+\subsection{Batch Performance Optimisations}
+
+\begin{itemize}
+	\item Disctinction between different optimization types
+	\begin{itemize}
+		\item Technical optimization
+		\begin{itemize}
+			\item Data formats (binary, CSV)
+			\item Database transactions
+			\item Database design
+		\end{itemize}
+		\item Business optimization
+		\begin{itemize}
+			\item optimization depending on data semantics
+			\item Caching of reference data
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
 \section{Message-base processing}\label{sec:message_processing}
 Messaging facilitates the integration of heterogeneous applications using asynchronous communication. Applications are communicating with each other by sending messages (see Figure \ref{fig:message_based_processing}). A messaging server or message-oriented middleware handles the asynchronous exchange of messages including an appropriate transaction control \cite{conrad2006enterprise}.
 
@@ -79,6 +98,10 @@ Hohpe et al.\cite{Hohpe:2003fk} describe the following basic messaging concepts:
 \end{itemize}
 
 \subsection{Integration Styles}
+
+\begin{itemize}
+	\item JMS
+\end{itemize}
 
 \subsubsection{Point To Point}
 
@@ -209,6 +232,21 @@ A service container provides the following interfaces \citep{Chappell:2004jo}:
 	\item \textbf{Management interface}\\
 	The management interface provides an entry endpoint for retrieving configuration data and an exit endpoint for sending logging, event tracking and performance data.
 \end{itemize}
+
+\section{Enterprise Integration Patterns}
+\label{sec:ch03_eip}
+
+\ac{EIP}
+
+\subsection{Performance relevant \acp{EIP}}
+
+\begin{itemize}
+	\item Aggregator
+	\item Content Filter
+	\item Message Router
+	\item Claim Check
+\end{itemize}
+
 \section{Performance Issues}
 This section describes the performance issues of an SOA middleware that inhibit their appropriateness for systems with high performance requirements.
 \subsection{Distributed Architecture}
@@ -229,6 +267,32 @@ Another aspect of SOA that has an impact on performance is the utilisation of lo
 	\item \textbf{Trust}\\
 	Component B does not rely on component A to comply with pre-conditions. Component A does not rely on component B to comply with post-conditions.
 \end{itemize}
+
+Coupling between services occurs on different levels. \citet{Krafzig:2005zc} describe the different levels of coupling that are leveraged in an \ac{SOA} (see Table \ref{table:ch02_coupling}).
+
+\begin{table}[htpb]
+	\centering
+	\begin{tabularx}{\textwidth}{@{} X X X @{}}
+		\caption{Levels of coupling}\label{table:ch02_coupling}\\
+		\toprule
+		\bfseries Level & \bfseries Tight Coupling & \bfseries Loose Coupling\\
+		\midrule
+		\bfseries Physical coupling & Direct physical link required & Physical intermediary\\
+		\midrule
+		\bfseries Communication style & Synchronous & Asynchronous\\
+		\midrule
+		\bfseries Type system & Strong type system & Weak type system\\
+		\midrule
+		\bfseries Interaction pattern & OO-style navigation of complex object trees & Data-centric, self-contained messages\\
+		\midrule
+		\bfseries Control of process logic & Central control of processing logic & Distributed logical components\\
+		\midrule
+		\bfseries Service discovery and binding & Statically bound services & Dynamically bound services\\
+		\midrule
+		\bfseries Platform dependencies & Strong OS and programming language dependencies & OS and programming languages independent\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
 The gains in flexibility and maintainability of loose coupling are amongst others opposed by performance costs.
 

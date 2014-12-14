@@ -6,7 +6,7 @@
 Enterprise Systems like customer-billing systems or financial transaction systems are required to process large volumes of data in a fixed period of time. For example, a billing system for a large telecommunication provider has to process more than 1 million bills per day.
 Those systems are increasingly required to also provide near-time processing of data to support new service offerings.
 
-Traditionally, enterprise systems for bulk data processing are implemented as batch processing systems \citep{Fleck:1999aa}. Batch processing delivers high throughput but cannot provide near-time processing of data, that is the end-to-end latency of such a system is high. End-to-end latency refers to the period of time that it takes for a business process, implemented by multiple subsystems, to process a single business event.  For example, consider the following billing system of telecommunications provider:
+Traditionally, enterprise systems for bulk data processing are implemented as batch processing systems \citep{Fleck:1999aa}. Batch processing delivers high throughput but cannot provide near-time processing of data, that is the end-to-end latency of such a system is high. End-to-end latency refers to the period of time that it takes for a business process, implemented by multiple subsystems, to process a single business event.  For example, consider the following billing system of a telecommunications provider:
 \begin{itemize}
 	\item Customers are billed once per month
 	\item Customers are partitioned in 30 billing groups
@@ -25,8 +25,17 @@ This research project aims to find a solution for the following problem:
 \begin{quote}
 \textbf{How to achieve high-performance near-time processing of bulk data?}
 \end{quote}
-To approach this problems, the research project has the following key objectives:
-\begin{enumerate}[A.]
+
+Based on this problem, the thesis aims to answer the following research questions:
+\begin{itemize}
+	\item \textbf{RQ1:} What are the performance characteristics of batch and single-event processing systems?
+	\item \textbf{RQ2:} What is the impact of data granularity on end-to-end latency and maximum throughput?
+	\item \textbf{RQ3:} tbd.
+	\item \textbf{RQ4:} tbd.
+\end{itemize}
+
+To approach these research questions, the research project has the following key objectives:
+\begin{enumerate}
 	\item Performance evaluation of batch and messaging systems regarding throughput and latency.
 	\item Development of a concept for an adaptive middleware that delivers low latency while providing high throughput.
 	\item Implementation of a research prototype used for demonstrating the practicability of the concept.
@@ -35,6 +44,16 @@ To approach this problems, the research project has the following key objectives
 \end{enumerate}
 
 \section{Research Methodology}
+
+\begin{itemize}
+	\item Evaluation of current approaches to optimize the performance of service-oriented systems. 
+	\item To better understand the performance characteristics of batch and message-based processing two prototypes of each processing styles has been implemented.
+	\item Using these prototypes, a performance evaluation has been done to better understand the differences between the two processing styles, with a special focus on the latency and throughput.
+	\item Using the message-based prototype, the impact of data granularity on latency and throughput has been studied.
+	\item Based on the results of the performance evaluation the concept of an adaptive middleware has been developed.
+	\item The message-based prototype has been extending to implement the concepts of the adaptive middleware.
+	\item A performance evaluation has been conducted to evaluate the proposed concepts for an adaptive middleware for bulk data processing.
+\end{itemize}
 
 \section{Contributions}\label{sec:contributions}
 

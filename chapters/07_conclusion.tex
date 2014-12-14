@@ -3,10 +3,13 @@
 \chapter{Conclusion}\label{ch:conclusion}
 %******************************************************************************
 
+\section{Summary of the Research project}
+
 \section{Contributions}
 
 \section{Limitations}
 
+Limitations of the concept for an \emph{Adaptive Middlware}:
 \begin{itemize}
 	\item Only a single processing pattern is implemented
 	\item Integrated services need to be changed to support batch and single event processing
@@ -16,12 +19,20 @@
 	\item Only a single adaption pattern is considered in the adaptive middleware concept and protoype implementation.
 \end{itemize}
 
-Conceptual Framework:
+Limitations of the research prototype:
 \begin{itemize}
-	\item The conceptual framework has not been validated, for example by qualitative research methods, such as expert interviews are applied with real-life projects.
+	\item Impact of different controller architectures have not been exhaustivley analysed and researched. Only two controller architectures have been implemented. 
+\end{itemize}
+
+Limitations of the \emph{Conceptual Framework}:
+\begin{itemize}
+	\item The services integrated by the prototype do not implement any further optimisations for batch processing. They use the same implementation for batch and single-event processing. Thus, the impact of batch optimisations has not been investigated.
+	\item The \emph{Conceptual Framework} has not been validated, for example by qualitative research methods, such as expert interviews are applied with real-life projects.
 \end{itemize}
 
 \section{Future Work}
+
+Based on the limitations of this research, as described in the previous section, the following open issues could be adressed by future work.
 
 \begin{itemize}
 	\item System consisting of multiple Aggregators and input queues
@@ -32,4 +43,5 @@ Conceptual Framework:
 	\item Add a figure for illustration
 	\item Support for different messaging patterns such as Publish/Subscribe
 	\item Extending the middleware concept to support different adaption patterns, such as dynamic service composition and selection and load balancing.
+	\item Validation of the \emph{Conceptual Framework} by qualitative research methods or in real-life projects
 \end{itemize}
