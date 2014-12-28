@@ -94,6 +94,8 @@ SPECjms2007 is a standard benchmark for the evaluation of Message-Oriented Middl
 \section{Performance Optimisation}
 Most of the work that aims to optimise the performance of service-oriented systems is done in the area of Web Services since it is a common technology to implement a SOA.
 
+\subsection{Transport Optimization}
+
 In particular, various approaches have been proposed to optimise the performance of SOAP, the standard protocol for Web Service communication. This includes approaches for optimising the processing of SOAP messages (see for example \citet{Abu-Ghazaleh:2005bs}, \citet{Suzumura:2005fv} and \citet{Ng:2006kl}), compression of SOAP messages (see for example \citet{Estrella:2008dz} and \citet{Ng:2005qa}) and caching (see for example \citet{andresen2004lye} and \citet{Devaram:2003fu}). A survey of the current approaches to improve the performance of SOAP can be found in \cite{Tekli:2012bh}.
 
 \citet{Wichaiwong:2007oq} propose an approach to transfer bulk data between web services per FTP. The SOAP messages transferred between the web services would only contain the necessary details how to download the corresponding data from an FTP server since this protocol is optimized for transferring huge files. This approach solves the technical aspect of efficiently transferring the input and output data but does not pose any solutions how to implement loose coupling and how to integrate heterogeneous technologies, the fundamental means of an SOA to improve the flexibility of an application landscape.
@@ -108,6 +110,8 @@ Data-Grey-Box Web Services are an approach to transfer bulk data between Web Ser
 \end{enumerate}
 
 MPAB (Massively Parallel Application Bus) is an ESB-oriented messaging bus used for the integration of business applications \citep{Benosman:2012zr}. The main principle of MPAB is to fragment an application into parallel software processing units, called SPU. Every SPU is connected to an Application Bus Multiplexor (ABM) through an interface called Application Bus Terminal (ABT). The Application Bus Multiplexor manages the resources shared across the host system and communicates with other ABM using TCP/IP. The Application Bus Terminal contains all the resources needed by SPU to communicate with its ABM. A performance evaluation of MPAB shows that it achieves a lower response time compared to the open source ESBs Fuse, Mule and Petals.
+
+\subsection{Middleware Optimizations}
 
 Some research has been done to add real-time capabalities to ESB or messaging middleware. \cite{Garces-Erice:2009kx} proposes an architecture for a real-time messaging middleware based on an Enterprise Service Bus. It consists of an event scheduler, a \ac{JMS}-like API and a communication subsystem. While fulfilling real-time requirements, the middleware also supports already deployed infrastructure.
 
@@ -124,6 +128,9 @@ Tempo is a real-time messaging system written in Java that can be used on either
 \end{itemize}
 The authors state that a coarse-grained data granularity reduces the communication overhead, since the number of network transfers is decreased.
 ``Especially in the case of Web services, this overhead is high since asynchronous messaging requires multiple queuing operations and numerous XML transformations''.
+
+\subsection{Message Batching}
+The adaption strategy of our middleware is to change the message aggregation size based on the current load of the system. Aggregating or batching of messages is a common approach to increase the throughput of a messaging system, for example to increase the throughput of total ordering protocols \citep{Friedman:1997aa} \citep{Friedman:2006aa} \citep{Romano:2012aa} \citep{Didona:2012aa}.
 
 \section{Self-Adaptive Software Systems}
 
@@ -143,16 +150,36 @@ The authors state that a coarse-grained data granularity reduces the communicati
 	\begin{itemize}
 		\item Self-adaptive \ac{SOA}
 		\item Self-adaptive \ac{ESB}
+		\begin{itemize}
+			\item A runtime-adaptable service bus design for telecom operations support systems \citep{Chen:2008hj}
+			\item Design of a Dynamic Composition Handler for ESB-based Services \citep{Chang:2007aa}
+			\item Addressing QoS Issues in Service Based Systems through an Adaptive ESB Infrastructure \citep{Gonzalez:2011}
+		\end{itemize}
 	\end{itemize}
 	\item Self-adaptive frameworks
 	\begin{itemize}
-		\item Rainbow framework
-		\item PLASTIC
-		\item Javeleon
-		\item JavAdaptor
-		\item ArchJava
+		\item (Rainbow framework)
+		\item (PLASTIC)
+		\item (Javeleon)
+		\item (JavAdaptor)
+		\item (ArchJava)
+		\item DRESR \citep{Bai:2007aa}
+		\item Adaptive SOA Solution Stack \citep{Zielinnski:2012bo}
+		\item S-Cube (Software Services and Systems Network)
 	\end{itemize}
 \end{itemize}
+
+\begin{table}
+	\centering
+	\begin{tabularx}{\textwidth}{@{} l X X @{}}
+		\caption{Summary of adaption mechanisms of related work}\label{table:ch03_summary_adaption_mechanisms}\\
+		\toprule
+		\bfseries Adaption Mechanism & \bfseries Managed Ressource & \bfseries References\\
+		\midrule
+		\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
 \subsection{Definition}
 Self-Adaptive Software is a ``a closed-loop system with a feedback loop aiming to adjust itself to changes during its operation'' \citep{Salehie:2009pi}. These changes can originate from internal causes of the system (the system's self) or from the context of the system.
@@ -205,6 +232,13 @@ Static resource management optimises the allocation of services to computing res
 The coBRA framework proposed by \citet{Irmert:2008nx} is an approach to replace service implementations at runtime as a foundation for self-adaptive applications. The framework facilitates the replacement of software components to switch the implementation of a service with the interface of the service staying the same.
 
 DREAM (Dynamic Reflective Asynchronous Middleware) \citep{Leclercq:2004ly} is a component-based framework for the construction of reflective Message-Oriented Middleware. Reflective middleware ``refers to the use of a causally connected self-presentation to support the inspection and adaption of the middleware system'' \citep{Kon:2002fu}. DREAM is based on FRACTAL, a generic component framework and supports various asynchronous communication paradigms such as message passing, event-reaction and publish/subscribe. DREAM facilitates the construction and configuration of Message-Oriented Middleware from a library of components such as message queues, filters, routers and aggregators, which can be assembled either at deploy-time or runtime.
+
+Research on messaging middleware currently focusses on Enterprise Services Bus (ESB) infrastructure. An ESB is an integration plattform that combines messaging, web services, data transformation and intelligent routing to connect multiple heterogeneous services \citep{Chappell:2004jo}. It is a common middleware to implement the integration layer of an Service Oriented Architecture (SOA) and is available in numerous commercial and open-source packages.
+
+Several research has been done to extend the static service composition and routing features of standard ESB implementations with dynamic capabilities decided at run-time, such as dynamic service composition \citep{Chang:2007aa}, routing \citep{Bai:2007aa} \citep{Wu:2008aa} \citep{Ziyaeva:2008aa} and load balancing \citep{Jongtaveesataporn:2010aa}.
+
+Work to manage and improve the Quality of Service (QoS) of ESB and service-based systems in general is mainly focussed on dynamic service composition and service selection based on monitored QoS metrics such as throughput, availability and response time \citep{Calinescu:2011aa}. \cite{Gonzalez:2011} propose an adaptive ESB infrastructure to adress QoS issues in service-based systems which provides adaption strategies for response time degradation and service saturation, such as invoking an equivalent service, using previously stored information, distributing requests to equivalent services, load balancing and deferring service requests.
+
 \section{SLA-Monitoring of Business Processes}
 The SECMOL framework (Service Centric Monitoring Language), developed by \citet{Guinea:2009fk}, allows to monitor the quality of service constraints of BPEL processes. It is comprised of three components. Data Collectors for capturing data, Data Analyzers for analysing the captured data and the Monitoring Manager for coordinating the monitoring process. SECMOL also defines a XML-based monitoring specification, which consists of monitoring policies that specify how the monitoring should be done and monitoring rules that express the quality of service properties the system needs to satisfy.
 

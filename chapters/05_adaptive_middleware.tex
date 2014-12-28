@@ -154,7 +154,7 @@ Message routing can be static or dynamic:
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=\columnwidth]{ch5_monitoring_control}
+	\includegraphics[width=\columnwidth]{ch05_monitoring_control}
 	\caption{Monitoring and Control}
 	\label{fig:ch05_monitoring_control}
 \end{figure}
@@ -243,6 +243,14 @@ This section describes aspects that should be taken into account when designing 
 
 \subsection{Usage Scenarios}
 \todo[inline]{do we need this?}
+
+\begin{itemize}
+	\item different usage scenarios
+	\item single aggregator, request/response integration pattern
+	\item single aggregator, point to point channel
+	\item system consisting of multiple subsystems, with each subsystem having an input queue, aggregator, router
+\end{itemize}
+
 \begin{landscape}
 	\begin{figure*}[htpb]
 		\centering
@@ -251,13 +259,6 @@ This section describes aspects that should be taken into account when designing 
 		\caption{Usage scenarios}
 	\end{figure*}
 \end{landscape}
-
-\begin{itemize}
-	\item different usage scenarios
-	\item single aggregator, request/response integration pattern
-	\item single aggregator, point to point channel
-	\item system consisting of multiple subsystems, with each subsystem having an input queue, aggregator, router
-\end{itemize}
 
 \subsection{Service Design}
 \label{sec:ch05_service_design}
@@ -397,13 +398,14 @@ There are several approaches for the implementation of feedback-control system. 
 
 There are different approaches that are used in practice to model the dynamics of a system \citep{Hellerstein:2004tu}:
 \begin{itemize}
-	\item Empirical approach
+	\item Empirical approach using curve fitting to create a model of the system
 	\item Black-box modeling
 	\item Modeling using stochastic approaches, especially queuing theory
 	\item Modeling using special purpose representations, for example the first principles analysis
 \end{itemize}
 
 The following approach has been taken in this research:
+
 \begin{enumerate}
 	\item Define the control problem
 	\item Define the input and output variables of the system
@@ -420,16 +422,42 @@ The following approach has been taken in this research:
 	\item when system faces high load, aggregation sizes should be increased
 	\item when sytem faces low load, aggregation sizes could be decreases
 \end{itemize}
-\subsubsection{Input/Output Variables}
+\subsubsection{Input/Output Signals}
 
+\cite{Janert:2013aa} describes the following criteria for selecting input control signals:
+\begin{itemize}
+	\item \textbf{Availability}\\
+	It should be possible to influence the control input directly and immediately.
+	\item \textbf{Responsiveness}\\
+	The system should respond quickly to a change of the input signal. Inputs whose effect is subject to latency or delays should be avoided when possible.
+	\item \textbf{Granularity}\\
+	It should be possible to adjust the control input in small increments. If the control input can only be adjusted in fixed increments, then it could be necessary to consider this in the controller or actuator implementation.
+	\item \textbf{Directionality}\\
+	How does the control input impact the control output? Does an increased control input result in increased or decreased output?
+\end{itemize}
+
+Additionally, the following criteria should be considered for selecting output control signals:
+
+\begin{itemize}
+	\item \textbf{Availability}\\
+	The quantity must be observable without gaps and delays.
+	\item \textbf{Relevance}\\
+	The output signal should be relevant for the behaviour of the system that should be controlled. 
+	\item \textbf{Responsiveness}\\
+	The output signal should reflect changes of the state of the system quickly without lags and delays.
+	\item \textbf{Smoothness}\\
+	The output signal should be smooth and does not need to be filtered.
+\end{itemize}
+
+With regard to these criteria, the following input and output control signals have been choosen 
 \begin{itemize}
 	\item \textbf{Input (u):} Current aggregation size
 	\item \textbf{Output (y):} Change of queue size measured between sampling intervals
 	\item \textbf{Set point (r):} The change of queue size should be zero.
-	\item advantage of queue size as output variable: queue size can be directly measured whithout a delay
 \end{itemize}
 
 \subsubsection{Control Strategy}
+\label{sec:ch05_control_strategy}
 
 \paragraph{Simple controller}\mbox{}\\
 A simple control strategy could be implemented as follows:
@@ -450,12 +478,36 @@ with $K_p$ being the controller gain of the proportional part, $e_k$ being the e
 
 This section describes the implementation of the prototype which implements the core concepts of the adaptive middleware. The prototype is based on the messaging prototype described in Section \ref{sec:ch04_messaging_prototype}.
 
-\todo[inline]{Insert image from section \ref{sec:ch04_messaging_prototype}}
+The prototype extends the messaging prototype with the following components (see Figure \ref{fig:ch05_components_prototype}):
+\begin{itemize}
+	\item \textbf{Performance Monitor}\\
+	The \emph{Performance Monitor} manages the feedback-control loop by periodically calling the \emph{Sensor} and updating the \emph{Controller}. Additionally, it calculates the current throughput and end-to-end latency of the sytem.
+	\item \textbf{Sensor}\\
+	The \emph{Sensor} is responsible for getting the current size of the message queue using \ac{JMX}.
+	\item \textbf{Controller}\\
+	The \emph{Controller} calculates the new value for the aggregation size base on the setpoint and the current error.
+	\item \textbf{Actuator}\\
+	The \emph{Actuator} is responsible for setting the new aggregation size of the \emph{Aggregator} calculated by the \emph{Controller}.
+\end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch05_components_prototype}
+	\caption{Components of the prototype system}
+	\label{fig:ch05_components_prototype}
+\end{figure}
 
 \subsection{Aggregator}
-
+The message aggregator uses the same \emph{AggregationStrategy} as the messaging prototype as described in Section \ref{sec:ch4_impact_granularity}, as shown in Listing \ref{listing:ch5_UsageEventsAggrationStrategy}:
 \begin{itemize}
-	\item Implementation is based on the aggregator of the messaging prototype as described in Section \ref{sec:ch4_impact_granularity}
+	\item The \emph{aggregate} method, which is called by the aggregator for each message, takes two arguments: \emph{oldExchange} contains the already aggregated messages, \emph{newExchange} contains the new arrived message (line 4).
+	\item If there are not yet any aggregated messages stored in the aggregator (line 5):
+	\begin{itemize}
+		\item The message body (\emph{rawUsageEvent}) is read from the new arrived message (line 6).
+		\item A new \emph{usageEventsList} is generated (line 8).
+		\item The message body is added to the list and the list is added to the incoming message, which now becomes the new message aggregate.
+	\end{itemize}
+	\item Otherwise, the message body of the new message is added to list of the aggregated messages (line 22).
 \end{itemize}
 
 \begin{lstlisting}[caption={UsageEventsAggrationStrategy},label=listing:ch5_UsageEventsAggrationStrategy]
@@ -495,6 +547,8 @@ public class UsageEventsAggrationStrategy implements AggregationStrategy {
 }
 \end{lstlisting}
 
+The aggregator is configured to dynamically use the aggregation size (\emph{completionSize}) set by a message header, as shown in Listing \ref{listing:ch5_aggregator_definition} (line 2). This message header is set by the \emph{Actuator} (see Section \ref{sec:ch05_actuator}), which is controlled by the \emph{Controller} (see Section \ref{sec:ch05_controller}).
+
 \begin{lstlisting}[caption={Aggregator configuration in definition of BillingRoute},label=listing:ch5_aggregator_definition]
 .aggregate(constant(true), new UsageEventsAggrationStrategy())
 	.completionSize(header(completionSizeHeader))
@@ -515,16 +569,33 @@ Figure \ref{fig:ch05_components_feedback_loop} shows the components of the feedb
 
 \subsubsection{Sensor}
 
-\begin{itemize}
-	\item Base class JmxSensor
-	\item Reads the current queue length of the ActiveMQ instance using JMX
-\end{itemize}
+The \emph{JmxSensor} implements the \emph{Sensor} interface (see Figure \ref{fig:ch05_classdiagram_sensor}). It reads the current length of the input queue of the \emph{ActiveMQ} server instance using \ac{JMX}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.6]{ch05_classdiagram_sensor}
+	\caption{\ac{UML} classdiagram showing the sensor classes}
+	\label{fig:ch05_classdiagram_sensor}
+\end{figure}
 
 \subsubsection{Controller}
-
+\label{sec:ch05_controller}
+A \emph{Controller} has to implement the \emph{Controller} interface. The following implementations of the \emph{Controller} interface have been implemented (see Figure \ref{fig:ch05_classdiagram_controller}):
 \begin{itemize}
-	\item ControllerStrategy Interface
+	\item \textbf{BasicController}\\
+	Implements a generic controller. The control strategy is provided by an implementation of the \emph{ControllerStratey}.
+	\item \textbf{TestController}\\
+	A controller used for testing the static behaviour of the system.
 \end{itemize}
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch05_classdiagram_controller}
+	\caption{\ac{UML} classdiagram showing the controller classes}
+	\label{fig:ch05_classdiagram_controller}
+\end{figure}
+
+The strategy of the controller is implemented by a \emph{Controller Strategy} which implements the \emph{ControllerStrategy} interface (see Listing \ref{listing:ch5_controller_strategy}).
 
 \begin{lstlisting}[caption={ControllerStrategy Interface},label=listing:ch5_controller_strategy]
 package com.jswiente.phd.performance.controller;
@@ -534,9 +605,55 @@ public interface ControllerStrategy {
 }
 \end{lstlisting}
 
+Figure \ref{fig:ch05_classdiagram_controllerStrategy} shows the available implementations of the \emph{ControllerStrategy}.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch05_classdiagram_controllerStrategy}
+	\caption{\ac{UML} classdiagram showing the controller strategy classes}
+	\label{fig:ch05_classdiagram_controllerStrategy}
+\end{figure}
+
 \paragraph{Simple Controller}\mbox{}\\
 
+Listing \ref{listing:ch5_simple_controller} shows the implementation of the simple control strategy, as described in Section \ref{sec:ch05_control_strategy}:
+\begin{itemize}
+	\item If the queue size increases, increase the aggregation size (line 10-13).
+	\item Otherwise, do not change the aggregation size (line 22).
+	\item Periodically decrease the aggregation size by one (line 17-20).
+\end{itemize}
+
+\begin{lstlisting}[caption={Implementation of the simple control strategy},label=listing:ch5_simple_controller]
+public class SimpleControlStrategy implements ControllerStrategy {
+
+	@Value("${simpleController.period1}")
+	private int period1;
+	@Value("${simpleController.period2}")
+	private int period2;
+	private int timer = 0;
+	
+	public Double getOutput(Double error) {
+		if (error > 0) {
+			timer = period1;
+			return +1.0;
+		}
+
+		timer--;
+		
+		if (timer == 0) {
+			timer = period2;
+			return -1.0;
+		}
+		
+		return 0.0;
+	}
+
+}	
+\end{lstlisting}
+
 \paragraph{PID Controller}\mbox{}\\
+
+The implementation of the \emph{PID Controller}, as described in Section \ref{sec:ch05_control_strategy} is straight forward, as shown in Listing \ref{listing:ch5_pid_controller}.
 
 \begin{lstlisting}[caption={Implementation of PID Controller},label=listing:ch5_pid_controller]
 public class PIDController implements ControllerStrategy {
@@ -570,15 +687,19 @@ public class PIDController implements ControllerStrategy {
 \end{lstlisting}
 
 \subsubsection{Actuator}
+\label{sec:ch05_actuator}
 
-\begin{itemize}
-	\item Interface Actuator
-	\item AggregateSizeActuator
-	\begin{itemize}
-		\item Implements Actuator interface
-		\item Sets the completionSize of the Aggregator by setting a specific header in the currently processed exchange
-	\end{itemize}
-\end{itemize}
+The \emph{AggregateSizeActuator} is responsible for setting the aggregation size of the \emph{Aggregator} and is controlled by the \emph{Controller} (see Figure \ref{fig:ch05_classdiagram_actuator}).
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[scale=0.6]{ch05_classdiagram_actuator}
+	\caption{\ac{UML} classdiagram showing the actuator classes}
+	\label{fig:ch05_classdiagram_actuator}
+\end{figure}
+
+It \emph{AggregateSizeActuator} implements the \emph{Actuator} interface (see Listing \ref{listing:ch5_actuator_interface}). 
+
 \begin{lstlisting}[caption={Actuator Interface},label=listing:ch5_actuator_interface]
 package com.jswiente.phd.performance.actuator;
 
@@ -587,6 +708,8 @@ public interface Actuator<T> {
 	public void setValue(T value);
 }
 \end{lstlisting}
+
+The \emph{AggregateSizeActuator} sets the aggregation size (\emph{completionSize}) by setting a specific header in the currently processed message, as shown in Listing \ref{listing:ch5_aggregateSizeActuator} (line 15). 
 
 \begin{lstlisting}[caption={AggregateSizeActuator},label=listing:ch5_aggregateSizeActuator]
 @Component
@@ -628,11 +751,19 @@ public class AggregateSizeActuator implements Processor, Actuator<Double> {
 
 \end{lstlisting}
 
+\subsubsection{Performance Monitor}
+The \emph{Performance Monitor} manages the feedback-control loop by periodically calling the \emph{Sensor} and updating the \emph{Controller}. Additionally, it calculates the current throughput and end-to-end latency of the sytem using the \emph{StatisticsService} (see Figure \ref{fig:ch05_classdiagram_monitor}).
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=\columnwidth]{ch05_classdiagram_monitor}
+	\caption{\ac{UML} classdiagram showing the \emph{PerformanceMonitor}}
+	\label{fig:ch05_classdiagram_monitor}
+\end{figure}
+
 \subsection{Load Generator}
 
-The \emph{Load Generator} is used to generate the system load by generating events (\acp{CDR}) and writing them to the the message queue of the system. It is implemented as a stand-alone Java program using a command-line interface.
-
-\subsubsection{Overview}
+The \emph{Load Generator} is used to generate the system load by generating events (\acp{CDR}) and writing them to the the input message queue of the system. It is implemented as a stand-alone Java program using a command-line interface.
 
 Figure \ref{fig:ch5_datagenerator_classdiagram} shows the \ac{UML} class diagram of the load generator.
 
@@ -644,18 +775,19 @@ Figure \ref{fig:ch5_datagenerator_classdiagram} shows the \ac{UML} class diagram
 \end{figure}
 
 \begin{itemize}
-	\item Description of main classes
+	\item \textbf{DataGenerator}\\
+	This is the main class of the \emph{DataGenerator}.
+	\item \textbf{Writer}\\
+	The \emph{Writer} interface defines methods for writing the generated events. There are two implementations available, the \emph{FileWriter}, which is used to write the generated to a file and the \emph{JmsWriter}, which is used to write the events to a \ac{JMS} queue.
+	\item \textbf{Generator}\\
+	The \emph{Generator} interface defines methods for generating events.  
+	\item \textbf{Distribution}\\
+	The \emph{Distribution} interface represents an event distribution used by the \emph{DataGenerator}. The \emph{PoissonDistribution} is the single implementation of this interface.
+	\item \textbf{Configuration}\\
+	This class holds a specific set of configuration parameters used at run-time.
 \end{itemize}
 
-\subsubsection{Event Distribution}
-
-\begin{itemize}
-	\item Poisson Process
-	\begin{itemize}
-		\item Events occur continuously and independently of each other
-		\item Exponentially distributed inter-arrival times
-	\end{itemize}
-\end{itemize}
+The \emph{DataGenerator} uses a \emph{Poisson Process} to simulate the load of the system. Events occur continuously and independently of each other with exponentially distributed inter-arrival times.
 
 \section{Evaluation}
 \label{sec:ch05_evaluation}
@@ -668,51 +800,109 @@ The prototype described in the previous section has been used to evaluate the co
 
 \subsection{Test Environment}
 
-\begin{itemize}
-	\item Same test environment has been used as described in Section \ref{sec:ch4_test_environment}
-\end{itemize}
+The tests have been run on a development machine to decrease the development-build-deploy cycle, as described in Table \ref{table:ch05_test_environment}.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabularx}{\textwidth}{@{} l X @{}}
+		\caption{Test environment} \label{table:ch05_test_environment} \\
+		\toprule
+		\bfseries Memory & 3 GiB\\
+		\midrule
+		\bfseries CPU & Intel Core i5 M520 @ 2,40 GHz \\
+		\midrule
+		\bfseries Architecture & 32-bit\\
+		\midrule
+		\bfseries Disk Drive & 150 GB SSD\\
+		\midrule
+		\bfseries Operating System & Windows 7\\
+		\midrule 
+		\bfseries Database & MySQL 5.5.24\\
+		\midrule
+		\bfseries Messaging Middleware & Apache ActiveMQ 5.6.0\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
 
 \subsection{Test Design}
 
 \cite{Abdelzaher:2008ub} define a set of properties, that should be considered when designing feedback-control systems for computing systems, called the \acsu{SASO} properties (\textbf{S}table, \textbf{A}ccurate, \textbf{S}ettling times, \textbf{O}vershoot):
 
 \begin{itemize}
-	\item \textbf{Stability}
-	\item \textbf{Accuracy}
-	\item \textbf{Settling time}
-	\item \textbf{Overshoot}
+	\item \textbf{Stability}\\
+	The system should provide a bounded output for any bounded input.
+	\item \textbf{Accuracy}\\
+	The measured output of the control system should converge to the reference input.
+	\item \textbf{Settling time}\\
+	The system should converge quickly to its steady state.
+	\item \textbf{Overshoot}\\
+	The system should achieve its objectives in a manner that does not overshoot.
 \end{itemize}
 
 \subsubsection{Static Tests}
 \label{sec:ch05_static_tests}
+To test the relationship between the input and output variables of the control-loop, aggregation size and change of queue size, the following static tests have been performed:
+\begin{itemize}
+	\item The \emph{TestController} have been configured to periodically increase the aggregation size after 100 time steps (1 time step equals 1 second).
+	\item The test has been repeated with different load of the system, that is, using different arrival rates for the \emph{DataGenerator}.
+\end{itemize}
 
-\subsubsection{Step Tests}
-\label{sec:ch05_step_tests}
+Figure \ref{fig:ch5_static_tests_queue_size} shows the queues size of the system in relationship to the aggregation size, for differrent arrival rates. 
+
+\begin{itemize}
+	\item The system is not able to handle the load with an $aggregation size < 5$ and an $arrival rate = 50$. With an $aggregation size >= 5$, the system is able to process the events faster than they occur.
+	\item With an $arrival rate = 100$, the system is not able to handle the load with an $aggregation size < 15$. With an $aggregation size >= 15$, the system is able to process the events faster than they occur.
+	\item With an $arrival rate = 150$, the system is not able to handle the load with an $aggregation size < 25$. With an $aggregation size >= 25$, the system is able process the events faster than they occur.
+\end{itemize}
+
+The change of queue size between each time step is shown in Figure \ref{fig:ch5_static_tests_queue_size_change}.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch05_static_tests_queue_size}
+	\caption{Static test: queue sizes}
+	\label{fig:ch5_static_tests_queue_size}
+\end{figure}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch05_static_tests_queue_size_change}
+	\caption{Static test: queue size changes}
+	\label{fig:ch5_static_tests_queue_size_change}
+\end{figure}
 
 \subsubsection{Dynamic Tests}
 
+The following test has been performed to evaluatate the performance of the \emph{Simple Controller}:
+
 \begin{itemize}
-	\item Definition of test cases
+	\item Events are generated with an $arrival\ rate = 50.0$ for 100 timesteps. 
+	\item At $timestep = 100$, the arrival rate is set to 150.0 for another 100 timesteps. 
+	\item At $timestep = 200$, the arrival rate is set back to 50.0.
 \end{itemize}
+
+Figure \ref{fig:ch5_dynamic_test_simple_controller} shows the results of this test using the \emph{Simple Control} strategy.
+
+\begin{itemize}
+	\item The controller is reasonably able to control the size of the queue. At $timestep = 100$, it increases the aggregate size to a maximum value of x. 
+	\item At $timestep = 200$, the controller starts to decrease the aggregation size. At $timestep = 375$, the aggregation size is back at y.
+\end{itemize}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch05_simple_controller}
+	\caption{Simple control strategy}
+	\label{fig:ch5_dynamic_test_simple_controller}
+\end{figure}
 
 \subsection{Results}
 
 \section{Discussion with respect to related work}\label{sec:ch5_related_work}
-\subsection{Adaptive Middleware}
-Research on messaging middleware currently focusses on Enterprise Services Bus (ESB) infrastructure. An ESB is an integration plattform that combines messaging, web services, data transformation and intelligent routing to connect multiple heterogeneous services \citep{Chappell:2004jo}. It is a common middleware to implement the integration layer of an Service Oriented Architecture (SOA) and is available in numerous commercial and open-source packages.
-
-Several research has been done to extend the static service composition and routing features of standard ESB implementations with dynamic capabilities decided at run-time, such as dynamic service composition \citep{Chang:2007aa}, routing \citep{Bai:2007aa} \citep{Wu:2008aa} \citep{Ziyaeva:2008aa} and load balancing \citep{Jongtaveesataporn:2010aa}.
-
-Work to manage and improve the Quality of Service (QoS) of ESB and service-based systems in general is mainly focussed on dynamic service composition and service selection based on monitored QoS metrics such as throughput, availability and response time \citep{Calinescu:2011aa}. \cite{Gonzalez:2011} propose an adaptive ESB infrastructure to adress QoS issues in service-based systems which provides adaption strategies for response time degradation and service saturation, such as invoking an equivalent service, using previously stored information, distributing requests to equivalent services, load balancing and deferring service requests.
-
-\subsection{Message Batching}
-The adaption strategy of our middleware is to change the message aggregation size based on the current load of the system. Aggregating or batching of messages is a common approach to increase the throughput of a messaging system, for example to increase the throughput of total ordering protocols \citep{Friedman:1997aa} \citep{Friedman:2006aa} \citep{Romano:2012aa} \citep{Didona:2012aa}.
-
-
-\subsection{Dynamic Scaling}
-A different solution to handle infrequent load spikes is to automatically instantiate additional server instances, as provided by current Platform as a Service (PaaS) offerings such as Amazon EC2 \citep{ec2_autoscaling} or Google App Engine \citep{google_cloud_autoscaling}. While scaling is a common approach to improve the performance of a system, it also leads to additional operational and possible license costs. Of course, our solution can be combined with these auto-scaling approaches.
+This section gives an overview of work related to the adaptive middleware for bulk data processing presented in this chapter and discusses the approach that has been taken.
 
 \subsection{Feedback Control of Computing Systems}
+
+Feedback control is a common technique to implement 
 
 \begin{itemize}
 	\item General definition of Feedback Control
@@ -720,7 +910,7 @@ A different solution to handle infrequent load spikes is to automatically instan
 	\item Open-Loop and Closed-Loop Control Systems
 	\item Applications for Feedback Control
 	\begin{itemize}
-		\item Feedback-Control of Software Performance and \ac{QoS} 
+		\item Feedback-Control of Software Performance and \ac{QoS}
 	\end{itemize}
 \end{itemize}
 
@@ -743,10 +933,11 @@ A different solution to handle infrequent load spikes is to automatically instan
 		\item Feedback Performance Control in Software Services \citep{Abdelzaher:2003ea}
 		\item ControlWare: A Middleware Architecture for Feedback Control of Software Performance \citep{Zhang:2002gf}
 		\item Intelligent Enterprise Application Servers: A Vision for Self-Managing Performance \citep{Kumar:2013bw}
-		\item Throughput Improvement in Distributed Systems - An Investigation on Java Messaging Servers using Adaptive Control
 		\item Self-regulating Message Throughput in Enterprise Messaging Servers - A Feedback Control Solution \citep{Kumar:2012we}
 	\end{itemize}
 \end{itemize}
+
+The \emph{Adaptive Middleware} presented in this chapter utilizes a closed-feedback loop to control the aggregation size of the processed messages, depending on the current load of the system. This is a novel approach that has not previously been investigated.
 
 \section{Summary}\label{sec:ch5_summary}
 In this paper, we have presented a middleware that is able to adapt itself to changing load scenarios by fluently shifting the processing type between single event and batch processing. The middleware uses a closed feedback loop to control the end-to-end latency of the system by adjusting the level of message aggregation depending on the current load of the system. Determined by the aggregation size of a messsage, the middleware routes a message to appropriate service endpoints, which are optimized for either single-event or batch processing.

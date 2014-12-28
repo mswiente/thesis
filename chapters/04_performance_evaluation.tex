@@ -31,8 +31,6 @@ This section introduces the two prototypes of a billing system that have been bu
 
 A billing system is a distributed system consisting of several sub components that process the different billing sub processes like mediation, rating, billing and presentment (see Figure \ref{fig:ch4_billing_process}).
 
-
-
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{billing_process}
@@ -47,7 +45,7 @@ In order to compare batch and message-based types of processing, two different p
 	\item \textbf{Event Generator}\\
 	The \emph{Event Generator} generates the calling events, i.e. the \ac{CDR} that are processed by the billing application.
 	\item \textbf{Mediation}\\
-	The \emph{Mediation} component checks wether the calltime of the calldetail record exceeds the minimal billable length or if it belongs to a flatrate account and sets the corresponding flags of the record. The output of the \emph{Mediation} component are \ac{NCDR} that are further processed by the \emph{Rating} component.
+	The \emph{Mediation} component checks wether the calltime of the calldetail record exceeds the minimal billable length or if it belongs to a flat rate account and sets the corresponding flags of the record. The output of the \emph{Mediation} component are \ac{NCDR} that are further processed by the \emph{Rating} component.
 	\item \textbf{Rating}\\
 	The \emph{Rating} component processes the output from the \emph{Mediation} component. It assigns the calldetail record to a customer account and determines the price of the call event by looking up the correspondant product and tariff in the \emph{Master Data DB}. The output of the \emph{Rating} component (costed events) is afterwards written to the \emph{Costed Events DB}.
 	\item \textbf{Master Data DB}\\

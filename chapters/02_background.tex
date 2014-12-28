@@ -16,7 +16,7 @@ We consider a distributed system for bulk data processing consisting of several 
 	\caption{A system consisting of several subsystems forming a processing chain}
 \end{figure}
 
-To facilitate parallel processing, the system can consist of several lines of subsystems with data beeing distributed among each line. For simplification, we consider a system with a single processing line in the remainder of this paper.
+To facilitate parallel processing, the system can consist of several lines of subsystems with data beeing distributed among each line (see Figure \ref{fig:sytem_parallel}). For simplification, we consider a system with a single processing line in the remainder of this paper.
 
 We discuss two processing types for this kind of system, batch processing and message-based processing.
 
@@ -321,6 +321,9 @@ The improvements in flexibility and maintainability gained by loose coupling are
 Distant components trust each other in regard to the compliance of services levels to a lesser extent than near components do. The same applies to their common knowledge. Distant components share a lesser extent of knowledge of each other. Therefore, \citet{Hess:2006rs} argue that distant components should be coupled more loosely than close components.
 
 The degree of loose coupling between components that have been identified to be performance bottlenecks should be reconsidered to find the appropriate trade-off between flexibility and performance. It can be acceptable in that case to decrease the flexibility in favour of a better performance. 
+
+\subsection{Dynamic Scaling}
+A different solution to handle infrequent load spikes is to automatically instantiate additional server instances, as provided by current \ac{PaaS} offerings such as Amazon EC2 \citep{ec2_autoscaling} or Google App Engine \citep{google_cloud_autoscaling}. While scaling is a common approach to improve the performance of a system, it also leads to additional operational and possible license costs. Of course, our solution can be combined with these auto-scaling approaches.
 
 \section{Summary}
 Message-oriented middleware facilitates the integration of applications using asynchronous messages. An Enterprise Service Bus is such a middleware combining messaging, web services, data transformation and intelligent routing.
