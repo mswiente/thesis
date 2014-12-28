@@ -28,7 +28,7 @@ A distributed system for bulk data processing considered in this research consis
 To facilitate parallel processing, the system can consist of several lines of subsystems with data beeing distributed among each line.
 
 \subsection{An Example: Billing Systems for Telecommunications Carriers}
-An example of a system for bulk data processing is a billing system of a telecommunications carrier. A billing system is distributed system consisting of several sub components that process the different billing sub processes like mediation, rating, billing and presentment (see Figure \ref{fig:ch01_billing_process}).
+An example of a system for bulk data processing is a billing system of a telecommunications carrier. A billing system is a distributed system consisting of several sub components that process the different billing sub processes like mediation, rating, billing and presentment (see Figure \ref{fig:ch01_billing_process}).
 
 The performance requirements of such a billing system are high. It has to process more than 1 million records per hour and the whole batch run needs to be finished in a limited timeframe to comply with service level agreements with the print service provider. Since delayed invoicing causes direct loss of cash, it has to be ensured that the bill arrives at the customer on time.
 
@@ -42,7 +42,7 @@ The performance requirements of such a billing system are high. It has to proces
 \subsection{Near-Time Processing of Bulk Data}
 A new requirement for systems for bulk data processing is near-time processing. Near-time processing aims to reduce the end-to-end latency of a business process, that is, the time that is spent between the occurrence of an event and the end of its processing. In case of a billing system, it is the time between the user making a call and the complete processing of this call including mediation, rating, billing and presentment.
 
-The need for near-time charging and billing for telecommunications carriers is induced by market forces, such as the increased advent of mobile data usage and real-time data services \citep{Cryderman:2011aa}. Carriers want to offer new products and services that require real-time or near-time charging and billing. Customers want more transparency, for example, to set their own limits and alerts for their data usage, which is currently only possible for pre-paid accounts. Currently, a common approach for carriers is to operate different plattforms for real-time billing of pre-paid accounts and traditional batch-oriented billing for post-paid accounts. To reduce costs, carriers aim to converge these different plattforms.
+The need for near-time charging and billing for telecommunications carriers is induced by market forces, such as the increased advent of mobile data usage and real-time data services \citep{Cryderman:2011aa}. Carriers want to offer new products and services that require real-time or near-time charging and billing. Customers want more transparency, for example, to set their own limits and alerts for their data usage, which is currently only possible for pre-paid accounts. Currently, a common approach for carriers is to operate different platforms for real-time billing of pre-paid accounts and traditional batch-oriented billing for post-paid accounts. To reduce costs, carriers aim to converge these different plattforms.
 
 A lower end-to-end latency can be achieved by using single-event processing, for example by utilizing a message-oriented middleware for the integration of the services that form the enterprise system. While this approach is able to deliver near-time processing, it is hardly capable for bulk data processing due to the additional communication overhead for each processed message. Therefore, message-based processing is usually not considered for building a system for bulk data processing requiring high throughput.
 
@@ -81,6 +81,8 @@ To better understand the performance characteristics of batch and message-based 
 
 Based on the results of the performance evaluation of the batch and message-based prototype, the concept of an adaptive middleware has been developed. The message-based prototype has been extended to implement the concepts of the adaptive middleware. Using this prototype, a performance evaluation has been conducted to evaluate the proposed concepts for an adaptive middleware for bulk data processing.
 
+\newpage
+
 \section{Contributions}\label{sec:contributions}
 This thesis makes the following contributions to the field:
 
@@ -108,7 +110,7 @@ The thesis is organized as follows:
 	\item \textbf{Performance Evaluation of Batch and Message-based Systems}\\\\
 	This chapter compares the performance of a batch and message-based system. It introduces the batch and message-based prototype systems that have been imple- mented and describes the performance evaluation to compare the performance characterics of the two different processing types.  The impact of data granularity on throughput and latency of the messaging prototype is evaluated and discussed. In addition, the chapter gives an overview of other work related to the content of this chapter.
 	\item \textbf{An Adaptive Middleware for Near-Time Processing of Bulk Data}\\\\
-	This chapter presents the design, implementation and evaluation of the adaptive middleware which is able to adapt its processing type fluently between batch processing and single-event processing. It starts with a describtion of the core concepts, such as message aggregation, message routing, and monitoring and control, followed by a discussion of important design aspects such as service design, transports, error handling and controller design.
+	This chapter presents the design, implementation and evaluation of the adaptive middleware which is able to adapt its processing type fluently between batch processing and single-event processing. It starts with a description of the core concepts, such as message aggregation, message routing, and monitoring and control, followed by a discussion of important design aspects such as service design, transports, error handling and controller design.
 	The design and implementation of a prototype of the adaptive middleware is outlined. A performance evaluation of the prototype is described. It is shown that the concept of an adaptive middleware for bulk data processing is able to minimize the end-to-end latency of a system. Additionally, the chapter gives an overview of other work related to feedback-control of computing systems.
 	\item \textbf{A Conceptual Framework to Guide the Development of Feed-back-Controlled Bulk Data Processing Systems}\\\\
 	This chapter presents a framework that guides the practitioner to design, implement and operate a system based on the adaptive middleware for bulk data processing. It starts with a description of the metamodel of the framework, followed by a description of the entities of the process model, such as phases, roles, tasks, artifacts and tools. It is discussed how the conceptual framework can be used with other software development methodologies. The chapter gives an overview of other work related to the content of this chapter.
