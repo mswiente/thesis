@@ -4,23 +4,33 @@
 %******************************************************************************
 
 This section describes the source code of the research prototypes, which have been implemented during the course of this research.
-
-The complete source code is available on Github: https://github.com/mswiente/phd
+\\\\
+The complete source code is available on Github:\\
+https://github.com/mswiente/phd\_prototype
 
 \section{Project Structure}
 
-\begin{itemize}
-	\item BatchProcessor
-	\item BillingRouter
-	\item BillingService
-	\item CamelUtils
-	\item DataGenerator
-	\item FunctionalCore
-	\item MediationBatchRoute
-	\item MediationService
-	\item PerformanceMonitor
-	\item RatingBatchRoute
-	\item RatingService
-\end{itemize}
+The source code is organized in the following modules:
 
-\section{Package Structure}
+\begin{itemize}
+\item \textbf{BatchProcessor}\\
+Contains the implementation of the batch prototype based on Spring Batch.
+\item \textbf{BillingRouter}\\
+Contains the implementation of the messaging prototype based on Apache Camel.
+\item \textbf{CamelUtils}\\
+Contains common Apache Camel specific logging utilities
+\item \textbf{DataGenerator}\\
+Contains the load generator.
+\item \textbf{FunctionalCore}\\
+Contains the common business functionality of the system used by batch and messaging prototypes.
+\item \textbf{MediationBatchRoute}\\
+Contains the wrapper to integrate the mediation processor of the batch prototype with Apache Camel.
+\item \textbf{MediationService}\\
+Contains the webservice wrapper of mediation processor used by the messaging prototpye.
+\item \textbf{PerformanceMonitor}\\
+Contains the Feedback-Control framework to monitor, measure and control the messaging system.
+\item \textbf{RatingBatchRoute}\\
+Contains the wrapper to integrate the rating processor of the batch prototype with Apache Camel.
+\item \textbf{RatingService}\\
+Contains the webservice wrapper of the rating processor used by the messaging system.
+\end{itemize}

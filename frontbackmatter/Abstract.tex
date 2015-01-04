@@ -14,8 +14,15 @@
 \spacedallcaps{\myTitle}\\ \medskip
 \spacedlowsmallcaps{\myName} \bigskip
 \end{center}
-\lipsum[1-3]
+Enterprise Systems like customer-billing systems or financial transaction systems are required to process large volumes of data in a fixed period of time. Those systems are increasingly required to also provide near-time processing of data to support new service offerings. Common systems for data processing are either optimized for high maximum throughput or low latency.
 
+This thesis proposes the concept for an adaptive middleware, which is a new approach for designing systems for bulk data processing. The adaptive middleware is able to adapt its processing type fluently between batch processing and single-event processing. By using message aggregation, message routing and a closed feedback-loop to adjust the data granularity at runtime, the system is able to minimize the end-to-end latency for different load scenarios.
+
+The relationship of end-to-end latency and throughput of batch and message-based systems is formally analyzed and a performance evaluation of both processing types has been conducted. Additionally, the impact of message aggregation on throughput and latency is investigated.
+
+The proposed middleware concept has been implemented with a research prototype and has been evaluated. The results of the evaluation show that the concept is viable and is able to optimize the end-to-end latency of a system. 
+
+The design, implementation and operation of an adaptive system for bulk data processing differs from common approaches to implement enterprise systems. A conceptual framework has been development to guide the development process of how to build an adaptive software for bulk data processing. It defines the needed roles and their skills, the necessary tasks and their relationship, artifacts that are created and required by different tasks, the tools that are needed to process the tasks and the processes, which describe the order of tasks.
 \vfill
 \endgroup			
 

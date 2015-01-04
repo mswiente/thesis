@@ -4,9 +4,6 @@
 %******************************************************************************
 
 \section{Introduction}\label{sec:introduction}
-
-It has been shown in the previous Chapter \ref{ch:performance_evaluation}, that the end-to-end latency can be decreased by using a message-based processing style which facilitates single-event processing. While this approach is able to deliver near-time processing, it is hardly capable for bulk data processing due to the additional communication overhead for each processed message. In contrast, the batch processing style delivers high throughput but cannot provide near-time processing of data.
-
 The processing type is usually a fixed property of an enterprise system that is decided when the architecture of the system is designed, prior to implementing the system. This choice depends on the non-functional requirements of the system. These requirements are not fixed and can change during the lifespan of a system, either anticipated or not anticipated.
 
 Additionally, enterprise systems often need to handle load peaks that occur infrequently. For example, think of a billing system with moderate load over most of the time, but there are certain events with very high load such as New Year's Eve. Most of the time, a low end-to-end latency of the system is preferable when the system faces moderate load. During the peak load, it is more important that the system can handle the load at all. A low end-to-end latency is not as important as an optimized maximum throughput in this situation.
@@ -25,7 +22,7 @@ In this chapter, a solution to this problem is proposed:
 
 The remainder of this chapter is organized as follows. 
 
-Section \ref{sec:ch04_requirements} describes the requirements of an adaptive middleware derived from the results of Chapter \ref{ch:performance_evaluation}. Section \ref{sec:ch05_middleware_concepts} introduces the core concepts of the \emph{Adaptive Middleware for Bulk Data Processing}. These concepts are implemented by components of the adaptive middleware that are described in Section \ref{sec:ch05_middleware_components}. There are several architectural design aspects that need to be considered to implement a system based on the adaptive middleware, which are discussed in Section \ref{sec:ch05_design_aspects}. To evaluate the concepts of the adaptive middleware, a prototype has been built. The design and implementation of this prototype is outlined in Section \ref{sec:ch05_prototype}. The prototype has been evaluated in Section \ref{sec:ch05_evaluation}. Section \ref{sec:ch5_related_work} gives an overview of other work related to this research. Finally, Section \ref{sec:ch5_summary} concludes this chapter.
+Section \ref{sec:ch04_requirements} describes the requirements of an adaptive middleware derived from the results of Chapter \ref{ch:performance_evaluation}. Section \ref{sec:ch05_middleware_concepts} introduces the core concepts of the \emph{Adaptive Middleware for Bulk Data Processing}. These concepts are implemented by components of the adaptive middleware that are described in Section \ref{sec:ch05_middleware_components}. There are several architectural design aspects that need to be considered to implement a system based on the adaptive middleware, which are discussed in Section \ref{sec:ch05_design_aspects}. To evaluate the concepts of the adaptive middleware, a prototype has been built. The design and implementation of this prototype is outlined in Section \ref{sec:ch05_prototype}. The prototype has been evaluated in Section \ref{sec:ch05_evaluation}. Finally, Section \ref{sec:ch5_summary} concludes this chapter.
 
 \section{Requirements}
 \label{sec:ch04_requirements}
@@ -140,7 +137,7 @@ The goal of the message routing is to route the message aggregate to the appropr
 	\end{tabularx}
 \end{table}
 
-With high levels of message aggregation, it is not preferred to send the aggregated message payload itself over the message bus using Java Message Service (JMS) or SOAP. Instead, the message only contains a pointer to the data payload, which is transferred using File Transfer Protocol (FTP) or a shared database.
+With high levels of message aggregation, it is not preferred to send the aggregated message payload itself over the message bus using \acf{JMS} or SOAP. Instead, the message only contains a pointer to the data payload, which is transferred using \acf{FTP} or a shared database.
 
 Message routing can be static or dynamic:
 \begin{itemize}
@@ -152,6 +149,8 @@ Message routing can be static or dynamic:
 
 \subsection{Monitoring and Control}
 
+In order to optimize the end-to-end latency of the system, the middleware needs to constantely monitor the load of the system and control the aggregation size accordingly (see Figure \ref{fig:ch05_monitoring_control}).
+
 \begin{figure}[htbp]
 	\centering
 	\includegraphics[width=\columnwidth]{ch05_monitoring_control}
@@ -159,23 +158,9 @@ Message routing can be static or dynamic:
 	\label{fig:ch05_monitoring_control}
 \end{figure}
 
-Aggregation size is not static, depends on the current load of the system:
-\begin{itemize}
-	\item If the current load of the system is low, aggregation size can be small to provide a low end-to-end latency of the system.
-	\item If the current load of the system is high, aggregation size should be high to provide a high maximum throughput of the system. 
-\end{itemize}
+If the current load of the system is low, the aggregation size should be small to provide a low end-to-end latency of the system. If the current load of the system is high, the aggregation size should be high to provide a high maximum throughput of the system.
 
-Monitoring component continuously monitors the the load of the system. 
-
-To control the level of message aggregation at runtime, the adaptive middleware uses a closed feedback loop as shown in Figure \ref{fig:feedback_loop}.
-
-\begin{itemize}
-	\item Control Engineering Methodologies have been identified as a promising solution to implement self-adaptive software systems \citep{Patikirikorala:2012ky}, especially for performance control \citep{Abdelzaher:2003ea}.
-	\item In particular, feedback loops provide generic mechanisms for self-adaption \citep{Brun:2009ww}. 
-	\item Control engineering is based on control theory, which provides a systematic approach to designing closed loop systems that are stable, accurate, have short settling times, and do not overshoot \citep{Abdelzaher:2008ub}.
-\end{itemize}
-
-The feedback loop used by the adaptive middleware has the following properties:
+To control the level of message aggregation at runtime, the adaptive middleware uses a closed feedback loop as shown in Figure \ref{fig:feedback_loop}, with the following properties:
 
 \begin{itemize}
 	\item \textbf{Input (u):} Current aggregation size
@@ -194,7 +179,14 @@ Ultimately, we want to control the average end-to-end latency depending on the c
 
 \section{Middleware Components}
 \label{sec:ch05_middleware_components}
-Table \ref{table:ch4_middleware_components} shows the components of the middleware, that are based on the Enterprise Integration Patterns described by \cite{Hohpe:2003fk}.
+Figure \ref{fig:ch4_usage_scenario_1} shows the components of the middleware, that are based on the Enterprise Integration Patterns described by \cite{Hohpe:2003fk}. A description of these components can be found in Table \ref{table:ch4_middleware_components}.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch5_usage_scenario_1}
+	\caption{Middleware components}
+	\label{fig:ch4_usage_scenario_1}
+\end{figure}
 
 \begin{table}[htpb]
 	\caption{Components of the Adaptive Middleware. We are using the notation defined by \cite{Hohpe:2003fk}}
@@ -241,29 +233,10 @@ Table \ref{table:ch4_middleware_components} shows the components of the middlewa
 \label{sec:ch05_design_aspects}
 This section describes aspects that should be taken into account when designing an adaptive system for bulk data processing.
 
-\subsection{Usage Scenarios}
-\todo[inline]{do we need this?}
-
-\begin{itemize}
-	\item different usage scenarios
-	\item single aggregator, request/response integration pattern
-	\item single aggregator, point to point channel
-	\item system consisting of multiple subsystems, with each subsystem having an input queue, aggregator, router
-\end{itemize}
-
-\begin{landscape}
-	\begin{figure*}[htpb]
-		\centering
-		\mbox{\subfloat[request/response integration pattern]{\includegraphics[scale=0.5]{ch5_usage_scenario_1}\label{fig:ch4_usage_scenario_1}}}
-		\mbox{\subfloat[point-to-point channel integration pattern]{\includegraphics[scale=0.5]{middleware_components}}}
-		\caption{Usage scenarios}
-	\end{figure*}
-\end{landscape}
-
 \subsection{Service Design}
 \label{sec:ch05_service_design}
 
-The services that implement the business functionality of the system need to be explicitely designed to support the runt-time adaption between single-event and batch processing. 
+The services that implement the business functionality of the system need to be explicitely designed to support the run-time adaption between single-event and batch processing. 
 
 There are different options for the design of these services:
 \begin{itemize}
@@ -283,8 +256,6 @@ There are different options for the design of these services:
 
 The choice of service design relates to where you want to have the logic for the message routing for optimized processing. With a single service offering distinct operations for single-event and batch processing, as well as with distinct service for each processing style, the message router decides which service endpoint should be called. In contrast, using a single service with a single operation for both processing styles, the service itself is responsible for choosing the appropriate processing strategy. Using a different integration type for each processing style is not possible in this case.
 
-Table \ref{table:ch05_service_design} shows the advantages and disadvantages for each service design option.
-
 Listing \ref{listing:ch5_service_design_if} shows the interface of a service offering different operations for batch processing (line 6) and single-event processing (line 10).
 
 \begin{lstlisting}[caption={Java interface of a web  service offering different operations for single and batch processing.},label=listing:ch5_service_design_if]
@@ -300,40 +271,6 @@ Listing \ref{listing:ch5_service_design_if} shows the interface of a service off
 		public Costedevent processCallDetail(@WebParam(name="simpleCDR") SimpleCDR callDetailRecord) throws ProcessingException, Exception;
 	}
 \end{lstlisting}
-
-\begin{table}[htpb]
-	\centering
-	\begin{tabularx}{\textwidth}{@{} X X X @{}}
-		\caption{Options for designing service interfaces}\label{table:ch05_service_design}\\
-		\toprule
-		\bfseries Interface option & \bfseries Pros & \bfseries Cons\\
-		\midrule
-		Single service /\\distinct Operations & \savespace
-		\begin{titemize}
-			\item Lorem ipsum
-		\end{titemize} & \savespace
-		\begin{titemize}
-			\item Lorem ipsum
-		\end{titemize}\\
-		\midrule
-		Single service /\\single operation & \savespace
-		\begin{titemize}
-			\item 
-		\end{titemize} & \savespace
-		\begin{titemize}
-			\item Lorem ipsum
-		\end{titemize}\\
-		\midrule
-		Distinct services & \savespace
-		\begin{titemize}
-			\item
-		\end{titemize} & \savespace
-		\begin{titemize}
-			\item Lorem ipsum
-		\end{titemize}\\
-		\bottomrule
-	\end{tabularx}
-\end{table}
 
 \subsection{Integration and Transports}
 \label{sec:ch05_transports}
@@ -404,23 +341,23 @@ There are different approaches that are used in practice to model the dynamics o
 	\item Modeling using special purpose representations, for example the first principles analysis
 \end{itemize}
 
-The following approach has been taken in this research:
+For pratical reasons, the following approach has been taken in this research:
 
 \begin{enumerate}
 	\item Define the control problem
 	\item Define the input and output variables of the system
 	\item Measure the dynamics of the system
-	\item Create a model of the system
 	\item Develop the control system
 \end{enumerate}
 
 \subsubsection{Control Problem}
+The control problem is defined as follows:
 
 \begin{itemize}
-	\item Control problem: minimise the end-to-end latency of the system by controlling the message aggregation size
-	\item aggregation size used by the messaging system should depend on the current load of the system
-	\item when system faces high load, aggregation sizes should be increased
-	\item when sytem faces low load, aggregation sizes could be decreases
+	\item Minimize the end-to-end latency of the system by controlling the message aggregation size.
+	\item The aggregation size used by the messaging system should depend on the current load of the system.
+	\item When the system faces high load, the aggregation size should be increased to maximize the maximum throughput of the system.
+	\item When the sytem faces low load, the aggregation size should be decreased to miminize the end-to-end latency of the system.
 \end{itemize}
 \subsubsection{Input/Output Signals}
 
@@ -460,10 +397,11 @@ With regard to these criteria, the following input and output control signals ha
 \label{sec:ch05_control_strategy}
 
 \paragraph{Simple controller}\mbox{}\\
-A simple control strategy could be implemented as follows:
+A simple non-linear control strategy could be implemented as follows (cf. \cite{Janert:2013aa}):
 \begin{itemize}
-	\item change queue > 0: Increase the aggregation size by a certain amount
-	\item change queue = 0: Do nothing
+	\item When the tracking error is positive, increase the aggregation size by 1
+	\item Do nothing when the tracking error is zero.
+	\item Periodically decrease the aggregation size to test if a smaller queue size is able to handle the load.
 \end{itemize}
 
 \paragraph{PID controller}\mbox{}\\
@@ -472,6 +410,8 @@ Another option would be to use a standard PID-Controller instead, which calculat
 	u_k=K_p*e_k+K_i*T_a\sum_{i=0}^k e_i+\frac{K_d}{T_a}(e_k-e_{k-1})
 \end{displaymath}
 with $K_p$ being the controller gain of the proportional part, $e_k$ being the error ($r-y$) at step $k$, $K_i$ being the controller gain of the integral part, $T_a$ being the sampling interval and $K_d$ being the controller gain of the differential part.
+
+A PID-controller seems not a good fit for the problem at hand since the aggregation size can not be controlled continously. It is always a whole positive integer.
 
 \section{Prototype Implementation}
 \label{sec:ch05_prototype}
@@ -583,7 +523,7 @@ The \emph{JmxSensor} implements the \emph{Sensor} interface (see Figure \ref{fig
 A \emph{Controller} has to implement the \emph{Controller} interface. The following implementations of the \emph{Controller} interface have been implemented (see Figure \ref{fig:ch05_classdiagram_controller}):
 \begin{itemize}
 	\item \textbf{BasicController}\\
-	Implements a generic controller. The control strategy is provided by an implementation of the \emph{ControllerStratey}.
+	Implements a generic controller. The control strategy is provided by an implementation of the \emph{ControllerStrategy}.
 	\item \textbf{TestController}\\
 	A controller used for testing the static behaviour of the system.
 \end{itemize}
@@ -595,7 +535,7 @@ A \emph{Controller} has to implement the \emph{Controller} interface. The follow
 	\label{fig:ch05_classdiagram_controller}
 \end{figure}
 
-The strategy of the controller is implemented by a \emph{Controller Strategy} which implements the \emph{ControllerStrategy} interface (see Listing \ref{listing:ch5_controller_strategy}).
+The strategy of the controller is implemented by a controller strategy which implements the \emph{ControllerStrategy} interface (see Listing \ref{listing:ch5_controller_strategy}).
 
 \begin{lstlisting}[caption={ControllerStrategy Interface},label=listing:ch5_controller_strategy]
 package com.jswiente.phd.performance.controller;
@@ -622,6 +562,8 @@ Listing \ref{listing:ch5_simple_controller} shows the implementation of the simp
 	\item Otherwise, do not change the aggregation size (line 22).
 	\item Periodically decrease the aggregation size by one (line 17-20).
 \end{itemize}
+
+The controller uses two different timers depending on the previous action.
 
 \begin{lstlisting}[caption={Implementation of the simple control strategy},label=listing:ch5_simple_controller]
 public class SimpleControlStrategy implements ControllerStrategy {
@@ -763,7 +705,7 @@ The \emph{Performance Monitor} manages the feedback-control loop by periodically
 
 \subsection{Load Generator}
 
-The \emph{Load Generator} is used to generate the system load by generating events (\acp{CDR}) and writing them to the the input message queue of the system. It is implemented as a stand-alone Java program using a command-line interface.
+The \emph{Load Generator} is used to generate the system load by generating events (\acp{CDR}) and writing them to the input message queue of the system. It is implemented as a stand-alone Java program using a command-line interface.
 
 Figure \ref{fig:ch5_datagenerator_classdiagram} shows the \ac{UML} class diagram of the load generator.
 
@@ -792,11 +734,7 @@ The \emph{DataGenerator} uses a \emph{Poisson Process} to simulate the load of t
 \section{Evaluation}
 \label{sec:ch05_evaluation}
 
-The prototype described in the previous section has been used to evaluate the concepts of adaptive middleware. 
-
-\begin{itemize}
-	\item Goals of the evaluation
-\end{itemize}
+The prototype described in the previous section has been used to evaluate the general feasibility of the adaptive middleware.
 
 \subsection{Test Environment}
 
@@ -839,20 +777,20 @@ The tests have been run on a development machine to decrease the development-bui
 	The system should achieve its objectives in a manner that does not overshoot.
 \end{itemize}
 
-\subsubsection{Static Tests}
+\subsection{Static Tests}
 \label{sec:ch05_static_tests}
 To test the relationship between the input and output variables of the control-loop, aggregation size and change of queue size, the following static tests have been performed:
 \begin{itemize}
-	\item The \emph{TestController} have been configured to periodically increase the aggregation size after 100 time steps (1 time step equals 1 second).
+	\item The \emph{TestController} has been configured to periodically increase the aggregation size after 100 time steps (1 time step equals 1 second).
 	\item The test has been repeated with different load of the system, that is, using different arrival rates for the \emph{DataGenerator}.
 \end{itemize}
 
 Figure \ref{fig:ch5_static_tests_queue_size} shows the queues size of the system in relationship to the aggregation size, for differrent arrival rates. 
 
 \begin{itemize}
-	\item The system is not able to handle the load with an $aggregation size < 5$ and an $arrival rate = 50$. With an $aggregation size >= 5$, the system is able to process the events faster than they occur.
-	\item With an $arrival rate = 100$, the system is not able to handle the load with an $aggregation size < 15$. With an $aggregation size >= 15$, the system is able to process the events faster than they occur.
-	\item With an $arrival rate = 150$, the system is not able to handle the load with an $aggregation size < 25$. With an $aggregation size >= 25$, the system is able process the events faster than they occur.
+	\item The system is not able to handle the load with an $aggregation size < 5$ and an $arrival rate = 50$. With an $aggregation size \geq 5$, the system is able to process the events faster than they occur.
+	\item With an $arrival rate = 100$, the system is not able to handle the load with an $aggregation size < 15$. With an $aggregation size \geq 15$, the system is able to process the events faster than they occur.
+	\item With an $arrival rate = 150$, the system is not able to handle the load with an $aggregation size < 25$. With an $aggregation size \geq 25$, the system is able process the events faster than they occur.
 \end{itemize}
 
 The change of queue size between each time step is shown in Figure \ref{fig:ch5_static_tests_queue_size_change}.
@@ -871,9 +809,29 @@ The change of queue size between each time step is shown in Figure \ref{fig:ch5_
 	\label{fig:ch5_static_tests_queue_size_change}
 \end{figure}
 
-\subsubsection{Dynamic Tests}
+\subsection{Step Test}
+To measure the dynamic response of the system, the following step test have been performed:
+\begin{itemize}
+	\item The \emph{TestController} has been configured to increase the aggregation size from 1 to 50.
+	\item Messages occur with an arrival rate of 150.
+\end{itemize}
 
-The following test has been performed to evaluatate the performance of the \emph{Simple Controller}:
+Figure \ref{fig:ch5_step_test} shows the result of the step test:
+\begin{itemize}
+	\item With an aggregation size of 1, the system is not able to handle the load. The queue length is costantely increasing.
+	\item When the aggregation size is set to 50 at timestep 100, the queue size is directly decreased, without a noticable delay.
+\end{itemize}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch05_step_test}
+	\caption{Step test}
+	\label{fig:ch5_step_test}
+\end{figure}
+
+\subsection{Controller Tests}
+
+The following test has been performed to evaluate the performance of the \emph{Simple Controller} and the \emph{PID-Controller}:
 
 \begin{itemize}
 	\item Events are generated with an $arrival\ rate = 50.0$ for 100 timesteps. 
@@ -881,11 +839,25 @@ The following test has been performed to evaluatate the performance of the \emph
 	\item At $timestep = 200$, the arrival rate is set back to 50.0.
 \end{itemize}
 
-Figure \ref{fig:ch5_dynamic_test_simple_controller} shows the results of this test using the \emph{Simple Control} strategy.
+Figure \ref{fig:ch5_proportional_control} shows the results of this test using a proportional controller. The \emph{PID-Controller} has been configured with the following gains:
+\begin{itemize}
+	\item $K_p=1.0$, $K_i=0.0$, $K_d=0.0$
+\end{itemize}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=\textwidth]{ch05_p_1}
+	\caption{Proportional control}
+	\label{fig:ch5_proportional_control}
+\end{figure}
+
+The controller is able to control the queue size but it leads to an significant oscillation of the aggregation size. 
+
+A better solution can achieved when using the \emph{Simple Control} strategy. Figure \ref{fig:ch5_dynamic_test_simple_controller} shows the results of the test using the \emph{Simple Control} strategy:
 
 \begin{itemize}
-	\item The controller is reasonably able to control the size of the queue. At $timestep = 100$, it increases the aggregate size to a maximum value of x. 
-	\item At $timestep = 200$, the controller starts to decrease the aggregation size. At $timestep = 375$, the aggregation size is back at y.
+	\item The controller is reasonably able to control the size of the queue. At $timestep = 100$, it increases the aggregate size to a maximum value of 36. 
+	\item At $timestep = 200$, the controller starts to decrease the aggregation size. At $timestep = 375$, the aggregation size is back at 3.
 \end{itemize}
 
 \begin{figure}[htpb]
@@ -896,52 +868,26 @@ Figure \ref{fig:ch5_dynamic_test_simple_controller} shows the results of this te
 \end{figure}
 
 \subsection{Results}
-
-\section{Discussion with respect to related work}\label{sec:ch5_related_work}
-This section gives an overview of work related to the adaptive middleware for bulk data processing presented in this chapter and discusses the approach that has been taken.
-
-\subsection{Feedback Control of Computing Systems}
-
-Feedback control is a common technique to implement 
-
-\begin{itemize}
-	\item General definition of Feedback Control
-	\item Properties of Feedback Control Systems
-	\item Open-Loop and Closed-Loop Control Systems
-	\item Applications for Feedback Control
-	\begin{itemize}
-		\item Feedback-Control of Software Performance and \ac{QoS}
-	\end{itemize}
-\end{itemize}
-
-\begin{itemize}
-	\item Feedback Control of Computing Systems \citep{Hellerstein:2004a}
-	\begin{itemize}
-		\item Applications of Control Theory to Computing Systems
-		\item Examples of Feedback Control Systems
-	\end{itemize}
-	\item Introduction to Control Theory And Its Application to Computing Systems \citep{Abdelzaher:2008ub}
-	\item Challenges of Feedback Control of Computing Systems \citep{Hellerstein:2004tu}
-	\item A Systematic Survey on the Design of Self-Adaptive Software Systems using Control Engineering Approaches \citep{Patikirikorala:2012ky}
-	\item Control Systems application in Java based Enterprise and Cloud Environments \- A Survey \citep{Gullapalli:2011vn}
-	\item Engineering Self-Adaptive Systems through Feedback Loops \citep{Brun:2009ww}
-\end{itemize}
-
-\begin{itemize}
-	\item Feedback-Control of Software Performance and \ac{QoS}
-	\begin{itemize}
-		\item Feedback Performance Control in Software Services \citep{Abdelzaher:2003ea}
-		\item ControlWare: A Middleware Architecture for Feedback Control of Software Performance \citep{Zhang:2002gf}
-		\item Intelligent Enterprise Application Servers: A Vision for Self-Managing Performance \citep{Kumar:2013bw}
-		\item Self-regulating Message Throughput in Enterprise Messaging Servers - A Feedback Control Solution \citep{Kumar:2012we}
-	\end{itemize}
-\end{itemize}
-
-The \emph{Adaptive Middleware} presented in this chapter utilizes a closed-feedback loop to control the aggregation size of the processed messages, depending on the current load of the system. This is a novel approach that has not previously been investigated.
+Summarizing the results of the evaluation, the proposed concept for the adaptive middleware is a viable solution to optimize the end-to-end latency of data processing system. The results show that using a closed-feedback loop is a feasible technique for implementing the dynamic control of the aggregation size. Using the queue size change to measure the system load is also shown to be appropriate.
 
 \section{Summary}\label{sec:ch5_summary}
-In this paper, we have presented a middleware that is able to adapt itself to changing load scenarios by fluently shifting the processing type between single event and batch processing. The middleware uses a closed feedback loop to control the end-to-end latency of the system by adjusting the level of message aggregation depending on the current load of the system. Determined by the aggregation size of a messsage, the middleware routes a message to appropriate service endpoints, which are optimized for either single-event or batch processing.
 
-To evaluate the proposed middleware concepts, we have implemented a prototype system and performed preliminary performance tests. The tests show that throughput and latency of a messaging system depend on the level of data granularity and that the throughput can be increased by increasing the granularity of the processed messages.
+In this chapter, a novel concept of middleware for near-time processing of bulk data has been presented that is able to adapt itself to changing load scenarios by fluently shifting the processing type between single event and batch processing. The middleware uses a closed feedback loop to control the end-to-end latency of the system by adjusting the level of message aggregation depending on the current load of the system. Determined by the aggregation size of a messsage, the middleware routes a message to appropriate service endpoints, which are optimized for either single-event or batch processing.
 
-Next steps of our research are the implementation of the proposed middleware including the evaluation and tuning of different controller architectures, performance evaluation of the proposed middleware using the prototype and developing a conceptional framework containing guidelines and rules for the practitioner how to implement an enterprise system based on the adaptive middleware for near-time processing
+Additionally, several design aspects have been described that should be taken into account when designing and implementing an adaptive system for bulk data processing, such as how to design the service interfaces, the integration and transport mechanisms, the error-handling and controller design.
+
+The solution is based on standard middleware, messaging technologies and standards and fully preserves the benefits of an \ac{SOA} and messaging middlware, such as:
+
+\begin{itemize}		
+	\item Loose coupling
+	\item Remote communication
+	\item Platform language Integration
+	\item Asynchronous communication
+	\item Reliable Communication
+\end{itemize}
+
+To evaluate the proposed middleware concepts, a prototype system has been developed based on the message-based prototype described in Section \ref{ch:performance_evaluation}. The tests show that the proposed middleware solution is viable and is able to optimize the end-to-end latency of a data processing system for different load scenarios.
+
+During the implementation of the prototype of the adaptive middleware, it became apparent that the design and implementation of such a system differs from common approaches to implement enterprise software systems. The next chapter describes a conceptual framework that guides the design, implementation and operation of a system for bulk data processing based on the adaptive middleware.
+
+

@@ -13,7 +13,7 @@ The design, implementation and operation of such a system differs from common ap
 \begin{itemize}
 	\item There are specific activities or tasks needed to implement the feedback-control subsystem.
 	\item There are roles needed with different skills.
-	\item There are different tools needed to aid the design and development of such a system.
+	\item There are different tools needed to aid the design, development and operation of such a system.
 \end{itemize}
 
 Developing software is a complex process, the quality of a software product depends on the people, the organisation and procedures used to create and deliver it \citep{Fuggetta:2000ds}.
@@ -919,7 +919,7 @@ This package contains specific tasks that are concerned with the implementation 
 	\toprule 
 	\bfseries Task & Perform Step Tests\\
 	\midrule 
-	\bfseries What & Perform step tests to determine the dynamic behaviour of the system. See Section \ref{sec:ch05_step_tests} for details.\\
+	\bfseries What & Perform step tests to determine the dynamic behaviour of the system.\\
 	\midrule 
 	\bfseries Why & The dynamic behaviour of the system is needed for building a model of the system and to tune the controller.\\
 	\midrule 
@@ -1337,10 +1337,18 @@ There are two options for implementing the feedback-control loop:
 	\item Without using a model, the control architecture needs to be implemented prior to the controller tuning, as shown in the \ac{UML} activity diagram in Figure \ref{fig:ch6_process_feedback-control}.
 \end{itemize}
 
-\begin{figure}[htpb] \centering 
-	\subfloat[Using a model]{\includegraphics[width=0.5\textwidth]{ch6_process_feedback-control_modelling}\label{fig:ch6_process_feedback-control_modelling}}\qquad
-	\subfloat[Without a model]{\includegraphics[width=0.5\textwidth]{ch6_process_feedback-control}\label{fig:ch6_process_feedback-control}}
-	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop} 
+\begin{figure}[htpb] 
+	\centering 
+	\includegraphics[width=\textwidth]{ch6_process_feedback-control_modelling}
+	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop using a model}
+	\label{fig:ch6_process_feedback-control_modelling}
+\end{figure}
+
+\begin{figure}[htpb] 
+	\centering 
+	\includegraphics[width=\textwidth]{ch6_process_feedback-control}
+	\caption{\ac{UML} Activity Diagram: Implement Feedback-Control Loop without using a model}
+	\label{fig:ch6_process_feedback-control}
 \end{figure}
 
 \section{Artifacts}\label{sec:ch6_artifacts}
@@ -1466,7 +1474,7 @@ The conceptual framework describes the following artifacts:
 	\bfseries Description & Defines the technical integration of the business services, including
 	\begin{itemize}
 		\item Middleware technology or product
-		\item Transports, such as \ac{JMS}, \ac{SOAP} or \ac{FTP}
+		\item Transports, such as \ac{JMS}, SOAP or \ac{FTP}
 		\item Technical format of the input and output data, such as \ac{XML} or \ac{JSON}, \ac{CSV} or binary formats.
 	\end{itemize}
 	\\
@@ -1990,7 +1998,7 @@ The authors argue, that on-line activities must be explicitely reflected in soft
 	\item The \emph{Evolution Process} is executed for a single or multiple occurences of the inner adaptive process. It consists of the activities \emph{Aggregate Metrics}, \emph{Analyze}, \emph{Evolve Adaption Rules}, \emph{Adjust and Synchronize}, and \emph{Reflect}. Theses tasks might require human involvement.
 \end{itemize}
 
-The related work on process models for adaptive systems is focused on generic adaptation mechanisms to evolve and adapt a system, which are carried out at run-time. In contrast, the conceptual framework presented in this chapter is aimed to guide the design, development and operation of a specific system, that is, an adaptive system for bulk data processing, which provides a specific adaptation mechanism, that is, the adaption of the aggregation size at run-time depending on the current load of the system. 
+The related work on process models for adaptive systems is focused on generic adaptation mechanisms to evolve and adapt a system, which are carried out at run-time. In contrast, the conceptual framework presented in this chapter is aimed to guide the design, development and operation of a specific system, that is, an adaptive system for bulk data processing, which provides a specific adaptation mechanism, that is, the adaption of the aggregation size at run-time depending on the current load of the system.
 
 \section{Summary}
 \label{sec:ch6_summary}

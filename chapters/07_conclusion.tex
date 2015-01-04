@@ -3,45 +3,67 @@
 \chapter{Conclusion}\label{ch:conclusion}
 %******************************************************************************
 
-\section{Summary of the Research project}
+This chapter concludes the thesis by summarizing the achievements of the research and discussing its limitations. 
+Additionally, it presents possible directions for further research. 
 
-\section{Contributions}
+\section{Achievements of the Research}
+
+This research project is aimed to optimize the end-to-end latency of a system for bulk data processing. 
+
+The first objective of the research was to analyze the relationship of end-to-end latency and throughput of batch and message-based systems. A formal definition of the relationship of end-to-end latency and maximum throughput has been given in Section \ref{sec:ch2_latency_throughput}.
+To analyze the impact of different processing styles, that is batch and message-based processing, on throughput and latency, two prototypes of a billing system for each processing type have been built. A performance evaluation has been conducted to compare the prototypes with each other with the focus on throughput and latency. The evaluation showed the following results:
+\begin{itemize}
+	\item The throughput of the batch prototype is 4 times the throughput of the messaging prototype.
+	\item The latency of the messaging prototype is only a fraction of the latency of the batch prototype.
+	\item The overhead of the messaging prototype is about 84\% of the total processing time, which is mostly induced by the webservice overhead and the database transactions. 
+	\item The overhead of the batch prototype is only about 7\% of the total processing time.
+\end{itemize}
+
+To evaluate the impact of different aggregation sizes on throughput and latency, the messaging prototype has been extended with an aggregator. A performance test has been conducted with different static aggregation sizes (see Section \ref{sec:ch4_impact_granularity}).
+
+The results presented in Section \ref{sec:ch4_impact_granularity} show that throughput and latency depend on the granularity of data that is being processed.
+Another finding is, that there is an optimal range for the aggregation size to control the throughput and latency of the system. Setting the aggregation size higher than a certain threshold leads to a throughput drop and latency gain cause by a congestion in the aggregator.
+
+Based on the results of the performance evaluation of the batch and message-based prototype, the concept of an adaptive middleware for near-time processing of bulk data has been developed (see Section \ref{ch:adaptive_middleware}). The adaptive middleware is able to adapt its processing type fluently between batch processing and single-event processing. By using message aggregation, message routing and a closed feedback-loop to adjust the data granularity at runtime, the system is able to minimize the end-to-end latency for different load scenarios. The concept also describes several design aspects that should be taken into account when
+designing and implementing an adaptive system for bulk data processing, such as how to design the service interfaces, the integration and transport mechanisms, the error-handling and controller design.
+
+The message-based prototype has been extended to implement the concepts of the adaptive middleware, which is described in Section \ref{sec:ch05_prototype}. Using this prototype, a performance evaluation has been conducted to evaluate the proposed concepts of the adaptive middleware for bulk data processing (see Section \ref{sec:ch05_evaluation}). The results show that the concept is generally viable and is able to minimize the end-to-end latency of a system for bulk data processing.
+
+During the implementation of the prototype of the adaptive middleware, it became apparent that the design and implementation of such a system differs from common approaches to implement enterprise software systems. In order to guide the implementation of an adaptive system for bulk data processing, a conceptual framework has been developed (see Section \ref{ch:conceptual_framework}). It defines artifacts, roles, tasks and their dependencies, and processes to describe the necessary steps for design, implementation and operation of such a system, including:
+\begin{itemize}
+	\item The needed roles and their skills for the design, implementation and operation.
+	\item The necessary tasks and their relationships for the design, implementation and operation.
+	\item The artifacts that are created and required by the different tasks.
+	\item The tools that are needed to process the different tasks.
+	\item The processes that describe the order of tasks to implement a certain feature of the software system.
+\end{itemize}
+
+Additionally, it has been described in Section \ref{sec:ch6_other_frameworks} how the conceptual framework can be used with common software development methodologies.
+
+Several aspects of the results achieved in this research project have been presented
+at refereed conferences and have received positive comments from reviewers and delegates.
 
 \section{Limitations}
+Despite having met the objectives of this research project, this research has some limitations, that are summarized below: 
 
-Limitations of the concept for an \emph{Adaptive Middlware}:
 \begin{itemize}
-	\item Only a single processing pattern is implemented
-	\item Integrated services need to be changed to support batch and single event processing
-	\begin{itemize}
-		\item Integration of Off-the-shelf components difficult
-	\end{itemize}
-	\item Only a single adaption pattern is considered in the adaptive middleware concept and protoype implementation.
+	\item The services that implement the business functionality of the system need to be explicitely designed to support the run-time adaption between single-event and batch processing, as described in Section \ref{sec:ch05_service_design}. Therefore, existing services need to be changed in order to be integrated into the system. This can pose a problem when using off-the-shelf services or \ac{SaaS}. The integration of such services has not been considered in this research.
+	\item The services integrated by the prototype do not implement any further optimizations for batch processing. They use the same implementation for batch and single-event processing. Thus, the impact of batch optimizations has not been investigated. This was not necessary to show the performance improvements of message aggregation on the maximum throughput of the messaging prototype.
+	\item The adaption mechanisms of the \emph{Adaptive Middleware} only uses message aggregation and message routing, depending on the aggregation size. Other mechanisms such as dynamic service composition and selection and load balancing have not been investigated. 
+	\item The prototype of the \emph{Adaptive Middleware} only uses a single message queue, the integrated services are called synchronous, using a request/response pattern. This design was chosen, to simplify the dynamics of the system. Thus, the impact of using multiple message queues has been investigated in the evaluation.
+	\item The impact of different controller architectures has not been exhaustivley analysed and researched. Only two controller architectures have been implemented and evaluated. Other controller designs, such as fuzzy control, have not been invistigated. Additionally, a formal analyzation of the feedback-control system has not been conducted, for example by creating a model of the system. Instead, an empirical approach has been taken to evaluate the viability of the proposed solution.
+	\item The \emph{Conceptual Framework} has not been validated, for example by qualitative research methods, such as expert interviews, or applied with real-life projects.
 \end{itemize}
 
-Limitations of the research prototype:
-\begin{itemize}
-	\item Impact of different controller architectures have not been exhaustivley analysed and researched. Only two controller architectures have been implemented. 
-\end{itemize}
-
-Limitations of the \emph{Conceptual Framework}:
-\begin{itemize}
-	\item The services integrated by the prototype do not implement any further optimisations for batch processing. They use the same implementation for batch and single-event processing. Thus, the impact of batch optimisations has not been investigated.
-	\item The \emph{Conceptual Framework} has not been validated, for example by qualitative research methods, such as expert interviews are applied with real-life projects.
-\end{itemize}
+Despite these limitations, the research project has made valid contributions to knowledge and provided sufficient proof of concept for the proposed approaches.
 
 \section{Future Work}
 
-Based on the limitations of this research, as described in the previous section, the following open issues could be adressed by future work.
+The research project has advanced the field of systems for bulk data processing. However, a number of areas for future work can be identified that build on the achieved results.
 
 \begin{itemize}
-	\item System consisting of multiple Aggregators and input queues
-	\begin{itemize}
-		\item Does this approach still work with the proposed control strategy (every aggregator optimizes the aggregation size independently)?
-		\item Is a different approach better or even necessary? For example a central control strategy?
-	\end{itemize}
-	\item Add a figure for illustration
-	\item Support for different messaging patterns such as Publish/Subscribe
-	\item Extending the middleware concept to support different adaption patterns, such as dynamic service composition and selection and load balancing.
-	\item Validation of the \emph{Conceptual Framework} by qualitative research methods or in real-life projects
+	\item The adaptive middleware uses a single aggregator, that aggregates messages after they have been read from the input message queue of the system. The aggregator is controlled by a closed feedback-loop that controls the aggregation size based on the current load of the system. It could be interesting to investigate how this approach scales for a system consisting of multiple sub-systems, each sub-system consisting of an input message queue and an aggregator. These aggregators need to be a combination of an aggegrator and splitter to decrease the aggegration size of messages that are aggregrated by preceding sub-systems. A question of interest is the type of control strategy that is needed for this kind of systems. Does a decentralized control strategy work, with every subsystem having its own independant control-loop or is central approach necessary?
+	\item The aggregator used by the adaptive middleware uses static correlation rules to aggregate messages. Depending on the type of input data, it could be necessary to adapt these rules at run-time. For example to change the correlation rule from a simple correlation, where messages are aggregated in the order in which they occur to a more complex correlation rule based on business rules. It is thinkable that this adaption can be automatically performed by the system without manual changes. 
+	\item The proposed adaptive middleware uses dynamic message aggregation to optimize the end-to-end latency of a data processing system. The concept could be extended to use other adaption mechanisms, such as dynamic service composition and selection and load balancing. Additionally, further performance optimization techniques such as caching or dynamic scaling could be investigated by further research.
+	\item The concept for the adaptive middleware has only been evaluated using a prototype using simulated data. No experience has been made so far using this approach in real-life projects. It could be of interest how this approach is transferrable to real enterprise systems.
 \end{itemize}
